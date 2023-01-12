@@ -12,8 +12,8 @@ import 'package:mwinkhouse2/objbox/models/TipologiaColloquio.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaContatto.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaStanza.dart';
-import '../../objectbox.g.dart';
-import '../models/Riscaldamento.dart';
+import 'package:mwinkhouse2/objectbox.g.dart';
+import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:async_task/async_task.dart';
@@ -619,7 +619,7 @@ class ObjectBox {
     anagraficaBox.remove(codAnagrafica);
   }
 
-  Stream<List<Anagrafica>> getAnagrafiche({List<int>? notin}) {
+  Stream<List<Anagrafica>> getAnagrafiche({List<int> notin=const []}) {
     // Query for all tasks, sorted by their date.
     // https://docs.objectbox.io/queries
     QueryBuilder<Anagrafica> qBuilderTasks;
@@ -630,6 +630,21 @@ class ObjectBox {
       qBuilderTasks = anagraficaBox.query(Anagrafica_.codAnagrafica.notOneOf(notin!))
         ..order(Anagrafica_.codAnagrafica, flags: Order.descending);
     }
+    // Build and watch the query,
+    // set triggerImmediately to emit the query immediately on listen.
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+    // Map it to a list of tasks to be used by a StreamBuilder.
+        .map((query) => query.find());
+  }
+
+  Stream<List<Anagrafica>> getAnagrafichePropieta({int codImmobile=0}) {
+    // Query for all tasks, sorted by their date.
+    // https://docs.objectbox.io/queries
+    QueryBuilder<Anagrafica> qBuilderTasks;
+    qBuilderTasks = anagraficaBox.query();
+    qBuilderTasks.linkMany(Anagrafica_.proprieta, Immobile_.codImmobile.equals(codImmobile));
+    qBuilderTasks.order(Anagrafica_.codAnagrafica, flags: Order.descending);
     // Build and watch the query,
     // set triggerImmediately to emit the query immediately on listen.
     return qBuilderTasks

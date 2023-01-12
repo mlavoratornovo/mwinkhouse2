@@ -5,6 +5,7 @@ import 'package:mwinkhouse2/widgets/dettaglio_anagrafica.dart';
 import '../objbox/models/Anagrafica.dart';
 import '../main.dart';
 import '../objbox/models/Immobile.dart';
+import 'lista_anagrafiche_proprieta.dart';
 
 
 /// Displays the current list of tasks by listening to a stream.
@@ -14,17 +15,49 @@ import '../objbox/models/Immobile.dart';
 class AnagraficheList extends StatefulWidget {
   final String title = 'Lista anagrafiche';
   Immobile? immobile;
+  List<int> idAnagrafiche = [];
+
   AnagraficheList({Key? key, Immobile? immobile}) : super(key: key){
     this.immobile = immobile;
+    for (var i = 0; i < (immobile?.proprietari.length ?? 0); i++ ){
+      idAnagrafiche.add(immobile?.proprietari[i].codAnagrafica ?? 0);
+    }
   }
 
   @override
-  State<AnagraficheList> createState() => _AnagraficheListState(immobile);
+  State<AnagraficheList> createState() => _AnagraficheListState(immobile,idAnagrafiche);
+}
+
+extension SafeLookup<E> on List<E> {
+  E? get(int index) {
+    try {
+      return this[index];
+    } on RangeError {
+      return null;
+    }
+  }
 }
 
 class _AnagraficheListState extends State<AnagraficheList> {
+
   Immobile? immobile;
-  _AnagraficheListState(this.immobile);
+  List<int> idAnagrafiche = [];
+  List<int> selected = [];
+  _AnagraficheListState(this.immobile,this.idAnagrafiche);
+
+
+  void _onCheckboxSelect(bool select, int codAnagrafica){
+    if (select == true) {
+      setState(() {
+        selected.add(codAnagrafica);
+      });
+    } else {
+      setState(() {
+        selected.remove(codAnagrafica);
+      });
+    }
+  }
+
   Dismissible Function(BuildContext, int) _itemBuilder(List<Anagrafica> anagrafiche) =>
           (BuildContext context, int index) => Dismissible(
         background: Container(
@@ -48,12 +81,15 @@ class _AnagraficheListState extends State<AnagraficheList> {
         child: Row(
           children: <Widget>[
             Checkbox(
-                value: false, //immobili[index].isFinished(),
-                onChanged: (bool? value) {
-                  final anagrafica = anagrafiche[index];
-                  // immobile.toggleFinished();
-                  // objectbox.taskBox.put(task);
-                  // List updated via watched query stream.
+                value: (selected.get(index)!=null)?true:false,
+                onChanged: (immobile == null)?null:(bool? value) {
+                    final anagrafica = anagrafiche[index];
+                    _onCheckboxSelect(value!, anagrafica.codAnagrafica ?? 0);
+                    if (value==true){
+                      immobile?.proprietari.add(anagrafica);
+                    }else{
+                      immobile?.proprietari.remove(anagrafica);
+                    }
                 }),
             Expanded(
               child: Container(
@@ -117,7 +153,7 @@ class _AnagraficheListState extends State<AnagraficheList> {
               children: [
                 Expanded(
                     child: StreamBuilder<List<Anagrafica>?>(
-                        stream: (immobile!=null)?objectbox.getAnagrafiche():objectbox.getAnagrafiche(),
+                        stream: (immobile!=null)?objectbox.getAnagrafiche(notin:idAnagrafiche):objectbox.getAnagrafiche(),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             // Print the stack trace and show the error message.
@@ -152,9 +188,13 @@ class _AnagraficheListState extends State<AnagraficheList> {
               ]
           )
       ),
-      floatingActionButton: Row(children: [
+      floatingActionButton: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
         FloatingActionButton(
-          heroTag: "immobili",
+          heroTag: "Anagrafica",
           backgroundColor: (immobile!=null)?Colors.grey:null,
           onPressed: (immobile!=null)?null:() {
             Navigator.of(context).push(MaterialPageRoute(
@@ -162,12 +202,13 @@ class _AnagraficheListState extends State<AnagraficheList> {
           },
           child: const Icon(Icons.add),
         ),
+            SizedBox(height: 10),
         FloatingActionButton(
           heroTag: "immobili",
-          backgroundColor: (immobile!=null)?Colors.grey:null,
-          onPressed: (immobile!=null)?null:() {
+          backgroundColor: (immobile==null)?Colors.grey:null,
+          onPressed: (immobile==null)?null:() {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => DettaglioAnagrafica(anagrafica:Anagrafica())));
+                builder: (context) => AnagraficheProprietaList(immobile:immobile)));
           },
           child: const Icon(Icons.check_box),
         ),

@@ -11,6 +11,7 @@ import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
 
 import 'lista_anagrafiche.dart';
+import 'lista_anagrafiche_proprieta.dart';
 
 class DettaglioImmobile extends StatefulWidget {
   final String title = 'Dettaglio immobile';
@@ -60,7 +61,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 if (result == 1) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AnagraficheList(immobile:immobile)),
+                    MaterialPageRoute(builder: (context) => AnagraficheProprietaList(immobile:immobile)),
                   );
                 }
                 },

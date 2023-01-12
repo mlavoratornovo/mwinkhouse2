@@ -10,4 +10,9 @@ class ClasseCliente{
 
   int? ordine;
 
+  bool operator ==(dynamic other) =>
+      other != null && other is ClasseCliente && this.codClasseCliente == other.codClasseCliente;
+
+  @override
+  int get hashCode => super.hashCode;
 }

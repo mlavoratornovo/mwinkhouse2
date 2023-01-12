@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/widgets/dettaglio_anagrafica.dart';
+import 'package:mwinkhouse2/widgets/dettaglio_immobile.dart';
 
 import '../objbox/models/Anagrafica.dart';
 import '../main.dart';
@@ -13,10 +14,11 @@ import 'lista_anagrafiche.dart';
 /// Each task has a check button to mark it completed and an edit button to
 /// update it. A task can also be swiped away to remove it.
 class AnagraficheProprietaList extends StatefulWidget {
-  final String title = 'Lista anagrafiche';
+  String title = 'Lista propietari : ';
   Immobile? immobile;
   AnagraficheProprietaList({Key? key, Immobile? immobile}) : super(key: key){
     this.immobile = immobile;
+    title = title + (immobile?.indirizzo ?? "");
   }
 
   @override
@@ -24,12 +26,20 @@ class AnagraficheProprietaList extends StatefulWidget {
 }
 
 class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
+
   Immobile? immobile;
   List<int> idproprietari = List<int>.empty(growable: true);
+
+  late Stream<List<Anagrafica>?> proprietari;
+
   _AnagraficheProprietaListState(this.immobile){
     this.immobile?.proprietari.map((element) => {
       idproprietari?.add(element.codAnagrafica!)
     });
+    proprietari = (() async* {
+      await Future<void>.delayed(Duration(milliseconds: 1));
+      yield this.immobile?.proprietari.toList();
+    })();
   }
   Dismissible Function(BuildContext, int) _itemBuilder(List<Anagrafica> anagrafiche) =>
           (BuildContext context, int index) => Dismissible(
@@ -123,7 +133,7 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
               children: [
                 Expanded(
                     child: StreamBuilder<List<Anagrafica>?>(
-                        stream: (immobile!=null)?objectbox.getAnagrafiche(notin: idproprietari):objectbox.getAnagrafiche(),
+                        stream: proprietari,
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             // Print the stack trace and show the error message.
@@ -158,15 +168,16 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
               ]
           )
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "anagrafiche",
-        backgroundColor: (immobile!=null)?Colors.grey:null,
-        onPressed: (immobile!=null)?null:() {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AnagraficheList(immobile:immobile)));
-        },
-        child: const Icon(Icons.check_box),
-      ),
+      floatingActionButton:
+        FloatingActionButton(
+          heroTag: "immobile",
+          backgroundColor: (immobile==null)?Colors.grey:null,
+          onPressed: (immobile==null)?null:() {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => AnagraficheList(immobile:immobile)));
+          },
+          child: const Icon(Icons.add),
+        ),
     );
   }
 }
