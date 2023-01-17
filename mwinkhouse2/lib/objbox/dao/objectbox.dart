@@ -623,7 +623,7 @@ class ObjectBox {
     // Query for all tasks, sorted by their date.
     // https://docs.objectbox.io/queries
     QueryBuilder<Anagrafica> qBuilderTasks;
-    if (notin!=null) {
+    if (notin==null) {
       qBuilderTasks = anagraficaBox.query()
         ..order(Anagrafica_.codAnagrafica, flags: Order.descending);
     }else{

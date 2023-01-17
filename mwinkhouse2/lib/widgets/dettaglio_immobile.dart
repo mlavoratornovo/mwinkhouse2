@@ -9,14 +9,15 @@ import 'package:mwinkhouse2/main.dart';
 import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
 import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
+import 'package:mwinkhouse2/widgets/lista_stanze_immobile.dart';
 
 import 'lista_anagrafiche.dart';
 import 'lista_anagrafiche_proprieta.dart';
 
 class DettaglioImmobile extends StatefulWidget {
   final String title = 'Dettaglio immobile';
-  Immobile? immobile;
-  DettaglioImmobile({Key? key, this.immobile}) : super(key: key){
+  Immobile immobile = Immobile();
+  DettaglioImmobile({Key? key, required Immobile immobile}) : super(key: key){
     this.immobile = immobile ?? Immobile();
   }
 
@@ -26,7 +27,7 @@ class DettaglioImmobile extends StatefulWidget {
 
 class _DettaglioImmobileState extends State<DettaglioImmobile> {
 
-  Immobile? immobile;
+  Immobile immobile;
   List<TipologiaImmobile> tipologieImmobile = [];
   List<StatoConservativo> statoConservativo = [];
   List<ClasseEnergetica> classeEnergetica = [];
@@ -64,7 +65,13 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                     MaterialPageRoute(builder: (context) => AnagraficheProprietaList(immobile:immobile)),
                   );
                 }
-                },
+                if (result == 0) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StanzeImmobileList(immobile:immobile)),
+                  );
+                }
+              },
             )]),
     body: Center(
       // Center is a layout widget. It takes a single child and positions it

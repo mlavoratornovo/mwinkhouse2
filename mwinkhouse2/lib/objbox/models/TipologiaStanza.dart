@@ -8,4 +8,9 @@ class TipologiaStanza{
 
   String? descrizione;
 
+  bool operator ==(dynamic other) =>
+      other != null && other is TipologiaStanza && this.codTipologiaStanza == other.codTipologiaStanza;
+
+  @override
+  int get hashCode => super.hashCode;
 }
