@@ -6,10 +6,12 @@ import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse2/main.dart';
 
+import 'lista_contatti_anagrafica.dart';
+
 class DettaglioAnagrafica extends StatefulWidget {
   final String title = 'Dettaglio anagrafica';
-  Anagrafica? anagrafica;
-  DettaglioAnagrafica({Key? key, this.anagrafica}) : super(key: key){
+  Anagrafica anagrafica = Anagrafica();
+  DettaglioAnagrafica({Key? key,required Anagrafica anagrafica}) : super(key: key){
     this.anagrafica = anagrafica ?? Anagrafica();
   }
 
@@ -19,7 +21,7 @@ class DettaglioAnagrafica extends StatefulWidget {
 
 class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
 
-  Anagrafica? anagrafica;
+  Anagrafica anagrafica;
   List<ClasseCliente> classeCliente = [];
 
   final _formKey = GlobalKey<FormState>();
@@ -38,11 +40,21 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
           title: Text(widget.title),
           actions: [
             PopupMenuButton(itemBuilder: (context)=>const [
-              PopupMenuItem(child: Text('Contatti')),
-              PopupMenuItem(child: Text('Immobili')),
-              PopupMenuItem(child: Text('Colloqui')),
-            ]
+              PopupMenuItem(child: Text('Contatti'), value:0),
+              PopupMenuItem(child: Text('Immobili'), value:1),
+              PopupMenuItem(child: Text('Colloqui'), value:2),
+            ],
+            onSelected: (result) {
+              if (result == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      ContattiAnagraficaList(anagrafica: anagrafica)),
+                  );
+              }
+            }
             )],
+
         ),
         body: Center(
           // Center is a layout widget. It takes a single child and positions it
