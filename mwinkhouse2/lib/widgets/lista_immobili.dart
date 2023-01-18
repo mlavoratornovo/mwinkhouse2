@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/widgets/dettaglio_immobile.dart';
+import 'package:mwinkhouse2/widgets/lista_immobili_proprieta.dart';
 
 import '../objbox/models/Immobile.dart';
 import '../main.dart';
@@ -11,13 +13,47 @@ import '../main.dart';
 /// update it. A task can also be swiped away to remove it.
 class ImmobiliList extends StatefulWidget {
   final String title = 'Lista immobili';
-  const ImmobiliList({Key? key}) : super(key: key);
+  Anagrafica? anagrafica;
+  List<int> idImmobili = [];
+
+  ImmobiliList({Key? key,this.anagrafica}) : super(key: key){
+    for (var i = 0; i < (anagrafica?.proprieta.length ?? 0); i++ ){
+      idImmobili.add(anagrafica?.proprieta[i].codImmobile ?? 0);
+    }
+  }
 
   @override
-  State<ImmobiliList> createState() => _ImmobiliListState();
+  State<ImmobiliList> createState() => _ImmobiliListState(anagrafica,idImmobili);
+}
+extension SafeLookup<E> on List<E> {
+  E? get(int index) {
+    try {
+      return this[index];
+    } on RangeError {
+      return null;
+    }
+  }
 }
 
 class _ImmobiliListState extends State<ImmobiliList> {
+  Anagrafica? anagrafica;
+  List<int> idImmobili = [];
+  List<int> selected = [];
+  _ImmobiliListState(this.anagrafica,this.idImmobili);
+
+
+  void _onCheckboxSelect(bool select, int codImmobile){
+    if (select == true) {
+      setState(() {
+        selected.add(codImmobile);
+      });
+    } else {
+      setState(() {
+        selected.remove(codImmobile);
+      });
+    }
+  }
+
   Dismissible Function(BuildContext, int) _itemBuilder(List<Immobile> immobili) =>
           (BuildContext context, int index) => Dismissible(
         background: Container(
@@ -41,12 +77,15 @@ class _ImmobiliListState extends State<ImmobiliList> {
         child: Row(
           children: <Widget>[
             Checkbox(
-                value: false, //immobili[index].isFinished(),
-                onChanged: (bool? value) {
+                value: (selected.get(index)!=null)?true:false,
+                onChanged: (anagrafica == null)?null:(bool? value) {
                   final immobile = immobili[index];
-                  // immobile.toggleFinished();
-                  // objectbox.taskBox.put(task);
-                  // List updated via watched query stream.
+                  _onCheckboxSelect(value!, immobile.codImmobile ?? 0);
+                  if (value==true){
+                    anagrafica?.proprieta.add(immobile);
+                  }else{
+                    anagrafica?.proprieta.remove(immobile);
+                  }
                 }),
             Expanded(
               child: Container(
@@ -110,7 +149,7 @@ class _ImmobiliListState extends State<ImmobiliList> {
         children: [
           Expanded(
             child: StreamBuilder<List<Immobile>>(
-            stream: objectbox.getImmobili(),
+            stream: (anagrafica!=null)?objectbox.getImmobili(notin:idImmobili):objectbox.getImmobili(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 // Print the stack trace and show the error message.
@@ -145,14 +184,31 @@ class _ImmobiliListState extends State<ImmobiliList> {
         ]
       )
     ),
-            floatingActionButton: FloatingActionButton(
+            floatingActionButton: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton(
                         heroTag: "immobili",
-                        onPressed: () {
+                        backgroundColor: (anagrafica!=null)?Colors.grey:null,
+                        onPressed: (anagrafica!=null)?null:() {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => DettaglioImmobile(immobile:Immobile())));
                         },
                         child: const Icon(Icons.add),
-                    ),
+                ),
+                FloatingActionButton(
+                  heroTag: "immobili propieta",
+                  backgroundColor: (anagrafica==null)?Colors.grey:null,
+                  onPressed: (anagrafica==null)?null:() {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ImmobiliProprietaList(anagrafica: anagrafica??Anagrafica())));
+                  },
+                  child: const Icon(Icons.check_box),
+                ),
+
+              ])
     );
   }
 }

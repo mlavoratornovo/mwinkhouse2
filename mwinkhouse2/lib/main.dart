@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 heroTag: "immobili",
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ImmobiliList()));
+                      builder: (context) => ImmobiliList()));
                 },
                 child: const Icon(Icons.home),
               ),

@@ -11,11 +11,11 @@ import 'lista_anagrafiche.dart';
 /// Each task has a check button to mark it completed and an edit button to
 /// update it. A task can also be swiped away to remove it.
 class AnagraficheProprietaList extends StatefulWidget {
-  String title = 'Lista propietari : ';
-  Immobile? immobile;
-  AnagraficheProprietaList({Key? key, Immobile? immobile}) : super(key: key){
+  String title = 'Lista proprietari : ';
+  Immobile immobile = new Immobile();
+  AnagraficheProprietaList({Key? key,required Immobile immobile}) : super(key: key){
     this.immobile = immobile;
-    title = title + (immobile?.indirizzo ?? "");
+    title = title + (immobile.indirizzo ?? "");
   }
 
   @override
@@ -24,7 +24,7 @@ class AnagraficheProprietaList extends StatefulWidget {
 
 class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
 
-  Immobile? immobile;
+  Immobile immobile;
   List<int> idproprietari = List<int>.empty(growable: true);
 
   late Stream<List<Anagrafica>?> proprietari;
@@ -50,7 +50,7 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Immobile ${anagrafiche[index].codAnagrafica} deleted'))));
+                  child: Text('Anagrafica ${anagrafiche[index].codAnagrafica} deleted'))));
         },
         child: Row(
           children: <Widget>[
@@ -110,12 +110,12 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
 
   @override
   Widget build(BuildContext context) {
-    this.immobile?.proprietari.map((element) => {
-      idproprietari?.add(element.codAnagrafica!)
+    this.immobile.proprietari.map((element) => {
+      idproprietari.add(element.codAnagrafica!)
     });
     proprietari = (() async* {
       await Future<void>.delayed(Duration(milliseconds: 1));
-      yield this.immobile?.proprietari.toList();
+      yield this.immobile.proprietari.toList();
     })();
     return Scaffold(
       appBar: AppBar(
@@ -169,8 +169,8 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
       floatingActionButton:
         FloatingActionButton(
           heroTag: "immobile",
-          backgroundColor: (immobile==null)?Colors.grey:null,
-          onPressed: (immobile==null)?null:() async {
+          backgroundColor: (immobile.codImmobile==null)?Colors.grey:null,
+          onPressed: (immobile.codImmobile==null)?null:() async {
             final value = await Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AnagraficheList(immobile:immobile)));
             setState(() {});

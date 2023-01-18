@@ -580,11 +580,17 @@ class ObjectBox {
     immobileBox.remove(codImmobile);
   }
 
-  Stream<List<Immobile>> getImmobili() {
+  Stream<List<Immobile>> getImmobili({List<int> notin=const []}) {
     // Query for all tasks, sorted by their date.
     // https://docs.objectbox.io/queries
-    final qBuilderTasks = immobileBox.query()
-      ..order(Immobile_.codImmobile, flags: Order.descending);
+    QueryBuilder<Immobile> qBuilderTasks;
+    if (notin==null) {
+      qBuilderTasks = immobileBox.query()
+        ..order(Immobile_.codImmobile, flags: Order.descending);
+    }else{
+      qBuilderTasks = immobileBox.query(Immobile_.codImmobile.notOneOf(notin!))
+        ..order(Immobile_.codImmobile, flags: Order.descending);
+    }
     // Build and watch the query,
     // set triggerImmediately to emit the query immediately on listen.
     return qBuilderTasks

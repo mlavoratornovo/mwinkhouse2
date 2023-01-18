@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse2/main.dart';
+import 'package:mwinkhouse2/widgets/lista_immobili_proprieta.dart';
 
 import 'lista_contatti_anagrafica.dart';
 
@@ -51,6 +52,13 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                   MaterialPageRoute(builder: (context) =>
                       ContattiAnagraficaList(anagrafica: anagrafica)),
                   );
+              }
+              if (result == 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      ImmobiliProprietaList(anagrafica: anagrafica)),
+                );
               }
             }
             )],
