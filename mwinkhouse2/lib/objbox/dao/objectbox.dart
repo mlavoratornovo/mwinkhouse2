@@ -644,20 +644,20 @@ class ObjectBox {
         .map((query) => query.find());
   }
 
-  Stream<List<Anagrafica>> getAnagrafichePropieta({int codImmobile=0}) {
-    // Query for all tasks, sorted by their date.
-    // https://docs.objectbox.io/queries
-    QueryBuilder<Anagrafica> qBuilderTasks;
-    qBuilderTasks = anagraficaBox.query();
-    qBuilderTasks.linkMany(Anagrafica_.proprieta, Immobile_.codImmobile.equals(codImmobile));
-    qBuilderTasks.order(Anagrafica_.codAnagrafica, flags: Order.descending);
-    // Build and watch the query,
-    // set triggerImmediately to emit the query immediately on listen.
-    return qBuilderTasks
-        .watch(triggerImmediately: true)
-    // Map it to a list of tasks to be used by a StreamBuilder.
-        .map((query) => query.find());
-  }
+  // Stream<List<Anagrafica>> getAnagrafichePropieta({int codImmobile=0}) {
+  //   // Query for all tasks, sorted by their date.
+  //   // https://docs.objectbox.io/queries
+  //   QueryBuilder<Anagrafica> qBuilderTasks;
+  //   qBuilderTasks = anagraficaBox.query();
+  //   qBuilderTasks.linkMany(Anagrafica_.proprieta, Immobile_.codImmobile.equals(codImmobile));
+  //   qBuilderTasks.order(Anagrafica_.codAnagrafica, flags: Order.descending);
+  //   // Build and watch the query,
+  //   // set triggerImmediately to emit the query immediately on listen.
+  //   return qBuilderTasks
+  //       .watch(triggerImmediately: true)
+  //   // Map it to a list of tasks to be used by a StreamBuilder.
+  //       .map((query) => query.find());
+  // }
 }
 
 class SaveImmobile extends AsyncTask<Immobile, void>{

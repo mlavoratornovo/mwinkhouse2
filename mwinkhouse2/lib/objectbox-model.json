@@ -156,11 +156,6 @@
           "id": "4:2488102019203560600",
           "name": "appuntamenti",
           "targetId": "3:3386994393142097222"
-        },
-        {
-          "id": "11:444762249311848945",
-          "name": "proprieta",
-          "targetId": "10:7568040681083448512"
         }
       ]
     },
@@ -864,6 +859,8 @@
   "retiredEntityUids": [],
   "retiredIndexUids": [],
   "retiredPropertyUids": [],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    444762249311848945
+  ],
   "version": 1
 }

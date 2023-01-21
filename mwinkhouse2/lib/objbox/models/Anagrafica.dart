@@ -32,6 +32,7 @@ class Anagrafica{
   final contatti = ToMany<Contatto>();
   final immobiliAbbinati = ToMany<Immobile>();
   final appuntamenti = ToMany<Appuntamento>();
+  @Backlink()
   final proprieta = ToMany<Immobile>();
 
 }
