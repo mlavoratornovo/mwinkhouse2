@@ -1,4 +1,5 @@
 import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
+import 'package:mwinkhouse2/objbox/models/Colloquio.dart';
 import 'package:mwinkhouse2/objbox/models/Contatto.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
 import 'package:objectbox/objectbox.dart';
@@ -34,6 +35,7 @@ class Anagrafica{
   final appuntamenti = ToMany<Appuntamento>();
   @Backlink()
   final proprieta = ToMany<Immobile>();
-
+  @Backlink()
+  final colloqui = ToMany<Colloquio>();
 }
 

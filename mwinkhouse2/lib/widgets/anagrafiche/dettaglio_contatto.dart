@@ -1,35 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mwinkhouse2/objbox/models/StanzaImmobile.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaStanza.dart';
+import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
+import 'package:mwinkhouse2/objbox/models/TipologiaContatto.dart';
 
-import '../main.dart';
-import '../objbox/models/Immobile.dart';
+import '../../main.dart';
+import '../../objbox/models/Contatto.dart';
 
-class DettaglioStanza extends StatefulWidget {
-  final String title = 'Dettaglio stanza';
-  StanzaImmobile? stanzaImmobile;
-  Immobile immobile;
-  DettaglioStanza({Key? key, required this.immobile, StanzaImmobile? stanzaImmobile}) : super(key: key){
-    this.stanzaImmobile = stanzaImmobile ?? StanzaImmobile();
-  }
+class DettaglioContatto extends StatefulWidget {
+  final String title = 'Dettaglio contatto';
+  Contatto? contatto;
+  Anagrafica? anagrafica;
+  DettaglioContatto({Key? key, this.anagrafica, this.contatto}) : super(key: key);
 
   @override
-  State<DettaglioStanza> createState() => _DettaglioStanzaState(this.immobile, this.stanzaImmobile);
+  State<DettaglioContatto> createState() => _DettaglioContattoState();
 }
 
-class _DettaglioStanzaState extends State<DettaglioStanza> {
+class _DettaglioContattoState extends State<DettaglioContatto> {
 
-  Immobile immobile;
-  StanzaImmobile? stanzaImmobile;
-  List<TipologiaStanza> tipologiaStanza = [];
+  List<TipologiaContatto> tipologiaContatto = [];
 
   final _formKey = GlobalKey<FormState>();
 
-  _DettaglioStanzaState(this.immobile,this.stanzaImmobile){
-    this.stanzaImmobile = stanzaImmobile;
-    tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
+  _DettaglioContattoState(){
+    tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
   }
 
   @override
@@ -55,21 +49,21 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
             child: SingleChildScrollView(
                 child:Column(
                     children: <Widget>[
-                      DropdownButtonFormField<TipologiaStanza>(
-                        hint: Text('Seleziona tipo stanza'),
+                      DropdownButtonFormField<TipologiaContatto>(
+                        hint: Text('Seleziona tipo contatto'),
                         validator: (value) => value == null ? 'Seleziona tipo' : null,
                         isExpanded: true,
-                        value: stanzaImmobile?.tipologiaStanza?.target,
-                        onChanged: (TipologiaStanza? newValue) {
+                        value: widget.contatto?.tipologiaContatto?.target,
+                        onChanged: (TipologiaContatto? newValue) {
                           setState(() {
-                            stanzaImmobile?.tipologiaStanza.target = newValue;
+                            widget.contatto?.tipologiaContatto.target = newValue;
                           });
                         },
-                        items: tipologiaStanza.map((TipologiaStanza tipologiaStanza) {
-                          return DropdownMenuItem<TipologiaStanza>(
-                            value: tipologiaStanza,
+                        items: tipologiaContatto.map((TipologiaContatto tipologiaContatto) {
+                          return DropdownMenuItem<TipologiaContatto>(
+                            value: tipologiaContatto,
                             child: Text(
-                              tipologiaStanza.descrizione??"",
+                              tipologiaContatto.descrizione??"",
                               style: const TextStyle(color: Colors.black),
                             ),
                           );
@@ -77,24 +71,30 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
-                            labelText: "Mq"
+                            labelText: "Contatto"
                         ),
                         validator:  (value) {
                           if (value == null || value.isEmpty) {
-                            if (this.stanzaImmobile?.mq == null){
-                              return 'Inserire la dimensione';
+                            if (widget.contatto?.descrizione == null){
+                              return 'Inserire il contatto';
                             }
                           }
                           return null;
                         },
                         onChanged: (text) {
-                          this.stanzaImmobile?.mq = int.parse(text);
+                          widget.contatto?.contatto = text;
                         },
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        initialValue: "${this.stanzaImmobile?.mq ?? ""}",
+                        initialValue: widget.contatto?.contatto ?? "",
+                      ),
+                      TextFormField(
+                        maxLines: null,
+                        decoration:const InputDecoration(
+                            labelText: "descrizione"
+                        ),
+                        onChanged: (text) {
+                          widget.contatto?.descrizione = text;
+                        },
+                        initialValue: widget.contatto?.descrizione ?? "",
                       ),
                     ])
             ),
@@ -102,10 +102,12 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
         ),
         floatingActionButton: FloatingActionButton(
           heroTag: "Salva",
-          onPressed: () {
+          onPressed:(widget.anagrafica==null)?null:() async {
             if (_formKey.currentState!.validate()) {
-              immobile.stanze.add(stanzaImmobile!);
+              widget.anagrafica?.contatti.add(widget.contatto!);
               Navigator.pop(context);
+              // final value = await Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (context) => ContattiAnagraficaList(anagrafica:widget.anagrafica??Anagrafica())));
             }else{
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Dati non validi impossibile procedere')),

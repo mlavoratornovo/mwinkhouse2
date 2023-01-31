@@ -47,6 +47,7 @@ class Immobile{
   final tipologiaImmobile = ToOne<TipologiaImmobile>();
   final classeEnergetica = ToOne<ClasseEnergetica>();
   final stanze = ToMany<StanzaImmobile>();
+  @Backlink()
   final colloqui = ToMany<Colloquio>();
   final immagini = ToMany<Immagine>();
   final proprietari = ToMany<Anagrafica>();

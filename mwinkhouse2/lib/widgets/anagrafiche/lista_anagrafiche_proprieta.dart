@@ -1,32 +1,38 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse2/objbox/models/StanzaImmobile.dart';
+import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
+import 'package:mwinkhouse2/widgets/anagrafiche/dettaglio_anagrafica.dart';
+import '../../main.dart';
+import '../../objbox/models/Immobile.dart';
+import 'lista_anagrafiche.dart';
 
-import '../main.dart';
-import '../objbox/models/Immobile.dart';
-import 'dettaglio_stanza.dart';
 
-class StanzeImmobileList extends StatefulWidget {
-  String title = 'Lista stanze : ';
+/// Displays the current list of tasks by listening to a stream.
+///
+/// Each task has a check button to mark it completed and an edit button to
+/// update it. A task can also be swiped away to remove it.
+class AnagraficheProprietaList extends StatefulWidget {
+  String title = 'Lista proprietari : ';
   Immobile immobile = Immobile();
-  StanzeImmobileList({Key? key, required Immobile immobile}) : super(key: key){
+  AnagraficheProprietaList({Key? key,required Immobile immobile}) : super(key: key){
     this.immobile = immobile;
-    title = title + (immobile?.indirizzo ?? "");
+    title = title + (immobile.indirizzo ?? "");
   }
 
   @override
-  State<StanzeImmobileList> createState() => _StanzeImmobileListState(immobile);
+  State<AnagraficheProprietaList> createState() => _AnagraficheProprietaListState(immobile);
 }
 
-class _StanzeImmobileListState extends State<StanzeImmobileList> {
+class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
 
   Immobile immobile;
-  late Stream<List<StanzaImmobile>?> stanze;
+  List<int> idproprietari = List<int>.empty(growable: true);
 
-  _StanzeImmobileListState(this.immobile){
+  late Stream<List<Anagrafica>?> proprietari;
+
+  _AnagraficheProprietaListState(this.immobile){
+
   }
-
-  Dismissible Function(BuildContext, int) _itemBuilder(List<StanzaImmobile> stanza) =>
+  Dismissible Function(BuildContext, int) _itemBuilder(List<Anagrafica> anagrafiche) =>
           (BuildContext context, int index) => Dismissible(
         background: Container(
           color: Colors.red,
@@ -34,7 +40,7 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeAnagrafica(stanza[index].codStanzaImmobile?.toInt() ?? 0);
+          objectbox.removeAnagrafica(anagrafiche[index].codAnagrafica?.toInt() ?? 0);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -44,14 +50,14 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Immobile ${stanza[index].codStanzaImmobile} deleted'))));
+                  child: Text('Anagrafica ${anagrafiche[index].codAnagrafica} deleted'))));
         },
         child: Row(
           children: <Widget>[
             Checkbox(
                 value: false, //immobili[index].isFinished(),
                 onChanged: (bool? value) {
-                  final anagrafica = stanza[index];
+                  final anagrafica = anagrafiche[index];
                   // immobile.toggleFinished();
                   // objectbox.taskBox.put(task);
                   // List updated via watched query stream.
@@ -68,12 +74,21 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '${stanza[index].tipologiaStanza.target?.descrizione ?? ""} ${stanza[index].mq}',
+                        '${anagrafiche[index].ragioneSociale ?? ""} ${anagrafiche[index].cognome} ${anagrafiche[index].nome}',
                         style: const TextStyle(
                             color: Colors.grey,
                             decoration: TextDecoration.none),
                         // Provide a Key for the integration test
                         key: Key('list_item_$index'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          anagrafiche[index].classeCliente.target?.descrizione.toString() ?? "",
+                          style: const TextStyle(
+                            fontSize: 12.0,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -84,8 +99,8 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
                 child: const Text('Edit'),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioStanza(immobile: immobile,
-                        stanzaImmobile: stanza[index],
+                      builder: (context) => DettaglioAnagrafica(
+                        anagrafica: anagrafiche[index],
                       )
                   ));
                 }),
@@ -95,11 +110,13 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
 
   @override
   Widget build(BuildContext context) {
-    stanze = (() async* {
+    this.immobile.proprietari.map((element) => {
+      idproprietari.add(element.codAnagrafica!)
+    });
+    proprietari = (() async* {
       await Future<void>.delayed(Duration(milliseconds: 1));
-      yield this.immobile?.stanze.toList();
+      yield this.immobile.proprietari.toList();
     })();
-
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -113,8 +130,8 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                    child: StreamBuilder<List<StanzaImmobile>?>(
-                        stream: stanze,
+                    child: StreamBuilder<List<Anagrafica>?>(
+                        stream: proprietari,
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             // Print the stack trace and show the error message.
@@ -150,16 +167,16 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
           )
       ),
       floatingActionButton:
-      FloatingActionButton(
-        heroTag: "immobile",
-        backgroundColor: (immobile==null)?Colors.grey:null,
-        onPressed: (immobile==null)?null:() async {
-          final value = await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => DettaglioStanza(immobile:this.immobile, stanzaImmobile: StanzaImmobile())));
-          setState(() {});
-        },
-        child: const Icon(Icons.add),
-      ),
+        FloatingActionButton(
+          heroTag: "immobile",
+          backgroundColor: (immobile.codImmobile==null)?Colors.grey:null,
+          onPressed: (immobile.codImmobile==null)?null:() async {
+            final value = await Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => AnagraficheList(immobile:immobile)));
+            setState(() {});
+          },
+          child: const Icon(Icons.add),
+        ),
     );
   }
 }

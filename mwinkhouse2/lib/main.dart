@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mwinkhouse2/widgets/lista_anagrafiche.dart';
-import 'package:mwinkhouse2/widgets/lista_immobili.dart';
+import 'package:mwinkhouse2/widgets/anagrafiche/lista_anagrafiche.dart';
+import 'package:mwinkhouse2/widgets/immobili/lista_immobili.dart';
 import 'objbox/dao/objectbox.dart';
 
 late ObjectBox objectbox;

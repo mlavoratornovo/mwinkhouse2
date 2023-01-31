@@ -1,34 +1,32 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse2/main.dart';
-import 'package:mwinkhouse2/widgets/lista_immobili_proprieta.dart';
+import 'package:mwinkhouse2/widgets/anagrafiche/lista_colloqui_anagrafica.dart';
+import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
 
 import 'lista_contatti_anagrafica.dart';
 
 class DettaglioAnagrafica extends StatefulWidget {
   final String title = 'Dettaglio anagrafica';
-  Anagrafica anagrafica = Anagrafica();
+  Anagrafica? _anagrafica = Anagrafica();
   DettaglioAnagrafica({Key? key,required Anagrafica anagrafica}) : super(key: key){
-    this.anagrafica = anagrafica ?? Anagrafica();
+    this._anagrafica = anagrafica;
   }
 
   @override
-  State<DettaglioAnagrafica> createState() => _DettaglioAnagraficaState(this.anagrafica);
+  State<DettaglioAnagrafica> createState() => _DettaglioAnagraficaState(this._anagrafica);
 }
 
 class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
 
-  Anagrafica anagrafica;
+  Anagrafica? _anagrafica;
   List<ClasseCliente> classeCliente = [];
 
   final _formKey = GlobalKey<FormState>();
 
-  _DettaglioAnagraficaState(this.anagrafica){
-    this.anagrafica = anagrafica;
+  _DettaglioAnagraficaState(anagrafica){
+    _anagrafica = anagrafica;
     classeCliente = objectbox.classeClienteBox.getAll();
   }
 
@@ -50,14 +48,21 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      ContattiAnagraficaList(anagrafica: anagrafica)),
+                      ContattiAnagraficaList(anagrafica: _anagrafica??Anagrafica())),
                   );
               }
               if (result == 1) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      ImmobiliProprietaList(anagrafica: anagrafica)),
+                      ImmobiliProprietaList(anagrafica: _anagrafica??Anagrafica())),
+                );
+              }
+              if (result == 2) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      ColloquiAnagraficaList(anagrafica: _anagrafica??Anagrafica())),
                 );
               }
             }
@@ -76,82 +81,82 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         decoration:const InputDecoration(
                             labelText: "Cognome"
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            if (this.anagrafica?.ragioneSociale == null){
-                              return 'Please enter some text';
-                            }
-                          }
-                          return null;
-                        },
+                        // validator:  (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     if (_anagrafica?.ragioneSociale == null){
+                        //       return 'Please enter some text';
+                        //     }
+                        //   }
+                        //   return null;
+                        // },
                         onChanged: (text) {
-                          this.anagrafica?.cognome = text;
+                          _anagrafica?.cognome = (text.trim() == '')?null:text;
                         },
-                        initialValue: "${this.anagrafica?.cognome ?? ""}",
+                        initialValue: _anagrafica?.cognome ?? "",
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
                             labelText: "Nome"
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            if (this.anagrafica?.ragioneSociale == null){
-                              return 'Please enter some text';
-                            }
-                          }
-                          return null;
-                        },
+                        // validator:  (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     if (_anagrafica?.ragioneSociale == null){
+                        //       return 'Please enter some text';
+                        //     }
+                        //   }
+                        //   return null;
+                        // },
                         onChanged: (text) {
-                          this.anagrafica?.nome = text;
+                          _anagrafica?.nome = (text.trim() == '')?null:text;
                         },
-                        initialValue: "${this.anagrafica?.nome ?? ""}",
+                        initialValue: _anagrafica?.nome ?? "",
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
                             labelText: "Ragione sociale"
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            if (this.anagrafica?.nome == null || this.anagrafica?.cognome == null){
-                              return 'Please enter some text';
-                            }
-                          }
-                          return null;
-                        },
+                        // validator:  (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     if (_anagrafica?.nome == null || _anagrafica?.cognome == null){
+                        //       return 'Please enter some text';
+                        //     }
+                        //   }
+                        //   return null;
+                        // },
                         onChanged: (text) {
-                          this.anagrafica?.ragioneSociale = text;
+                          _anagrafica?.ragioneSociale = (text.trim() == '')?null:text;;
                         },
-                        initialValue: "${this.anagrafica?.ragioneSociale ?? ""}",
+                        initialValue: _anagrafica?.ragioneSociale ?? "",
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
                             labelText: "Partita iva"
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+                        // validator:  (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Partita iva dato obbligatorio';
+                        //   }
+                        //   return null;
+                        // },
                         onChanged: (text) {
-                          this.anagrafica?.partitaIva = text;
+                          _anagrafica?.partitaIva = text;
                         },
-                        initialValue: "${this.anagrafica?.partitaIva ?? ""}",
+                        initialValue: _anagrafica?.partitaIva ?? "",
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
                             labelText: "Codice fiscale"
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+                        // validator:  (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Cofice fiscale dato obbligatorio';
+                        //   }
+                        //   return null;
+                        // },
                         onChanged: (text) {
-                          this.anagrafica?.codiceFiscale = text;
+                          _anagrafica?.codiceFiscale = text;
                         },
-                        initialValue: "${this.anagrafica?.codiceFiscale ?? ""}",
+                        initialValue: _anagrafica?.codiceFiscale ?? "",
                       ),
 
                       Row(
@@ -164,16 +169,16 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                               decoration:const InputDecoration(
                                   labelText: "Provincia"
                               ),
-                              validator:  (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter some text';
-                                }
-                                return null;
-                              },
+                              // validator:  (value) {
+                              //   if (value == null || value.isEmpty) {
+                              //     return 'Please enter some text';
+                              //   }
+                              //   return null;
+                              // },
                               onChanged: (text) {
-                                this.anagrafica?.provincia = text;
+                                _anagrafica?.provincia = text;
                               },
-                              initialValue: "${this.anagrafica?.provincia ?? ""}",
+                              initialValue: _anagrafica?.provincia ?? "",
                             ),
                           ),
                           SizedBox(width: 10.0),
@@ -183,16 +188,16 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                               decoration:const InputDecoration(
                                   labelText: "Cap"
                               ),
-                              validator:  (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter some text';
-                                }
-                                return null;
-                              },
+                              // validator:  (value) {
+                              //   if (value == null || value.isEmpty) {
+                              //     return 'Please enter some text';
+                              //   }
+                              //   return null;
+                              // },
                               onChanged: (text) {
-                                this.anagrafica?.cap = text;
+                                _anagrafica?.cap = text;
                               },
-                              initialValue: "${this.anagrafica?.cap ?? ""}",
+                              initialValue: _anagrafica?.cap ?? "",
                             ),
                           ),
                         ],
@@ -201,54 +206,56 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         decoration:const InputDecoration(
                             labelText: "Città"
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+                        // validator:  (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Please enter some text';
+                        //   }
+                        //   return null;
+                        // },
                         onChanged: (text) {
-                          this.anagrafica?.citta = text;
+                          _anagrafica?.citta = text;
                         },
-                        initialValue: "${this.anagrafica?.citta ?? ""}",
+                        initialValue: _anagrafica?.citta ?? "",
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
                             labelText: "Indirizzo"
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+                        // validator:  (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Please enter some text';
+                        //   }
+                        //   return null;
+                        // },
                         onChanged: (text) {
-                          this.anagrafica?.indirizzo = text;
+                          _anagrafica?.indirizzo = text;
                         },
-                        initialValue: "${this.anagrafica?.indirizzo ?? ""}",
+                        initialValue: _anagrafica?.indirizzo ?? "",
                       ),
                       TextFormField(
                         maxLines: null,
                         decoration:const InputDecoration(
                             labelText: "descrizione"
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
+                        // validator:  (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Please enter some text';
+                        //   }
+                        //   return null;
+                        // },
                         onChanged: (text) {
-                          this.anagrafica?.commento = text;
+                          _anagrafica?.commento = text;
                         },
-                        initialValue: "${this.anagrafica?.commento ?? ""}",
+                        initialValue: _anagrafica?.commento ?? "",
                       ),
-                      DropdownButton<ClasseCliente>(
+                      DropdownButtonFormField<ClasseCliente>(
+                        hint: Text('Tipologia cliente'),
+                        validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
                         isExpanded: true,
-                        value: anagrafica?.classeCliente?.target,
+                        value: _anagrafica?.classeCliente?.target,
                         onChanged: (ClasseCliente? newValue) {
                           setState(() {
-                            anagrafica?.classeCliente.target = newValue;
+                            _anagrafica?.classeCliente.target = newValue;
                           });
                         },
                         items: classeCliente.map((ClasseCliente classeCliente) {
@@ -269,8 +276,14 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
           heroTag: "Salva",
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              objectbox.addAnagrafica(this.anagrafica ?? Anagrafica());
-              Navigator.pop(context);
+              if (_anagrafica?.cognome == null && _anagrafica?.nome == null && _anagrafica?.ragioneSociale == null){
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Dati non validi impossibile procedere')),
+                );
+              }else{
+                objectbox.addAnagrafica(_anagrafica ?? Anagrafica());
+                Navigator.pop(context);
+              }
             }else{
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Dati non validi impossibile procedere')),

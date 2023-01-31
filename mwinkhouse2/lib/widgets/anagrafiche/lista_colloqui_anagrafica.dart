@@ -1,42 +1,30 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse2/widgets/dettaglio_anagrafica.dart';
-import 'package:mwinkhouse2/widgets/dettaglio_immobile.dart';
-import 'package:mwinkhouse2/widgets/lista_immobili.dart';
-import '../main.dart';
-import '../objbox/models/Immobile.dart';
-import 'lista_anagrafiche.dart';
+import 'package:mwinkhouse2/objbox/models/Colloquio.dart';
 
+import '../../main.dart';
+import 'dettaglio_colloquio_anagrafica.dart';
 
-/// Displays the current list of tasks by listening to a stream.
-///
-/// Each task has a check button to mark it completed and an edit button to
-/// update it. A task can also be swiped away to remove it.
-class ImmobiliProprietaList extends StatefulWidget {
-  String title = 'Lista proprietà : ';
-  Anagrafica anagrafica = new Anagrafica();
-  ImmobiliProprietaList({Key? key, required Anagrafica anagrafica}) : super(key: key){
-    this.anagrafica = anagrafica;
-    title = title + (anagrafica.ragioneSociale ?? "") +
-        " " + (anagrafica.cognome ?? "") +
-        " " + (anagrafica.nome ?? "");
+class ColloquiAnagraficaList extends StatefulWidget {
+  String title = 'Lista colloqui : ';
+  Anagrafica? anagrafica;
+  ColloquiAnagraficaList({Key? key, this.anagrafica}) : super(key: key){
+
+    title = title + (anagrafica?.ragioneSociale ?? "") + " " + (anagrafica?.nome ?? "") + " " + (anagrafica?.cognome ?? "");
   }
 
   @override
-  State<ImmobiliProprietaList> createState() => _ImmobiliProprietaListState(anagrafica);
+  State<ColloquiAnagraficaList> createState() => _ColloquiAnagraficaListState();
 }
 
-class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
+class _ColloquiAnagraficaListState extends State<ColloquiAnagraficaList> {
 
-  Anagrafica anagrafica;
-  List<int> idimmobili = List<int>.empty(growable: true);
+  late Stream<List<Colloquio>?> colloqui;
 
-  late Stream<List<Immobile>?> immobili;
+  _ColloquiAnagraficaListState(){}
 
-  _ImmobiliProprietaListState(this.anagrafica){
-
-  }
-  Dismissible Function(BuildContext, int) _itemBuilder(List<Immobile> immobili) =>
+  Dismissible Function(BuildContext, int) _itemBuilder(List<Colloquio> colloquio) =>
           (BuildContext context, int index) => Dismissible(
         background: Container(
           color: Colors.red,
@@ -44,7 +32,7 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeAnagrafica(immobili[index].codImmobile?.toInt() ?? 0);
+          objectbox.removeAnagrafica(colloquio[index].codColloquio?.toInt() ?? 0);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -54,14 +42,14 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Immobile ${immobili[index].codImmobile} deleted'))));
+                  child: Text('Contatto ${colloquio[index].codColloquio} deleted'))));
         },
         child: Row(
           children: <Widget>[
             Checkbox(
                 value: false, //immobili[index].isFinished(),
                 onChanged: (bool? value) {
-                  final immobile = immobili[index];
+                  final colloquiosel = colloquio[index];
                   // immobile.toggleFinished();
                   // objectbox.taskBox.put(task);
                   // List updated via watched query stream.
@@ -78,21 +66,12 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '${immobili[index].indirizzo} (Tipo: ${immobili[index].tipologiaImmobile.target?.descrizione.toString() ?? ""})',
+                        '${colloquio[index].tipologiaColloquio.target?.descrizione ?? ""} ${colloquio[index].dataColloquio}',
                         style: const TextStyle(
                             color: Colors.grey,
                             decoration: TextDecoration.none),
                         // Provide a Key for the integration test
                         key: Key('list_item_$index'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Text(
-                          immobili[index].classeEnergetica.target?.nome.toString() ?? "",
-                          style: const TextStyle(
-                            fontSize: 12.0,
-                          ),
-                        ),
                       ),
                     ],
                   ),
@@ -103,8 +82,8 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
                 child: const Text('Edit'),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioImmobile(
-                        immobile: immobili[index],
+                      builder: (context) => DettaglioColloquio(anagrafica: widget.anagrafica??Anagrafica(),
+                        colloquio: colloquio[index],
                       )
                   ));
                 }),
@@ -114,13 +93,11 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
 
   @override
   Widget build(BuildContext context) {
-    this.anagrafica.proprieta.map((element) => {
-      idimmobili.add(element.codImmobile!)
-    });
-    immobili = (() async* {
+    colloqui = (() async* {
       await Future<void>.delayed(Duration(milliseconds: 1));
-      yield this.anagrafica.proprieta.toList();
+      yield widget.anagrafica?.colloqui.toList();
     })();
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -134,8 +111,8 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                    child: StreamBuilder<List<Immobile>?>(
-                        stream: immobili,
+                    child: StreamBuilder<List<Colloquio>?>(
+                        stream: colloqui,
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             // Print the stack trace and show the error message.
@@ -173,10 +150,10 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
       floatingActionButton:
       FloatingActionButton(
         heroTag: "immobile",
-        backgroundColor: (anagrafica.codAnagrafica==null)?Colors.grey:null,
-        onPressed: (anagrafica.codAnagrafica==null)?null:() async {
+        backgroundColor: (widget.anagrafica==null)?Colors.grey:null,
+        onPressed: (widget.anagrafica==null)?null:() async {
           final value = await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ImmobiliList(anagrafica: anagrafica,)));
+              builder: (context) => DettaglioColloquio(anagrafica:widget.anagrafica??Anagrafica(), colloquio: Colloquio())));
           setState(() {});
         },
         child: const Icon(Icons.add),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse2/widgets/dettaglio_immobile.dart';
-import 'package:mwinkhouse2/widgets/lista_immobili_proprieta.dart';
+import 'package:mwinkhouse2/widgets/immobili/dettaglio_immobile.dart';
+import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
 
-import '../objbox/models/Immobile.dart';
-import '../main.dart';
+import '../../objbox/models/Immobile.dart';
+import '../../main.dart';
 
 
 /// Displays the current list of tasks by listening to a stream.

@@ -358,8 +358,8 @@
       ],
       "relations": [
         {
-          "id": "7:5185577959448678342",
-          "name": "anagraficheColloquio",
+          "id": "13:6144246402560499746",
+          "name": "anagrafiche",
           "targetId": "2:293834241018180873"
         }
       ]
@@ -658,11 +658,6 @@
           "targetId": "12:7637466687066493278"
         },
         {
-          "id": "9:5759117127510008189",
-          "name": "colloqui",
-          "targetId": "6:7264299303928495224"
-        },
-        {
           "id": "10:7789457817926044058",
           "name": "immagini",
           "targetId": "9:757328395889382841"
@@ -852,7 +847,7 @@
   ],
   "lastEntityId": "18:4409652037449677777",
   "lastIndexId": "13:8510568089575891598",
-  "lastRelationId": "12:8835141306723881424",
+  "lastRelationId": "13:6144246402560499746",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
@@ -860,7 +855,9 @@
   "retiredIndexUids": [],
   "retiredPropertyUids": [],
   "retiredRelationUids": [
-    444762249311848945
+    444762249311848945,
+    5185577959448678342,
+    5759117127510008189
   ],
   "version": 1
 }

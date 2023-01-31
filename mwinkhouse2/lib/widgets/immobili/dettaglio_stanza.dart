@@ -1,38 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/StanzaImmobile.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaContatto.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaStanza.dart';
 
-import '../main.dart';
-import '../objbox/models/Contatto.dart';
-import '../objbox/models/Immobile.dart';
+import '../../main.dart';
+import '../../objbox/models/Immobile.dart';
 
-class DettaglioContatto extends StatefulWidget {
-  final String title = 'Dettaglio contatto';
-  Contatto? contatto;
-  Anagrafica anagrafica;
-  DettaglioContatto({Key? key, required this.anagrafica, Contatto? contatto}) : super(key: key){
-    this.contatto = contatto ?? Contatto();
+class DettaglioStanza extends StatefulWidget {
+  final String title = 'Dettaglio stanza';
+  StanzaImmobile? stanzaImmobile;
+  Immobile immobile;
+  DettaglioStanza({Key? key, required this.immobile, StanzaImmobile? stanzaImmobile}) : super(key: key){
+    this.stanzaImmobile = stanzaImmobile ?? StanzaImmobile();
   }
 
   @override
-  State<DettaglioContatto> createState() => _DettaglioContattoState(this.anagrafica, this.contatto);
+  State<DettaglioStanza> createState() => _DettaglioStanzaState(this.immobile, this.stanzaImmobile);
 }
 
-class _DettaglioContattoState extends State<DettaglioContatto> {
+class _DettaglioStanzaState extends State<DettaglioStanza> {
 
-  Anagrafica anagrafica;
-  Contatto? contatto;
-  List<TipologiaContatto> tipologiaContatto = [];
+  Immobile immobile;
+  StanzaImmobile? stanzaImmobile;
+  List<TipologiaStanza> tipologiaStanza = [];
 
   final _formKey = GlobalKey<FormState>();
 
-  _DettaglioContattoState(this.anagrafica,this.contatto){
-    this.contatto = contatto;
-    tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+  _DettaglioStanzaState(this.immobile,this.stanzaImmobile){
+    this.stanzaImmobile = stanzaImmobile;
+    tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
   }
 
   @override
@@ -58,21 +55,21 @@ class _DettaglioContattoState extends State<DettaglioContatto> {
             child: SingleChildScrollView(
                 child:Column(
                     children: <Widget>[
-                      DropdownButtonFormField<TipologiaContatto>(
-                        hint: Text('Seleziona tipo contatto'),
+                      DropdownButtonFormField<TipologiaStanza>(
+                        hint: Text('Seleziona tipo stanza'),
                         validator: (value) => value == null ? 'Seleziona tipo' : null,
                         isExpanded: true,
-                        value: contatto?.tipologiaContatto?.target,
-                        onChanged: (TipologiaContatto? newValue) {
+                        value: stanzaImmobile?.tipologiaStanza?.target,
+                        onChanged: (TipologiaStanza? newValue) {
                           setState(() {
-                            contatto?.tipologiaContatto.target = newValue;
+                            stanzaImmobile?.tipologiaStanza.target = newValue;
                           });
                         },
-                        items: tipologiaContatto.map((TipologiaContatto tipologiaContatto) {
-                          return DropdownMenuItem<TipologiaContatto>(
-                            value: tipologiaContatto,
+                        items: tipologiaStanza.map((TipologiaStanza tipologiaStanza) {
+                          return DropdownMenuItem<TipologiaStanza>(
+                            value: tipologiaStanza,
                             child: Text(
-                              tipologiaContatto.descrizione??"",
+                              tipologiaStanza.descrizione??"",
                               style: const TextStyle(color: Colors.black),
                             ),
                           );
@@ -80,30 +77,24 @@ class _DettaglioContattoState extends State<DettaglioContatto> {
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
-                            labelText: "Contatto"
+                            labelText: "Mq"
                         ),
                         validator:  (value) {
                           if (value == null || value.isEmpty) {
-                            if (this.contatto?.descrizione == null){
-                              return 'Inserire il contatto';
+                            if (this.stanzaImmobile?.mq == null){
+                              return 'Inserire la dimensione';
                             }
                           }
                           return null;
                         },
                         onChanged: (text) {
-                          this.contatto?.contatto = text;
+                          this.stanzaImmobile?.mq = int.parse(text);
                         },
-                        initialValue: "${this.contatto?.contatto ?? ""}",
-                      ),
-                      TextFormField(
-                        maxLines: null,
-                        decoration:const InputDecoration(
-                            labelText: "descrizione"
-                        ),
-                        onChanged: (text) {
-                          this.contatto?.descrizione = text;
-                        },
-                        initialValue: "${this.contatto?.descrizione ?? ""}",
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        initialValue: "${this.stanzaImmobile?.mq ?? ""}",
                       ),
                     ])
             ),
@@ -113,7 +104,7 @@ class _DettaglioContattoState extends State<DettaglioContatto> {
           heroTag: "Salva",
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              anagrafica.contatti.add(contatto!);
+              immobile.stanze.add(stanzaImmobile!);
               Navigator.pop(context);
             }else{
               ScaffoldMessenger.of(context).showSnackBar(

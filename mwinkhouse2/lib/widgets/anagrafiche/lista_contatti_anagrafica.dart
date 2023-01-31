@@ -2,32 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/Contatto.dart';
-import 'package:mwinkhouse2/objbox/models/StanzaImmobile.dart';
-import 'package:mwinkhouse2/widgets/dettaglio_contatto.dart';
+import 'package:mwinkhouse2/widgets/anagrafiche/dettaglio_contatto.dart';
 
-import '../main.dart';
-import '../objbox/models/Immobile.dart';
-import 'dettaglio_stanza.dart';
+import '../../main.dart';
 
 class ContattiAnagraficaList extends StatefulWidget {
-  String title = 'Lista contatti : ';
-  Anagrafica anagrafica = Anagrafica();
-  ContattiAnagraficaList({Key? key, required Anagrafica anagrafica}) : super(key: key){
-    this.anagrafica = anagrafica;
-    title = title + (anagrafica?.ragioneSociale ?? "") + " " + (anagrafica?.nome ?? "") + " " + (anagrafica?.cognome ?? "");
+  String title = "";
+  Anagrafica? anagrafica;
+  ContattiAnagraficaList({Key? key, this.anagrafica}) : super(key: key){
+    title = "Lista contatti : ${(anagrafica?.ragioneSociale ?? "")} ${(anagrafica?.nome ?? "")} ${(anagrafica?.cognome ?? "")}";
   }
 
   @override
-  State<ContattiAnagraficaList> createState() => _ContattiAnagraficaListState(anagrafica);
+  State<ContattiAnagraficaList> createState() => _ContattiAnagraficaListState();
 }
 
 class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
 
-  Anagrafica anagrafica;
   late Stream<List<Contatto>?> contatti;
 
-  _ContattiAnagraficaListState(this.anagrafica){
-  }
+  _ContattiAnagraficaListState();
 
   Dismissible Function(BuildContext, int) _itemBuilder(List<Contatto> contatto) =>
           (BuildContext context, int index) => Dismissible(
@@ -87,7 +81,7 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
                 child: const Text('Edit'),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioContatto(anagrafica: anagrafica,
+                      builder: (context) => DettaglioContatto(anagrafica: widget.anagrafica,
                         contatto: contatto[index],
                       )
                   ));
@@ -100,7 +94,7 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
   Widget build(BuildContext context) {
     contatti = (() async* {
       await Future<void>.delayed(Duration(milliseconds: 1));
-      yield this.anagrafica?.contatti.toList();
+      yield widget.anagrafica?.contatti.toList();
     })();
 
     return Scaffold(
@@ -155,10 +149,10 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
       floatingActionButton:
       FloatingActionButton(
         heroTag: "immobile",
-        backgroundColor: (anagrafica==null)?Colors.grey:null,
-        onPressed: (anagrafica==null)?null:() async {
+        backgroundColor: (widget.anagrafica==null)?Colors.grey:null,
+        onPressed: (widget.anagrafica==null)?null:() async {
           final value = await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => DettaglioContatto(anagrafica:this.anagrafica, contatto: Contatto())));
+              builder: (context) => DettaglioContatto(anagrafica:widget.anagrafica, contatto: Contatto())));
           setState(() {});
         },
         child: const Icon(Icons.add),

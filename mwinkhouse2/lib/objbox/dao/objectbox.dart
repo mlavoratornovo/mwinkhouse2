@@ -68,7 +68,7 @@ class ObjectBox {
 
     tipologiaColloquioBox = Box<TipologiaColloquio>(store);
     if (tipologiaColloquioBox.isEmpty()){
-
+      _fillTipologiaColloquio();
     }
 
     statoConservativoBox = Box<StatoConservativo>(store);

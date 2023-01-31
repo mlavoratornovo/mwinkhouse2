@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,25 +7,25 @@ import 'package:mwinkhouse2/main.dart';
 import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
 import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
-import 'package:mwinkhouse2/widgets/lista_stanze_immobile.dart';
+import 'package:mwinkhouse2/widgets/immobili/lista_stanze_immobile.dart';
 
-import 'lista_anagrafiche.dart';
-import 'lista_anagrafiche_proprieta.dart';
+import '../anagrafiche/lista_anagrafiche_proprieta.dart';
+import 'lista_colloqui_immobile.dart';
 
 class DettaglioImmobile extends StatefulWidget {
   final String title = 'Dettaglio immobile';
-  Immobile immobile = Immobile();
+  Immobile? _immobile;
   DettaglioImmobile({Key? key, required Immobile immobile}) : super(key: key){
-    this.immobile = immobile ?? Immobile();
+    _immobile = immobile;
   }
 
   @override
-  State<DettaglioImmobile> createState() => _DettaglioImmobileState(this.immobile);
+  State<DettaglioImmobile> createState() => _DettaglioImmobileState(_immobile);
 }
 
 class _DettaglioImmobileState extends State<DettaglioImmobile> {
 
-  Immobile immobile;
+  Immobile? _immobile;
   List<TipologiaImmobile> tipologieImmobile = [];
   List<StatoConservativo> statoConservativo = [];
   List<ClasseEnergetica> classeEnergetica = [];
@@ -35,8 +33,8 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
 
   final _formKey = GlobalKey<FormState>();
 
-  _DettaglioImmobileState(this.immobile){
-    this.immobile = immobile;
+  _DettaglioImmobileState(immobile){
+    _immobile = immobile;
     tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
     statoConservativo = objectbox.statoConservativoBox.getAll();
     classeEnergetica = objectbox.classeEnergeticaBox.getAll();
@@ -62,15 +60,22 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 if (result == 1) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AnagraficheProprietaList(immobile:immobile)),
+                    MaterialPageRoute(builder: (context) => AnagraficheProprietaList(immobile:_immobile??Immobile())),
                   );
                 }
                 if (result == 0) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => StanzeImmobileList(immobile:immobile)),
+                    MaterialPageRoute(builder: (context) => StanzeImmobileList(immobile:_immobile??Immobile())),
                   );
                 }
+                if (result == 3) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ColloquiImmobileList(immobile:_immobile??Immobile())),
+                  );
+                }
+
               },
             )]),
     body: Center(
@@ -91,16 +96,16 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       decoration:const InputDecoration(
                           labelText: "Provincia"
                       ),
-                      validator:  (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
+                      // validator:  (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter some text';
+                      //   }
+                      //   return null;
+                      // },
                       onChanged: (text) {
-                        this.immobile?.provincia = text;
+                        _immobile?.provincia = text;
                       },
-                      initialValue: "${this.immobile?.provincia ?? ""}",
+                      initialValue: "${_immobile?.provincia ?? ""}",
                     ),
                   ),
                   SizedBox(width: 10.0),
@@ -110,16 +115,16 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       decoration:const InputDecoration(
                           labelText: "Cap"
                       ),
-                      validator:  (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
+                      // validator:  (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter some text';
+                      //   }
+                      //   return null;
+                      // },
                       onChanged: (text) {
-                        this.immobile?.cap = text;
+                        _immobile?.cap = text;
                       },
-                      initialValue: "${this.immobile?.cap ?? ""}",
+                      initialValue: "${_immobile?.cap ?? ""}",
                     ),
                   ),
                 ],
@@ -130,29 +135,29 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 ),
                 validator:  (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
+                    return 'Città dato obbligatorio';
                   }
                   return null;
                 },
                 onChanged: (text) {
-                  this.immobile?.citta = text;
+                  _immobile?.citta = text;
                 },
-                initialValue: "${this.immobile?.citta ?? ""}",
+                initialValue: "${_immobile?.citta ?? ""}",
               ),
               TextFormField(
                 decoration:const InputDecoration(
                     labelText: "Zona"
                 ),
-                validator:  (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+                // validator:  (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return 'Please enter some text';
+                //   }
+                //   return null;
+                // },
                 onChanged: (text) {
-                  this.immobile?.zona = text;
+                  _immobile?.zona = text;
                 },
-                initialValue: "${this.immobile?.zona ?? ""}",
+                initialValue: _immobile?.zona ?? "",
               ),
               TextFormField(
                 decoration:const InputDecoration(
@@ -160,29 +165,29 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 ),
                 validator:  (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
+                    return 'Indirizzo dato obbligatorio';
                   }
                   return null;
                 },
                 onChanged: (text) {
-                  this.immobile?.indirizzo = text;
+                  _immobile?.indirizzo = text;
                 },
-                initialValue: "${this.immobile?.indirizzo ?? ""}",
+                initialValue: _immobile?.indirizzo ?? "",
               ),
               TextFormField(
                 decoration:const InputDecoration(
                     labelText: "Prezzo"
                 ),
-                validator:  (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+                // validator:  (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return 'Please enter some text';
+                //   }
+                //   return null;
+                // },
                 onChanged: (text) {
-                  this.immobile?.prezzo = double.parse(text);
+                  _immobile?.prezzo = double.parse(text);
                 },
-                initialValue: "${this.immobile?.prezzo ?? ""}",
+                initialValue: "${_immobile?.prezzo ?? ""}",
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
@@ -198,16 +203,16 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       decoration:const InputDecoration(
                           labelText: "Mq"
                       ),
-                      validator:  (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
+                      // validator:  (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter some text';
+                      //   }
+                      //   return null;
+                      // },
                       onChanged: (text) {
-                        this.immobile?.mq = int.parse(text);
+                        _immobile?.mq = int.parse(text);
                       },
-                      initialValue: "${this.immobile?.mq ?? ""}",
+                      initialValue: "${_immobile?.mq ?? ""}",
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
@@ -221,16 +226,16 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       decoration:const InputDecoration(
                           labelText: "Anno Costruzione"
                       ),
-                      validator:  (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
+                      // validator:  (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter some text';
+                      //   }
+                      //   return null;
+                      // },
                       onChanged: (text) {
-                        this.immobile?.annoCostruzione = int.parse(text);
+                        _immobile?.annoCostruzione = int.parse(text);
                       },
-                      initialValue: "${this.immobile?.annoCostruzione ?? ""}",
+                      initialValue: "${_immobile?.annoCostruzione ?? ""}",
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
@@ -244,23 +249,25 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 decoration:const InputDecoration(
                     labelText: "descrizione"
                 ),
-                validator:  (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+                // validator:  (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return 'Please enter some text';
+                //   }
+                //   return null;
+                // },
                 onChanged: (text) {
-                  this.immobile?.descrizione = text;
+                  _immobile?.descrizione = text;
                 },
-                initialValue: "${this.immobile?.descrizione ?? ""}",
+                initialValue: _immobile?.descrizione ?? "",
               ),
-              DropdownButton<TipologiaImmobile>(
+              DropdownButtonFormField<TipologiaImmobile>(
                 isExpanded: true,
-                value: immobile?.tipologiaImmobile?.target,
+                hint: Text('Tipologia immobile'),
+                validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
+                value: _immobile?.tipologiaImmobile?.target,
                 onChanged: (TipologiaImmobile? newValue) {
                   setState(() {
-                    immobile?.tipologiaImmobile.target = newValue;
+                    _immobile?.tipologiaImmobile.target = newValue;
                   });
                 },
                 items: tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
@@ -275,10 +282,11 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               ),
               DropdownButton<StatoConservativo>(
                 isExpanded: true,
-                value: immobile?.statoConservativo?.target,
+                hint: Text('Stato conservativo'),
+                value: _immobile?.statoConservativo?.target,
                 onChanged: (StatoConservativo? newValue) {
                   setState(() {
-                    immobile?.statoConservativo.target = newValue;
+                    _immobile?.statoConservativo.target = newValue;
                   });
                 },
                 items: statoConservativo.map((StatoConservativo statoConservativo) {
@@ -293,10 +301,11 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               ),
               DropdownButton<ClasseEnergetica>(
                 isExpanded: true,
-                value: immobile?.classeEnergetica?.target,
+                hint: Text('Class energetica'),
+                value: _immobile?.classeEnergetica?.target,
                 onChanged: (ClasseEnergetica? newValue) {
                   setState(() {
-                    immobile?.classeEnergetica.target = newValue;
+                    _immobile?.classeEnergetica.target = newValue;
                   });
                 },
                 items: classeEnergetica.map((ClasseEnergetica classeEnergetica) {
@@ -311,10 +320,11 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               ),
               DropdownButton<Riscaldamento>(
                 isExpanded: true,
-                value: immobile?.riscaldamento?.target,
+                hint: Text('Riscaldamento'),
+                value: _immobile?.riscaldamento?.target,
                 onChanged: (Riscaldamento? newValue) {
                   setState(() {
-                    immobile?.riscaldamento.target = newValue;
+                    _immobile?.riscaldamento.target = newValue;
                   });
                 },
                 items: riscaldamento.map((Riscaldamento riscaldamento) {
@@ -335,7 +345,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
       heroTag: "Salva",
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          objectbox.addImmobile(this.immobile ?? Immobile());
+          objectbox.addImmobile(_immobile ?? Immobile());
           Navigator.pop(context);
         }else{
           ScaffoldMessenger.of(context).showSnackBar(

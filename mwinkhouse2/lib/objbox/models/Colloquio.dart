@@ -14,13 +14,14 @@ class Colloquio{
   final agenteInseritore = ToOne<Agente>();
   final immobileAbbinato = ToOne<Immobile>();
   final tipologiaColloquio = ToOne<TipologiaColloquio>();
-  final anagraficheColloquio = ToMany<Anagrafica>();
+
+  final anagrafiche = ToMany<Anagrafica>();
 
   @Property(type: PropertyType.date)
-  DateTime? dataInserimento ;
+  DateTime dataInserimento = DateTime.now();
 
   @Property(type: PropertyType.date)
-  DateTime? dataColloquio ;
+  DateTime dataColloquio = DateTime.now();
 
   String? luogoIncontro ;
   bool? scadenziere ;
