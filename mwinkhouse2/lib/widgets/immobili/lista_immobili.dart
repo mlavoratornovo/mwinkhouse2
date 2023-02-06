@@ -3,8 +3,10 @@ import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/widgets/immobili/dettaglio_immobile.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
 
+import '../../objbox/models/CriteriRicercaImmobile.dart';
 import '../../objbox/models/Immobile.dart';
 import '../../main.dart';
+import 'criteri_ricerca_immobili_editor.dart';
 
 
 /// Displays the current list of tasks by listening to a stream.
@@ -140,6 +142,19 @@ class _ImmobiliListState extends State<ImmobiliList> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: [
+          PopupMenuButton(itemBuilder: (context)=>const [
+            PopupMenuItem(child: Text('Ricerca'), value: 0),
+          ],
+            onSelected: (result) {
+              if (result == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CriteriRicercaImmobileEditor())
+                );
+              }
+            },
+          )]
     ),
     body: Center(
     // Center is a layout widget. It takes a single child and positions it

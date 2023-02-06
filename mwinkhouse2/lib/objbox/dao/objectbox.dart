@@ -5,6 +5,7 @@ import 'dart:ffi';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
+import 'package:mwinkhouse2/objbox/models/CriteriRicercaImmobile.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
 import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaAppuntamento.dart';
@@ -599,6 +600,44 @@ class ObjectBox {
         .map((query) => query.find());
   }
 
+  Stream<List<Immobile>> searchImmobili({required CriteriRicercaImmobile criteri}){
+
+    QueryBuilder<Immobile> qBuilderImmobili = immobileBox.query(
+        ((criteri.prezzoDa!=0.0)?Immobile_.prezzo.greaterOrEqual(criteri.prezzoDa):Immobile_.prezzo.notNull()) &
+        ((criteri.prezzoA!=0.0)?Immobile_.prezzo.lessOrEqual(criteri.prezzoA):Immobile_.prezzo.notNull()) &
+        ((criteri.mqDa!=0)?Immobile_.mq.greaterOrEqual(criteri.mqDa):Immobile_.mq.notNull()) &
+        ((criteri.mqA!=0)?Immobile_.mq.lessOrEqual(criteri.mqA):Immobile_.mq.notNull()) &
+        ((criteri.annoCostruzioneDa!=0)?Immobile_.annoCostruzione.greaterOrEqual(criteri.annoCostruzioneDa):Immobile_.annoCostruzione.notNull()) &
+        ((criteri.annoCostruzioneA!=0)?Immobile_.annoCostruzione.lessOrEqual(criteri.annoCostruzioneA):Immobile_.annoCostruzione.notNull()) &
+        ((criteri.indirizzo!='')?Immobile_.indirizzo.contains(criteri.indirizzo):Immobile_.indirizzo.isNull()) &
+        ((criteri.zona!='')?Immobile_.zona.contains(criteri.zona):Immobile_.zona.isNull()) &
+        ((criteri.provincia!='')?Immobile_.provincia.contains(criteri.provincia):Immobile_.provincia.isNull()) &
+        ((criteri.cap!='')?Immobile_.cap.contains(criteri.zona):Immobile_.cap.isNull()) &
+        ((criteri.citta!='')?Immobile_.citta.contains(criteri.citta):Immobile_.citta.isNull())
+    );
+
+    final statoConservativo = criteri?.statoConservativo;
+    if (statoConservativo!=null && statoConservativo.codStatoConservativo != null){
+      qBuilderImmobili.link(Immobile_.statoConservativo, StatoConservativo_.codStatoConservativo.equals(statoConservativo.codStatoConservativo!));
+    }
+    final riscaldamento = criteri?.riscaldamento;
+    if (riscaldamento!=null && riscaldamento.codRiscaldamento != null){
+      qBuilderImmobili.link(Immobile_.riscaldamento, Riscaldamento_.codRiscaldamento.equals(riscaldamento.codRiscaldamento!));
+    }
+    final tipologia = criteri?.tipologiaImmobile;
+    if (tipologia!=null && tipologia.codTipologiaImmobile != null){
+      qBuilderImmobili.link(Immobile_.tipologiaImmobile, TipologiaImmobile_.codTipologiaImmobile.equals(tipologia.codTipologiaImmobile!));
+    }
+    final classeEnergetica = criteri?.classeEnergetica;
+    if (classeEnergetica!=null && classeEnergetica.codClasseEnergetica != null){
+      qBuilderImmobili.link(Immobile_.classeEnergetica, ClasseEnergetica_.codClasseEnergetica.equals(classeEnergetica.codClasseEnergetica!));
+    }
+
+    return qBuilderImmobili
+        .watch(triggerImmediately: true)
+    // Map it to a list of tasks to be used by a StreamBuilder.
+        .map((query) => query.find());
+  }
   // AnagraficaBox
 
   static void _putAnagraficaInTx(Store store, List<Anagrafica> anagrafica) =>

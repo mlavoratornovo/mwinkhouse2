@@ -96,12 +96,6 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       decoration:const InputDecoration(
                           labelText: "Provincia"
                       ),
-                      // validator:  (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return 'Please enter some text';
-                      //   }
-                      //   return null;
-                      // },
                       onChanged: (text) {
                         _immobile?.provincia = text;
                       },
@@ -115,12 +109,6 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       decoration:const InputDecoration(
                           labelText: "Cap"
                       ),
-                      // validator:  (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return 'Please enter some text';
-                      //   }
-                      //   return null;
-                      // },
                       onChanged: (text) {
                         _immobile?.cap = text;
                       },
@@ -148,12 +136,6 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 decoration:const InputDecoration(
                     labelText: "Zona"
                 ),
-                // validator:  (value) {
-                //   if (value == null || value.isEmpty) {
-                //     return 'Please enter some text';
-                //   }
-                //   return null;
-                // },
                 onChanged: (text) {
                   _immobile?.zona = text;
                 },
@@ -178,12 +160,6 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 decoration:const InputDecoration(
                     labelText: "Prezzo"
                 ),
-                // validator:  (value) {
-                //   if (value == null || value.isEmpty) {
-                //     return 'Please enter some text';
-                //   }
-                //   return null;
-                // },
                 onChanged: (text) {
                   _immobile?.prezzo = double.parse(text);
                 },
@@ -203,12 +179,6 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       decoration:const InputDecoration(
                           labelText: "Mq"
                       ),
-                      // validator:  (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return 'Please enter some text';
-                      //   }
-                      //   return null;
-                      // },
                       onChanged: (text) {
                         _immobile?.mq = int.parse(text);
                       },
@@ -226,12 +196,6 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       decoration:const InputDecoration(
                           labelText: "Anno Costruzione"
                       ),
-                      // validator:  (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return 'Please enter some text';
-                      //   }
-                      //   return null;
-                      // },
                       onChanged: (text) {
                         _immobile?.annoCostruzione = int.parse(text);
                       },
@@ -249,12 +213,6 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 decoration:const InputDecoration(
                     labelText: "descrizione"
                 ),
-                // validator:  (value) {
-                //   if (value == null || value.isEmpty) {
-                //     return 'Please enter some text';
-                //   }
-                //   return null;
-                // },
                 onChanged: (text) {
                   _immobile?.descrizione = text;
                 },
