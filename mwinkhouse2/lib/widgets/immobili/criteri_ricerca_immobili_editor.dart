@@ -29,7 +29,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
 
   final _formKey = GlobalKey<FormState>();
 
-  _CriteriRicercaImmobileState(){
+  _CriteriRicercaImmobileEditorState(){
     tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
     statoConservativo = objectbox.statoConservativoBox.getAll();
     classeEnergetica = objectbox.classeEnergeticaBox.getAll();
@@ -295,14 +295,14 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
         floatingActionButton: FloatingActionButton(
           heroTag: "Cerca",
           onPressed: () {
-            if ((widget.criteri.provincia != null && widget.criteri.provincia?.trim() != '') ||
-                (widget.criteri.cap != null && widget.criteri.cap?.trim() != '') ||
-                (widget.criteri.citta != null && widget.criteri.citta?.trim() != '') ||
-                (widget.criteri.zona != null && widget.criteri.zona?.trim() != '') ||
-                (widget.criteri.indirizzo != null && widget.criteri.indirizzo?.trim() != '') ||
-                (widget.criteri.prezzoDa != null) || (widget.criteri.prezzoA != null) ||
-                (widget.criteri.mqDa != null) || (widget.criteri.mqA != null) ||
-                (widget.criteri.annoCostruzioneDa != null) || (widget.criteri.annoCostruzioneA != null) ||
+            if ((widget.criteri.provincia.trim() != '') ||
+                (widget.criteri.cap.trim() != '') ||
+                (widget.criteri.citta.trim() != '') ||
+                (widget.criteri.zona.trim() != '') ||
+                (widget.criteri.indirizzo?.trim() != '') ||
+                (widget.criteri.prezzoDa != 0.0) || (widget.criteri.prezzoA != 0.0) ||
+                (widget.criteri.mqDa != 0) || (widget.criteri.mqA != 0) ||
+                (widget.criteri.annoCostruzioneDa != 0) || (widget.criteri.annoCostruzioneA != 0) ||
                 (widget.criteri.classeEnergetica != null) || (widget.criteri.riscaldamento != null) ||
                 (widget.criteri.tipologiaImmobile != null) || (widget.criteri.statoConservativo != null)
             ) {

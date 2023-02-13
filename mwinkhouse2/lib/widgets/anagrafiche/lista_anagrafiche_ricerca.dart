@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse2/widgets/immobili/dettaglio_immobile.dart';
-import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
+import 'package:mwinkhouse2/objbox/models/CriteriRicercaAnagrafica.dart';
+import 'package:mwinkhouse2/widgets/anagrafiche/dettaglio_anagrafica.dart';
 
-import '../../objbox/models/CriteriRicercaImmobile.dart';
-import '../../objbox/models/Immobile.dart';
+import '../../objbox/models/Anagrafica.dart';
 import '../../main.dart';
-import 'criteri_ricerca_immobili_editor.dart';
+import '../../objbox/models/Immobile.dart';
+import 'lista_anagrafiche_proprieta.dart';
 
 
 /// Displays the current list of tasks by listening to a stream.
 ///
 /// Each task has a check button to mark it completed and an edit button to
 /// update it. A task can also be swiped away to remove it.
-class ImmobiliRicercaList extends StatefulWidget {
+class AnagraficheRicercaList extends StatefulWidget {
+  final String title = 'Lista anagrafiche ricerca';
 
-  final String title = 'Lista immobili ricerca';
-  CriteriRicercaImmobile? criteri;
+  CriteriRicercaAnagrafica? criteri;
 
-  ImmobiliRicercaList({Key? key,this.criteri}) : super(key: key);
+  AnagraficheRicercaList({Key? key, this.criteri}) : super(key: key);
 
   @override
-  State<ImmobiliRicercaList> createState() => _ImmobiliRicercaListState();
+  State<AnagraficheRicercaList> createState() => _AnagraficheRicercaListState();
 }
 
 extension SafeLookup<E> on List<E> {
@@ -34,11 +34,25 @@ extension SafeLookup<E> on List<E> {
   }
 }
 
-class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
+class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
 
-  _ImmobiliRicercaListState();
+  List<int> selected = [];
+  _AnagraficheRicercaListState();
 
-  Dismissible Function(BuildContext, int) _itemBuilder(List<Immobile> immobili) =>
+
+  void _onCheckboxSelect(bool select, int codAnagrafica){
+    if (select == true) {
+      setState(() {
+        selected.add(codAnagrafica);
+      });
+    } else {
+      setState(() {
+        selected.remove(codAnagrafica);
+      });
+    }
+  }
+
+  Dismissible Function(BuildContext, int) _itemBuilder(List<Anagrafica> anagrafiche) =>
           (BuildContext context, int index) => Dismissible(
         background: Container(
           color: Colors.red,
@@ -46,7 +60,7 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeImmobile(immobili[index].codImmobile?.toInt() ?? 0);
+          objectbox.removeAnagrafica(anagrafiche[index].codAnagrafica?.toInt() ?? 0);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -56,7 +70,7 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Immobile ${immobili[index].codImmobile} deleted'))));
+                  child: Text('Anagrafica ${anagrafiche[index].codAnagrafica} deleted'))));
         },
         child: Row(
           children: <Widget>[
@@ -72,7 +86,7 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '${immobili[index].indirizzo} (Tipo: ${immobili[index].tipologiaImmobile.target?.descrizione.toString() ?? ""})',
+                        '${anagrafiche[index].ragioneSociale ?? ""} ${anagrafiche[index].cognome} ${anagrafiche[index].nome}',
                         style: const TextStyle(
                             color: Colors.grey,
                             decoration: TextDecoration.none),
@@ -82,7 +96,7 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: Text(
-                          immobili[index].classeEnergetica.target?.nome.toString() ?? "",
+                          anagrafiche[index].classeCliente.target?.descrizione.toString() ?? "",
                           style: const TextStyle(
                             fontSize: 12.0,
                           ),
@@ -97,8 +111,8 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
                 child: const Text('Edit'),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioImmobile(
-                        immobile: immobili[index],
+                      builder: (context) => DettaglioAnagrafica(
+                        anagrafica: anagrafiche[index],
                       )
                   ));
                 }),
@@ -112,7 +126,7 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-            title: Text(widget.title),
+          title: Text(widget.title),
         ),
         body: Center(
           // Center is a layout widget. It takes a single child and positions it
@@ -121,8 +135,8 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                      child: StreamBuilder<List<Immobile>>(
-                          stream: objectbox.searchImmobili(criteri: widget.criteri??CriteriRicercaImmobile()),
+                      child: StreamBuilder<List<Anagrafica>?>(
+                          stream: objectbox.searchAnagrafiche(criteri: widget.criteri??CriteriRicercaAnagrafica()),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               // Print the stack trace and show the error message.

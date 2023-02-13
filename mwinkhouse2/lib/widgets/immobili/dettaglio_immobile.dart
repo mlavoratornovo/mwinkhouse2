@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
 import 'package:mwinkhouse2/main.dart';
@@ -75,7 +76,9 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                     MaterialPageRoute(builder: (context) => ColloquiImmobileList(immobile:_immobile??Immobile())),
                   );
                 }
-
+                if (result == 4){
+                  MapsLauncher.launchQuery("${(widget._immobile?.indirizzo??'')}, ${(widget._immobile?.citta??'')}, ${(widget._immobile?.provincia??'')} ${(widget._immobile?.cap??'')}");
+                }
               },
             )]),
     body: Center(
