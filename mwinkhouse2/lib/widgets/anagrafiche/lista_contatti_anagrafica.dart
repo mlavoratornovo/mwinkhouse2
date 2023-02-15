@@ -8,8 +8,8 @@ import '../../main.dart';
 
 class ContattiAnagraficaList extends StatefulWidget {
   String title = "";
-  Anagrafica? anagrafica;
-  ContattiAnagraficaList({Key? key, this.anagrafica}) : super(key: key){
+  Anagrafica anagrafica;
+  ContattiAnagraficaList({Key? key,required this.anagrafica}) : super(key: key){
     title = "Lista contatti : ${(anagrafica?.ragioneSociale ?? "")} ${(anagrafica?.nome ?? "")} ${(anagrafica?.cognome ?? "")}";
   }
 
@@ -31,7 +31,8 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeAnagrafica(contatto[index].codContatto?.toInt() ?? 0);
+          widget.anagrafica.contatti.removeWhere((element) => element.codContatto == contatto[index].codContatto);
+          objectbox.addAnagrafica(widget.anagrafica);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -41,7 +42,7 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Contatto ${contatto[index].codContatto} deleted'))));
+                  child: Text('Contatto ${contatto[index].contatto} cancellato'))));
         },
         child: Row(
           children: <Widget>[

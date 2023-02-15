@@ -5,6 +5,8 @@ import 'dart:ffi';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
+import 'package:mwinkhouse2/objbox/models/Colloquio.dart';
+import 'package:mwinkhouse2/objbox/models/Contatto.dart';
 import 'package:mwinkhouse2/objbox/models/CriteriRicercaAnagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/CriteriRicercaImmobile.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
@@ -35,6 +37,8 @@ class ObjectBox {
   late final Box<ClasseEnergetica> classeEnergeticaBox;
   late final Box<Immobile> immobileBox;
   late final Box<Anagrafica> anagraficaBox;
+  late final Box<Colloquio> colloquioBox;
+  late final Box<Contatto> contattoBox;
   late final Admin _admin;
 
   ObjectBox._create(this.store) {
@@ -46,7 +50,11 @@ class ObjectBox {
 
     immobileBox = Box<Immobile>(store);
 
-    anagraficaBox= Box<Anagrafica>(store);
+    anagraficaBox = Box<Anagrafica>(store);
+
+    colloquioBox = Box<Colloquio>(store);
+
+    contattoBox = Box<Contatto>(store);
 
     classeClienteBox = Box<ClasseCliente>(store);
     if (classeClienteBox.isEmpty()) {
@@ -555,6 +563,18 @@ class ObjectBox {
     store.box<TipologiaColloquio>().put(c1);
   }
 
+  // ColloquioBox
+
+  void removeColloquio(int codColloquio){
+    colloquioBox.remove(codColloquio);
+  }
+
+  // ConattoBox
+
+  void removeConatto(int codConatto){
+    contattoBox.remove(codConatto);
+  }
+
   // ImmobileBox
   
   static void _putImmobileInTx(Store store, List<Immobile> immobile) =>
@@ -571,7 +591,6 @@ class ObjectBox {
     );
     asyncExecutor.execute(SaveImmobile(c1, store));
   }
-
 
   static void _addImmobileInTx(Store store, Immobile c1) {
 

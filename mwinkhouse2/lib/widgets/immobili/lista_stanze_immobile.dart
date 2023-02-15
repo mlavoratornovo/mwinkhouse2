@@ -8,23 +8,20 @@ import 'dettaglio_stanza.dart';
 
 class StanzeImmobileList extends StatefulWidget {
   String title = 'Lista stanze : ';
-  Immobile immobile = Immobile();
-  StanzeImmobileList({Key? key, required Immobile immobile}) : super(key: key){
-    this.immobile = immobile;
-    title = title + (immobile?.indirizzo ?? "");
+  Immobile immobile;
+  StanzeImmobileList({Key? key, required this.immobile}) : super(key: key){
+    title = title + (immobile.indirizzo ?? "");
   }
 
   @override
-  State<StanzeImmobileList> createState() => _StanzeImmobileListState(immobile);
+  State<StanzeImmobileList> createState() => _StanzeImmobileListState();
 }
 
 class _StanzeImmobileListState extends State<StanzeImmobileList> {
 
-  Immobile immobile;
   late Stream<List<StanzaImmobile>?> stanze;
 
-  _StanzeImmobileListState(this.immobile){
-  }
+  _StanzeImmobileListState();
 
   Dismissible Function(BuildContext, int) _itemBuilder(List<StanzaImmobile> stanza) =>
           (BuildContext context, int index) => Dismissible(
@@ -34,7 +31,8 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeAnagrafica(stanza[index].codStanzaImmobile?.toInt() ?? 0);
+          widget.immobile.stanze.removeWhere((element) => element.codStanzaImmobile == stanza[index].codStanzaImmobile);
+          objectbox.addImmobile(widget.immobile);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -44,7 +42,7 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Immobile ${stanza[index].codStanzaImmobile} deleted'))));
+                  child: Text('Stanza ${stanza[index].tipologiaStanza.target?.descrizione} cancellata'))));
         },
         child: Row(
           children: <Widget>[
@@ -84,7 +82,7 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
                 child: const Text('Edit'),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioStanza(immobile: immobile,
+                      builder: (context) => DettaglioStanza(immobile: widget.immobile,
                         stanzaImmobile: stanza[index],
                       )
                   ));
@@ -97,7 +95,7 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
   Widget build(BuildContext context) {
     stanze = (() async* {
       await Future<void>.delayed(Duration(milliseconds: 1));
-      yield this.immobile?.stanze.toList();
+      yield widget.immobile?.stanze.toList();
     })();
 
     return Scaffold(
@@ -152,10 +150,10 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
       floatingActionButton:
       FloatingActionButton(
         heroTag: "immobile",
-        backgroundColor: (immobile==null)?Colors.grey:null,
-        onPressed: (immobile==null)?null:() async {
+        backgroundColor: (widget.immobile==null)?Colors.grey:null,
+        onPressed: (widget.immobile==null)?null:() async {
           final value = await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => DettaglioStanza(immobile:this.immobile, stanzaImmobile: StanzaImmobile())));
+              builder: (context) => DettaglioStanza(immobile:widget.immobile, stanzaImmobile: StanzaImmobile())));
           setState(() {});
         },
         child: const Icon(Icons.add),

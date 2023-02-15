@@ -115,7 +115,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       onChanged: (text) {
                         _immobile?.cap = text;
                       },
-                      initialValue: "${_immobile?.cap ?? ""}",
+                      initialValue: _immobile?.cap ?? "",
                     ),
                   ),
                 ],

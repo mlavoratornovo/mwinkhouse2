@@ -10,10 +10,10 @@ import 'dettaglio_colloquio_immobile.dart';
 
 class ColloquiImmobileList extends StatefulWidget {
   String title = '';
-  Immobile? immobile;
-  ColloquiImmobileList({Key? key, this.immobile}) : super(key: key){
+  Immobile immobile;
+  ColloquiImmobileList({Key? key,required this.immobile}) : super(key: key){
 
-    title = 'Lista colloqui :'  + (immobile?.indirizzo ?? "");
+    title = 'Lista colloqui : ${(immobile.indirizzo ?? "")}';
   }
 
   @override
@@ -24,7 +24,7 @@ class _ColloquiImmobileListState extends State<ColloquiImmobileList> {
 
   late Stream<List<Colloquio>?> colloqui;
 
-  _ColloquiImmobileListState(){}
+  _ColloquiImmobileListState();
 
   Dismissible Function(BuildContext, int) _itemBuilder(List<Colloquio> colloquio) =>
           (BuildContext context, int index) => Dismissible(
@@ -34,7 +34,9 @@ class _ColloquiImmobileListState extends State<ColloquiImmobileList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeAnagrafica(colloquio[index].codColloquio?.toInt() ?? 0);
+          widget.immobile?.colloqui.removeWhere((element) => element.codColloquio == colloquio[index].codColloquio);
+          objectbox.addImmobile(widget.immobile);
+
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,

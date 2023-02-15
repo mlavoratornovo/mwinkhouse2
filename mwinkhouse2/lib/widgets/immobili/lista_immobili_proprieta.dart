@@ -13,29 +13,25 @@ import '../anagrafiche/lista_anagrafiche.dart';
 /// Each task has a check button to mark it completed and an edit button to
 /// update it. A task can also be swiped away to remove it.
 class ImmobiliProprietaList extends StatefulWidget {
-  String title = 'Lista proprietà : ';
+  String title = '';
   Anagrafica anagrafica = Anagrafica();
-  ImmobiliProprietaList({Key? key, required Anagrafica anagrafica}) : super(key: key){
-    this.anagrafica = anagrafica;
-    title = title + (anagrafica.ragioneSociale ?? "") +
-        " " + (anagrafica.cognome ?? "") +
-        " " + (anagrafica.nome ?? "");
+  ImmobiliProprietaList({Key? key, required this.anagrafica}) : super(key: key){
+    title = "Lista proprietà : ${(anagrafica.ragioneSociale ?? "")} ${(anagrafica.cognome ?? "")} ${(anagrafica.nome ?? "")}";
   }
 
   @override
-  State<ImmobiliProprietaList> createState() => _ImmobiliProprietaListState(anagrafica);
+  State<ImmobiliProprietaList> createState() => _ImmobiliProprietaListState();
 }
 
 class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
 
-  Anagrafica anagrafica;
+
   List<int> idimmobili = List<int>.empty(growable: true);
 
   late Stream<List<Immobile>?> immobili;
 
-  _ImmobiliProprietaListState(this.anagrafica){
+  _ImmobiliProprietaListState();
 
-  }
   Dismissible Function(BuildContext, int) _itemBuilder(List<Immobile> immobili) =>
           (BuildContext context, int index) => Dismissible(
         background: Container(
@@ -44,7 +40,8 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeAnagrafica(immobili[index].codImmobile?.toInt() ?? 0);
+          widget.anagrafica.proprieta.removeWhere((element) => element.codImmobile == immobili[index].codImmobile);
+          objectbox.addAnagrafica(widget.anagrafica);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -54,7 +51,7 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Immobile ${immobili[index].codImmobile} deleted'))));
+                  child: Text('Immobile ${immobili[index].indirizzo} eliminato da proprietà'))));
         },
         child: Row(
           children: <Widget>[
@@ -114,12 +111,12 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
 
   @override
   Widget build(BuildContext context) {
-    this.anagrafica.proprieta.map((element) => {
+    widget.anagrafica.proprieta.map((element) => {
       idimmobili.add(element.codImmobile!)
     });
     immobili = (() async* {
       await Future<void>.delayed(Duration(milliseconds: 1));
-      yield this.anagrafica.proprieta.toList();
+      yield widget.anagrafica.proprieta.toList();
     })();
     return Scaffold(
       appBar: AppBar(
@@ -173,10 +170,10 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
       floatingActionButton:
       FloatingActionButton(
         heroTag: "immobile",
-        backgroundColor: (anagrafica.codAnagrafica==null)?Colors.grey:null,
-        onPressed: (anagrafica.codAnagrafica==null)?null:() async {
+        backgroundColor: (widget.anagrafica.codAnagrafica==null)?Colors.grey:null,
+        onPressed: (widget.anagrafica.codAnagrafica==null)?null:() async {
           final value = await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ImmobiliList(anagrafica: anagrafica,)));
+              builder: (context) => ImmobiliList(anagrafica: widget.anagrafica,)));
           setState(() {});
         },
         child: const Icon(Icons.add),

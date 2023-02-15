@@ -13,25 +13,23 @@ import 'lista_anagrafiche.dart';
 class AnagraficheProprietaList extends StatefulWidget {
   String title = 'Lista proprietari : ';
   Immobile immobile = Immobile();
-  AnagraficheProprietaList({Key? key,required Immobile immobile}) : super(key: key){
-    this.immobile = immobile;
+  AnagraficheProprietaList({Key? key,required this.immobile}) : super(key: key){
+    //this.immobile = immobile;
     title = title + (immobile.indirizzo ?? "");
   }
 
   @override
-  State<AnagraficheProprietaList> createState() => _AnagraficheProprietaListState(immobile);
+  State<AnagraficheProprietaList> createState() => _AnagraficheProprietaListState();
 }
 
 class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
 
-  Immobile immobile;
   List<int> idproprietari = List<int>.empty(growable: true);
 
   late Stream<List<Anagrafica>?> proprietari;
 
-  _AnagraficheProprietaListState(this.immobile){
+  _AnagraficheProprietaListState();
 
-  }
   Dismissible Function(BuildContext, int) _itemBuilder(List<Anagrafica> anagrafiche) =>
           (BuildContext context, int index) => Dismissible(
         background: Container(
@@ -40,7 +38,8 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeAnagrafica(anagrafiche[index].codAnagrafica?.toInt() ?? 0);
+          widget.immobile.proprietari.removeWhere((element) => element.codAnagrafica == anagrafiche[index].codAnagrafica);
+          objectbox.addImmobile(widget.immobile);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -50,7 +49,7 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Anagrafica ${anagrafiche[index].codAnagrafica} deleted'))));
+                  child: Text('Anagrafica ${(anagrafiche[index].ragioneSociale ?? "")} ${(anagrafiche[index].cognome ?? "")} ${(anagrafiche[index].nome ?? "")} rimossa dai propietari'))));
         },
         child: Row(
           children: <Widget>[
@@ -110,12 +109,12 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
 
   @override
   Widget build(BuildContext context) {
-    this.immobile.proprietari.map((element) => {
+    widget.immobile.proprietari.map((element) => {
       idproprietari.add(element.codAnagrafica!)
     });
     proprietari = (() async* {
       await Future<void>.delayed(Duration(milliseconds: 1));
-      yield this.immobile.proprietari.toList();
+      yield widget.immobile.proprietari.toList();
     })();
     return Scaffold(
       appBar: AppBar(
@@ -169,10 +168,10 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
       floatingActionButton:
         FloatingActionButton(
           heroTag: "immobile",
-          backgroundColor: (immobile.codImmobile==null)?Colors.grey:null,
-          onPressed: (immobile.codImmobile==null)?null:() async {
+          backgroundColor: (widget.immobile.codImmobile==null)?Colors.grey:null,
+          onPressed: (widget.immobile.codImmobile==null)?null:() async {
             final value = await Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => AnagraficheList(immobile:immobile)));
+                builder: (context) => AnagraficheList(immobile:widget.immobile)));
             setState(() {});
           },
           child: const Icon(Icons.add),
