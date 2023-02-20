@@ -66,7 +66,7 @@ class _AnagraficheListState extends State<AnagraficheList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeAnagrafica(anagrafiche[index].codAnagrafica?.toInt() ?? 0);
+          objectbox.removeAnagraficaEntity(anagrafiche[index]);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,

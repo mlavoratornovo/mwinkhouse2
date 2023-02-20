@@ -601,6 +601,24 @@ class ObjectBox {
     immobileBox.remove(codImmobile);
   }
 
+  void removeImmobileEntity(Immobile immobile){
+    store.runInTransaction(TxMode.write, () => {
+
+      immobile.colloqui.forEach((element) {
+        colloquioBox.remove(element.codColloquio??0);
+      }),
+      immobile.colloqui.removeRange(0, immobile.colloqui.length),
+      immobile.colloqui.applyToDb(),
+
+      immobile.stanze.forEach((element) {
+        colloquioBox.remove(element.codStanzaImmobile??0);
+      }),
+      immobile.stanze.removeRange(0, immobile.stanze.length),
+      immobile.stanze.applyToDb(),
+      immobileBox.remove(immobile.codImmobile??0)
+    });
+  }
+
   Stream<List<Immobile>> getImmobili({List<int> notin=const []}) {
     // Query for all tasks, sorted by their date.
     // https://docs.objectbox.io/queries
@@ -682,6 +700,25 @@ class ObjectBox {
 
   void removeAnagrafica(int codAnagrafica) {
     anagraficaBox.remove(codAnagrafica);
+  }
+
+  void removeAnagraficaEntity(Anagrafica anagrafica){
+    store.runInTransaction(TxMode.write, () => {
+
+      anagrafica.colloqui.forEach((element) {
+        colloquioBox.remove(element.codColloquio??0);
+      }),
+      anagrafica.colloqui.removeRange(0, anagrafica.colloqui.length),
+      anagrafica.colloqui.applyToDb(),
+
+      anagrafica.contatti.forEach((element) {
+        contattoBox.remove(element.codContatto??0);
+      }),
+      anagrafica.contatti.removeRange(0, anagrafica.contatti.length),
+      anagrafica.contatti.applyToDb(),
+
+      anagraficaBox.remove(anagrafica.codAnagrafica??0);
+    });
   }
 
   Stream<List<Anagrafica>> getAnagrafiche({List<int> notin=const []}) {

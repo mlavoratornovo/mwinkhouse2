@@ -36,7 +36,7 @@ class _ColloquiImmobileListState extends State<ColloquiImmobileList> {
           // Remove the task from the store.
           widget.immobile?.colloqui.removeWhere((element) => element.codColloquio == colloquio[index].codColloquio);
           objectbox.addImmobile(widget.immobile);
-
+          objectbox.removeColloquio(colloquio[index].codColloquio ?? 0);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -46,7 +46,7 @@ class _ColloquiImmobileListState extends State<ColloquiImmobileList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Contatto ${colloquio[index].codColloquio} deleted'))));
+                  child: Text('Colloquio del ${colloquio[index].dataColloquio} cancellato'))));
         },
         child: Row(
           children: <Widget>[

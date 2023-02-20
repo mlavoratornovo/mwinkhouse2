@@ -64,7 +64,7 @@ class _ImmobiliListState extends State<ImmobiliList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeImmobile(immobili[index].codImmobile?.toInt() ?? 0);
+          objectbox.removeImmobileEntity(immobili[index]);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,

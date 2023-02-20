@@ -8,8 +8,8 @@ import 'dettaglio_colloquio_anagrafica.dart';
 
 class ColloquiAnagraficaList extends StatefulWidget {
   String title = 'Lista colloqui : ';
-  Anagrafica? anagrafica;
-  ColloquiAnagraficaList({Key? key, this.anagrafica}) : super(key: key){
+  Anagrafica anagrafica;
+  ColloquiAnagraficaList({Key? key,required this.anagrafica}) : super(key: key){
 
     title = title + (anagrafica?.ragioneSociale ?? "") + " " + (anagrafica?.nome ?? "") + " " + (anagrafica?.cognome ?? "");
   }
@@ -22,7 +22,7 @@ class _ColloquiAnagraficaListState extends State<ColloquiAnagraficaList> {
 
   late Stream<List<Colloquio>?> colloqui;
 
-  _ColloquiAnagraficaListState(){}
+  _ColloquiAnagraficaListState();
 
   Dismissible Function(BuildContext, int) _itemBuilder(List<Colloquio> colloquio) =>
           (BuildContext context, int index) => Dismissible(
@@ -32,7 +32,11 @@ class _ColloquiAnagraficaListState extends State<ColloquiAnagraficaList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          objectbox.removeAnagrafica(colloquio[index].codColloquio?.toInt() ?? 0);
+          widget.anagrafica.colloqui.removeWhere((element) => element.codColloquio == colloquio[index].codColloquio);
+          objectbox.addAnagrafica(widget.anagrafica);
+          if (widget.anagrafica.colloqui.isEmpty && colloquio[index].codColloquio != null){
+            objectbox.removeColloquio(colloquio[index].codColloquio ?? 0);
+          }
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -42,7 +46,7 @@ class _ColloquiAnagraficaListState extends State<ColloquiAnagraficaList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Contatto ${colloquio[index].codColloquio} deleted'))));
+                  child: Text('Colloquio del ${colloquio[index].dataColloquio} cancellato'))));
         },
         child: Row(
           children: <Widget>[
