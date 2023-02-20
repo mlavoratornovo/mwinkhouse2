@@ -717,7 +717,7 @@ class ObjectBox {
       anagrafica.contatti.removeRange(0, anagrafica.contatti.length),
       anagrafica.contatti.applyToDb(),
 
-      anagraficaBox.remove(anagrafica.codAnagrafica??0);
+      anagraficaBox.remove(anagrafica.codAnagrafica??0)
     });
   }
 
