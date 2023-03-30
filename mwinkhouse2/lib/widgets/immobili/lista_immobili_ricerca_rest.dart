@@ -3,6 +3,7 @@ import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/widgets/immobili/dettaglio_immobile.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
 
+import '../../objbox/dao/winkhouse_rest.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import '../../objbox/models/Immobile.dart';
 import '../../main.dart';
@@ -13,15 +14,17 @@ import 'criteri_ricerca_immobili_editor.dart';
 ///
 /// Each task has a check button to mark it completed and an edit button to
 /// update it. A task can also be swiped away to remove it.
-class ImmobiliRicercaList extends StatefulWidget {
+class ImmobiliRicercaRestList extends StatefulWidget {
 
   final String title = 'Lista immobili ricerca';
   CriteriRicercaImmobile? criteri;
-
-  ImmobiliRicercaList({Key? key,this.criteri}) : super(key: key);
+  late WinkhouseRest winkhouseRest;
+  ImmobiliRicercaRestList({Key? key,this.criteri}) : super(key: key){
+    this.winkhouseRest = WinkhouseRest();
+  }
 
   @override
-  State<ImmobiliRicercaList> createState() => _ImmobiliRicercaListState();
+  State<ImmobiliRicercaRestList> createState() => _ImmobiliRicercaRestListState();
 }
 
 extension SafeLookup<E> on List<E> {
@@ -34,9 +37,9 @@ extension SafeLookup<E> on List<E> {
   }
 }
 
-class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
+class _ImmobiliRicercaRestListState extends State<ImmobiliRicercaRestList> {
 
-  _ImmobiliRicercaListState();
+  _ImmobiliRicercaRestListState();
 
   Widget Function(BuildContext, int) _itemBuilder(List<Immobile> immobili) =>
           (BuildContext context, int index) => Container(
@@ -122,7 +125,7 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
                 children: [
                   Expanded(
                       child: StreamBuilder<List<Immobile>>(
-                          stream: objectbox.searchImmobili(criteri: widget.criteri??CriteriRicercaImmobile()),
+                          stream: widget.winkhouseRest.findImmobili(criteri: widget.criteri??CriteriRicercaImmobile()),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               // Print the stack trace and show the error message.

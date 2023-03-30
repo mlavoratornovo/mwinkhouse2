@@ -6,6 +6,7 @@ import 'package:mwinkhouse2/main.dart';
 import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
 import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
+import 'package:mwinkhouse2/widgets/immobili/lista_immobili_ricerca_rest.dart';
 
 import '../../objbox/models/Anagrafica.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
@@ -292,7 +293,11 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [FloatingActionButton(
           heroTag: "Cerca",
           onPressed: () {
             if ((widget.criteri.provincia.trim() != '') ||
@@ -316,7 +321,33 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
             }
           },
           child: const Icon(Icons.find_in_page),
-        )
+        ),
+            FloatingActionButton(
+              heroTag: "CercaRest",
+              onPressed: () {
+                if ((widget.criteri.provincia.trim() != '') ||
+                    (widget.criteri.cap.trim() != '') ||
+                    (widget.criteri.citta.trim() != '') ||
+                    (widget.criteri.zona.trim() != '') ||
+                    (widget.criteri.indirizzo?.trim() != '') ||
+                    (widget.criteri.prezzoDa != 0.0) || (widget.criteri.prezzoA != 0.0) ||
+                    (widget.criteri.mqDa != 0) || (widget.criteri.mqA != 0) ||
+                    (widget.criteri.annoCostruzioneDa != 0) || (widget.criteri.annoCostruzioneA != 0) ||
+                    (widget.criteri.classeEnergetica != null) || (widget.criteri.riscaldamento != null) ||
+                    (widget.criteri.tipologiaImmobile != null) || (widget.criteri.statoConservativo != null)
+                ) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ImmobiliRicercaRestList(criteri:widget.criteri)));
+                }
+                else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Dati non validi impossibile procedere')),
+                  );
+                }
+              },
+              child: const Icon(Icons.network_wifi_sharp),
+            )
+        ])
     );
   }
 

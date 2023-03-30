@@ -31,6 +31,7 @@ dependencies:
     sdk: flutter
   objectbox: 1.6.2
   objectbox_flutter_libs: any
+  http: ^0.13.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -38,6 +39,7 @@ dependencies:
   async_task: ^1.0.14
   flutter_datetime_picker: ^1.5.1
   maps_launcher: ^1.0.1
+  flutter_settings_screens: ^0.2.2+1
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,8 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class StatoConservativo{
 
+  StatoConservativo():super();
+
   @Id()
   int? codStatoConservativo;
 
@@ -13,5 +15,12 @@ class StatoConservativo{
 
   @override
   int get hashCode => super.hashCode;
+
+  factory StatoConservativo.fromJson(Map<String, dynamic> json){
+    StatoConservativo instance = StatoConservativo();
+    instance.codStatoConservativo = json['codStatoConservativo'];
+    instance.descrizione = json['descrizione'];
+    return instance;
+  }
 
 }

@@ -5,6 +5,8 @@ import 'TipologiaStanza.dart';
 @Entity()
 class StanzaImmobile{
 
+  StanzaImmobile():super();
+
   @Id()
   int? codStanzaImmobile;
 
@@ -13,5 +15,13 @@ class StanzaImmobile{
   final tipologiaStanza = ToOne<TipologiaStanza>();
 
   int? mq;
+
+  factory StanzaImmobile.fromJson(Map<String, dynamic> json){
+    StanzaImmobile instance = StanzaImmobile();
+    instance.codImmobile = json['codImmobile'];
+    instance.codStanzaImmobile = json['codStanzaImmobile'];
+    instance.mq = json['mq'];
+    return instance;
+  }
 
 }

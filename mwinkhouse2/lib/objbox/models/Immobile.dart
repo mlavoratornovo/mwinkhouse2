@@ -15,6 +15,8 @@ import 'Colloquio.dart';
 @Entity()
 class Immobile{
 
+  Immobile():super();
+
   @Id()
   int? codImmobile;
   String? rif;
@@ -51,4 +53,36 @@ class Immobile{
   final colloqui = ToMany<Colloquio>();
   final immagini = ToMany<Immagine>();
   final proprietari = ToMany<Anagrafica>();
+
+  factory Immobile.fromJson(Map<String, dynamic> json){
+
+    Immobile instance = Immobile();
+
+    instance.rif = json['rif'];
+    instance.codImmobile = json['codImmobile'];
+    instance.indirizzo = json['indirizzo'];
+    instance.provincia = json['provincia'];
+    instance.cap = json['cap'];
+    instance.citta = json['citta'];
+    instance.zona = json['zona'];
+    instance.dataInserimento = DateTime.tryParse(json['dataInserimento']);
+    instance.dataLibero = DateTime.tryParse(json['dataLibero']);
+    instance.descrizione = json['descrizione'];
+    instance.mutuoDescrizione = json['mutuoDescrizione'];
+    instance.prezzo = json['prezzo'].toDouble();
+    instance.mutuo = json['mutuo'].toDouble();
+    instance.spese = json['spese'].toDouble();
+    instance.varie = json['varie'];
+    instance.visione = json['visione'];
+    instance.storico = json['storico'];
+    instance.affittabile = json['affittabile'];
+    instance.mq = json['mq'];
+    instance.annoCostruzione = json['annoCostruzione'];
+    instance.riscaldamento.target = Riscaldamento.fromJson(json['riscaldamento']);
+    instance.statoConservativo.target = StatoConservativo.fromJson(json['statoConservativo']);
+    instance.tipologiaImmobile.target = TipologiaImmobile.fromJson(json['tipologiaImmobile']);
+    instance.classeEnergetica.target = ClasseEnergetica.fromJson(json['classeEnergetica']);
+
+    return instance;
+  }
 }

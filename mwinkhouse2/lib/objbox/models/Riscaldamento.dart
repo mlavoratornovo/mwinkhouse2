@@ -3,6 +3,8 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class Riscaldamento{
 
+  Riscaldamento():super();
+
   @Id()
   int? codRiscaldamento;
 
@@ -14,4 +16,10 @@ class Riscaldamento{
   @override
   int get hashCode => super.hashCode;
 
+  factory Riscaldamento.fromJson(Map<String, dynamic> json){
+    Riscaldamento instance = Riscaldamento();
+    instance.codRiscaldamento = json['codRiscaldamento'];
+    instance.descrizione = json['descrizione'];
+    return instance;
+  }
 }

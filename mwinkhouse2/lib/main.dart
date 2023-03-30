@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:mwinkhouse2/widgets/anagrafiche/lista_anagrafiche.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_immobili.dart';
+import 'package:mwinkhouse2/widgets/settings/impostazioni.dart';
 import 'objbox/dao/objectbox.dart';
 
 late ObjectBox objectbox;
@@ -17,8 +19,8 @@ Future<void> main() async{
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(const MyApp()));
+  Settings.init();
   runApp(const MyApp());
-
   //runApp(const MyApp());
 }
 
@@ -141,7 +143,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               FloatingActionButton(
                 heroTag: "impostazioni",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Impostazioni()));
+                },
                 child: const Icon(Icons.settings),
               )
             ],
