@@ -24,6 +24,8 @@ class ClasseEnergetica{
     ClasseEnergetica instance = ClasseEnergetica();
     instance.codClasseEnergetica = json['codClasseEnergetica'];
     instance.descrizione = json['descrizione'];
+    instance.nome = json['nome'];
+    instance.ordine = json['ordine'];
     return instance;
   }
 

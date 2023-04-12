@@ -601,6 +601,10 @@ class ObjectBox {
     immobileBox.remove(codImmobile);
   }
 
+  Immobile? getImmobile(int codImmobile) {
+    return immobileBox.get(codImmobile);
+  }
+
   void removeImmobileEntity(Immobile immobile){
     store.runInTransaction(TxMode.write, () => {
 
@@ -702,6 +706,9 @@ class ObjectBox {
     anagraficaBox.remove(codAnagrafica);
   }
 
+  Anagrafica? getAnagrafica(int codAnagrafica) {
+    anagraficaBox.get(codAnagrafica);
+  }
   void removeAnagraficaEntity(Anagrafica anagrafica){
     store.runInTransaction(TxMode.write, () => {
 

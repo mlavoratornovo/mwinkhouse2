@@ -2,7 +2,7 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class ClasseCliente{
-
+  ClasseCliente():super();
   @Id()
   int? codClasseCliente;
 
@@ -15,4 +15,12 @@ class ClasseCliente{
 
   @override
   int get hashCode => super.hashCode;
+
+  factory ClasseCliente.fromJson(Map<String, dynamic> json){
+    ClasseCliente instance = ClasseCliente();
+    instance.codClasseCliente = json['codClasseCliente'];
+    instance.descrizione = json['descrizione'];
+    instance.ordine = json['ordine'];
+    return instance;
+  }
 }

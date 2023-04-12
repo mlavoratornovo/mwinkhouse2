@@ -7,6 +7,8 @@ import 'Immobile.dart';
 
 @Entity()
 class Colloquio{
+
+  Colloquio():super();
   @Id()
   int? codColloquio;
 
@@ -18,10 +20,10 @@ class Colloquio{
   final anagrafiche = ToMany<Anagrafica>();
 
   @Property(type: PropertyType.date)
-  DateTime dataInserimento = DateTime.now();
+  DateTime? dataInserimento;
 
   @Property(type: PropertyType.date)
-  DateTime dataColloquio = DateTime.now();
+  DateTime? dataColloquio;
 
   String? luogoIncontro ;
   bool? scadenziere ;
@@ -30,4 +32,20 @@ class Colloquio{
   int? codParent ;
   String? iCalUid ;
 
+  factory Colloquio.fromJson(Map<String, dynamic> json){
+    Colloquio instance = Colloquio();
+    instance.codColloquio = json['codColloquio'];
+    instance.descrizione = json['descrizione'];
+    instance.immobileAbbinato.target = Immobile.fromJson(json['immobileAbbinato']);
+    instance.tipologiaColloquio.target = new TipologiaColloquio();
+    instance.tipologiaColloquio.target?.codTipologiaColloquio = json['codTipologiaColloquio'];
+    instance.dataInserimento = DateTime.tryParse(json['dataInserimento']);
+    instance.dataColloquio = DateTime.tryParse(json['dataColloquio']);
+    instance.luogoIncontro = json['luogoIncontro'];
+    instance.scadenziere = json['scadenziere'];
+    instance.commentoAgenzia = json['commentoAgenzia'];
+    instance.commentoCliente = json['commentoCliente'];
+    instance.iCalUid = json['iCalUid'];
+    return instance;
+  }
 }

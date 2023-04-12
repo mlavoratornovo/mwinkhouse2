@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maps_launcher/maps_launcher.dart';
@@ -14,32 +16,94 @@ import 'lista_colloqui_immobile.dart';
 
 class DettaglioImmobile extends StatefulWidget {
   final String title = 'Dettaglio immobile';
-  Immobile? _immobile;
-  DettaglioImmobile({Key? key, required Immobile immobile}) : super(key: key){
-    _immobile = immobile;
-  }
-
-  @override
-  State<DettaglioImmobile> createState() => _DettaglioImmobileState(_immobile);
-}
-
-class _DettaglioImmobileState extends State<DettaglioImmobile> {
-
-  Immobile? _immobile;
+  Immobile immobile;
+  Immobile dbimm = new Immobile();
+  bool bindRest;
+  bool readonly;
+  bool immobileIsFromDB = true;
+  int spacecounter=0;
   List<TipologiaImmobile> tipologieImmobile = [];
   List<StatoConservativo> statoConservativo = [];
   List<ClasseEnergetica> classeEnergetica = [];
   List<Riscaldamento> riscaldamento = [];
 
-  final _formKey = GlobalKey<FormState>();
-
-  _DettaglioImmobileState(immobile){
-    _immobile = immobile;
+  DettaglioImmobile({Key? key, required this.immobile, this.readonly=false, this.bindRest=false}) : super(key: key){
     tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
     statoConservativo = objectbox.statoConservativoBox.getAll();
     classeEnergetica = objectbox.classeEnergeticaBox.getAll();
     riscaldamento = objectbox.riscaldamentoBox.getAll();
+    if (bindRest){
+      _bindRest();
+      immobileIsFromDB = false;
+    }
   }
+
+  void _bindRest(){
+    if (immobile.codImmobile != null){
+      dbimm = objectbox.getImmobile(immobile.codImmobile??0)!;
+
+      //immobile.codImmobile = null;
+      bool findti = false;
+      for(TipologiaImmobile tipo in tipologieImmobile){
+        if (immobile.tipologiaImmobile.target?.descrizione?.toLowerCase() == tipo.descrizione?.toLowerCase()){
+          immobile.tipologiaImmobile.target?.codTipologiaImmobile = tipo.codTipologiaImmobile;
+          findti = true;
+          break;
+        }
+      }
+      if (findti == false){
+        immobile.tipologiaImmobile.target = null;
+      }
+
+      bool findsc = false;
+      for(StatoConservativo stato in statoConservativo){
+        if (immobile.statoConservativo.target?.descrizione?.toLowerCase() == stato.descrizione?.toLowerCase()){
+          immobile.statoConservativo.target?.codStatoConservativo = stato.codStatoConservativo;
+          findsc = true;
+          break;
+        }
+      }
+      if (findsc == false){
+        immobile.statoConservativo.target = null;
+      }
+
+      bool findr = false;
+      for(Riscaldamento riscaldamento in riscaldamento){
+        if (immobile.riscaldamento.target?.descrizione?.toLowerCase() == riscaldamento.descrizione?.toLowerCase()){
+          immobile.riscaldamento.target?.codRiscaldamento = riscaldamento.codRiscaldamento;
+          findr = true;
+          break;
+        }
+      }
+      if (findr == false){
+        immobile.riscaldamento.target = null;
+      }
+
+      bool findce = false;
+      for(ClasseEnergetica classe in classeEnergetica){
+        if (immobile.classeEnergetica.target?.nome?.toLowerCase() == classe.nome?.toLowerCase()){
+          immobile.classeEnergetica.target?.codClasseEnergetica = classe.codClasseEnergetica;
+          findce = true;
+          break;
+        }
+      }
+      if (findce == false){
+        immobile.classeEnergetica.target = null;
+      }
+    }
+
+  }
+
+  @override
+  State<DettaglioImmobile> createState() => _DettaglioImmobileState();
+}
+
+class _DettaglioImmobileState extends State<DettaglioImmobile> {
+
+
+  final _formKey = GlobalKey<FormState>();
+
+  _DettaglioImmobileState(){}
 
   @override
   Widget build(BuildContext context) {
@@ -60,23 +124,23 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 if (result == 1) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AnagraficheProprietaList(immobile:_immobile??Immobile())),
+                    MaterialPageRoute(builder: (context) => AnagraficheProprietaList(immobile:widget.immobile??Immobile())),
                   );
                 }
                 if (result == 0) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => StanzeImmobileList(immobile:_immobile??Immobile())),
+                    MaterialPageRoute(builder: (context) => StanzeImmobileList(immobile:widget.immobile??Immobile())),
                   );
                 }
                 if (result == 3) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ColloquiImmobileList(immobile:_immobile??Immobile())),
+                    MaterialPageRoute(builder: (context) => ColloquiImmobileList(immobile:widget.immobile??Immobile())),
                   );
                 }
                 if (result == 4){
-                  MapsLauncher.launchQuery("${(widget._immobile?.indirizzo??'')}, ${(widget._immobile?.citta??'')}, ${(widget._immobile?.provincia??'')} ${(widget._immobile?.cap??'')}");
+                  MapsLauncher.launchQuery("${(widget.immobile?.indirizzo??'')}, ${(widget.immobile?.citta??'')}, ${(widget.immobile?.provincia??'')} ${(widget.immobile?.cap??'')}");
                 }
               },
             )]),
@@ -88,6 +152,11 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
         child: SingleChildScrollView(
           child:Column(
             children: <Widget>[
+              TextFormField(
+                key: Key("origine:${(widget.immobileIsFromDB==true)?"base dati locale": "base dati remota"}"),
+                initialValue: "origine:${(widget.immobileIsFromDB==true)?"base dati locale": "base dati remota"}",
+                enabled: false,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -99,9 +168,10 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                           labelText: "Provincia"
                       ),
                       onChanged: (text) {
-                        _immobile?.provincia = text;
+                        widget.immobile?.provincia = text;
                       },
-                      initialValue: "${_immobile?.provincia ?? ""}",
+                      key: Key("${(widget.immobile.provincia != null && widget.immobile.provincia != '')? widget.immobile.provincia:Random().nextInt(1000).toString()}"),
+                      initialValue: "${widget.immobile.provincia ?? ""}",
                     ),
                   ),
                   SizedBox(width: 10.0),
@@ -112,9 +182,10 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                           labelText: "Cap"
                       ),
                       onChanged: (text) {
-                        _immobile?.cap = text;
+                        widget.immobile.cap = text;
                       },
-                      initialValue: _immobile?.cap ?? "",
+                      key: Key("${(widget.immobile.cap != null && widget.immobile.cap != '')? widget.immobile.cap:Random().nextInt(1000).toString()}"),
+                      initialValue: widget.immobile.cap ?? "",
                     ),
                   ),
                 ],
@@ -130,18 +201,20 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   return null;
                 },
                 onChanged: (text) {
-                  _immobile?.citta = text;
+                  widget.immobile.citta = text;
                 },
-                initialValue: "${_immobile?.citta ?? ""}",
+                key: Key("${(widget.immobile.citta != null && widget.immobile.citta != '')? widget.immobile.citta:Random().nextInt(1000).toString()}"),
+                initialValue: "${widget.immobile.citta ?? ""}",
               ),
               TextFormField(
                 decoration:const InputDecoration(
                     labelText: "Zona"
                 ),
                 onChanged: (text) {
-                  _immobile?.zona = text;
+                  widget.immobile.zona = text;
                 },
-                initialValue: _immobile?.zona ?? "",
+                key: Key("${(widget.immobile.zona != null && widget.immobile.zona != '')? widget.immobile.zona:Random().nextInt(1000).toString()}"),
+                initialValue: widget.immobile.zona ?? "",
               ),
               TextFormField(
                 decoration:const InputDecoration(
@@ -154,18 +227,20 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   return null;
                 },
                 onChanged: (text) {
-                  _immobile?.indirizzo = text;
+                  widget.immobile?.indirizzo = text;
                 },
-                initialValue: _immobile?.indirizzo ?? "",
+                key: Key("${(widget.immobile.indirizzo != null && widget.immobile.indirizzo != '')? widget.immobile.indirizzo:Random().nextInt(1000).toString()}"),
+                initialValue: widget.immobile?.indirizzo ?? "",
               ),
               TextFormField(
                 decoration:const InputDecoration(
                     labelText: "Prezzo"
                 ),
                 onChanged: (text) {
-                  _immobile?.prezzo = double.parse(text);
+                  widget.immobile?.prezzo = double.parse(text);
                 },
-                initialValue: "${_immobile?.prezzo ?? ""}",
+                key: Key("${(widget.immobile.prezzo != null && widget.immobile.prezzo != 0)? widget.immobile.prezzo:Random().nextInt(1000).toString()}"),
+                initialValue: "${widget.immobile?.prezzo ?? ""}",
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
@@ -182,9 +257,10 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                           labelText: "Mq"
                       ),
                       onChanged: (text) {
-                        _immobile?.mq = int.parse(text);
+                        widget.immobile?.mq = int.parse(text);
                       },
-                      initialValue: "${_immobile?.mq ?? ""}",
+                      key: Key("${(widget.immobile.mq != null && widget.immobile.mq != 0)? widget.immobile.mq:Random().nextInt(1000).toString()}"),
+                      initialValue: "${widget.immobile?.mq ?? ""}",
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
@@ -199,9 +275,10 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                           labelText: "Anno Costruzione"
                       ),
                       onChanged: (text) {
-                        _immobile?.annoCostruzione = int.parse(text);
+                        widget.immobile?.annoCostruzione = int.parse(text);
                       },
-                      initialValue: "${_immobile?.annoCostruzione ?? ""}",
+                      key: Key("${(widget.immobile.annoCostruzione != null && widget.immobile.annoCostruzione != 0)? widget.immobile.annoCostruzione:Random().nextInt(1000).toString()}"),
+                      initialValue: "${widget.immobile?.annoCostruzione ?? ""}",
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
@@ -216,21 +293,22 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                     labelText: "descrizione"
                 ),
                 onChanged: (text) {
-                  _immobile?.descrizione = text;
+                  widget.immobile?.descrizione = text;
                 },
-                initialValue: _immobile?.descrizione ?? "",
+                key: Key("${(widget.immobile.descrizione != null && widget.immobile.descrizione != '')? widget.immobile.descrizione:Random().nextInt(1000).toString()}"),
+                initialValue: widget.immobile?.descrizione ?? "",
               ),
               DropdownButtonFormField<TipologiaImmobile>(
                 isExpanded: true,
                 hint: Text('Tipologia immobile'),
                 validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
-                value: _immobile?.tipologiaImmobile?.target,
+                value: widget.immobile?.tipologiaImmobile?.target,
                 onChanged: (TipologiaImmobile? newValue) {
                   setState(() {
-                    _immobile?.tipologiaImmobile.target = newValue;
+                    widget.immobile?.tipologiaImmobile.target = newValue;
                   });
                 },
-                items: tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
+                items: widget.tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
                   return DropdownMenuItem<TipologiaImmobile>(
                     value: tipologiaImmobile,
                     child: Text(
@@ -243,13 +321,13 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               DropdownButton<StatoConservativo>(
                 isExpanded: true,
                 hint: Text('Stato conservativo'),
-                value: _immobile?.statoConservativo?.target,
+                value: widget.immobile?.statoConservativo?.target,
                 onChanged: (StatoConservativo? newValue) {
                   setState(() {
-                    _immobile?.statoConservativo.target = newValue;
+                    widget.immobile?.statoConservativo.target = newValue;
                   });
                 },
-                items: statoConservativo.map((StatoConservativo statoConservativo) {
+                items: widget.statoConservativo.map((StatoConservativo statoConservativo) {
                   return DropdownMenuItem<StatoConservativo>(
                     value: statoConservativo,
                     child: Text(
@@ -262,13 +340,13 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               DropdownButton<ClasseEnergetica>(
                 isExpanded: true,
                 hint: Text('Class energetica'),
-                value: _immobile?.classeEnergetica?.target,
+                value: widget.immobile?.classeEnergetica?.target,
                 onChanged: (ClasseEnergetica? newValue) {
                   setState(() {
-                    _immobile?.classeEnergetica.target = newValue;
+                    widget.immobile?.classeEnergetica.target = newValue;
                   });
                 },
-                items: classeEnergetica.map((ClasseEnergetica classeEnergetica) {
+                items: widget.classeEnergetica.map((ClasseEnergetica classeEnergetica) {
                   return DropdownMenuItem<ClasseEnergetica>(
                     value: classeEnergetica,
                     child: Text(
@@ -281,13 +359,13 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               DropdownButton<Riscaldamento>(
                 isExpanded: true,
                 hint: Text('Riscaldamento'),
-                value: _immobile?.riscaldamento?.target,
+                value: widget.immobile?.riscaldamento?.target,
                 onChanged: (Riscaldamento? newValue) {
                   setState(() {
-                    _immobile?.riscaldamento.target = newValue;
+                    widget.immobile?.riscaldamento.target = newValue;
                   });
                 },
-                items: riscaldamento.map((Riscaldamento riscaldamento) {
+                items: widget.riscaldamento.map((Riscaldamento riscaldamento) {
                   return DropdownMenuItem<Riscaldamento>(
                     value: riscaldamento,
                     child: Text(
@@ -301,20 +379,42 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
         ),
       ),
     ),
-    floatingActionButton: FloatingActionButton(
-      heroTag: "Salva",
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          objectbox.addImmobile(_immobile ?? Immobile());
-          Navigator.pop(context);
-        }else{
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Dati non validi impossibile procedere')),
-          );
-        }
-      },
-      child: const Icon(Icons.save),
-    )
+    floatingActionButton: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        FloatingActionButton(
+          heroTag: "Salva",
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              objectbox.addImmobile(widget.immobile ?? Immobile());
+              Navigator.pop(context);
+            }else{
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Dati non validi impossibile procedere')),
+              );
+            }
+          },
+          child: const Icon(Icons.save),
+        ),
+        FloatingActionButton(
+          heroTag: "Switch",
+          backgroundColor: (widget.dbimm.codImmobile != null)?null:Colors.grey,
+          onPressed: (widget.dbimm.codImmobile != null) ? () {
+
+            widget.immobileIsFromDB=!widget.immobileIsFromDB;
+
+            Immobile tmp=widget.immobile;
+            widget.immobile = widget.dbimm;
+            widget.dbimm = tmp;
+
+            setState(() {});
+          }:null,
+          child: const Icon(Icons.switch_account),
+        ),
+
+      ])
     );
   }
 

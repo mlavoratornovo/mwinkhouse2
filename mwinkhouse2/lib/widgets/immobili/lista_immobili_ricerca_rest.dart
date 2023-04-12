@@ -85,7 +85,9 @@ class _ImmobiliRicercaRestListState extends State<ImmobiliRicercaRestList> {
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: Text(
-                          immobili[index].classeEnergetica.target?.nome.toString() ?? "",
+                          'Classe:${immobili[index].classeEnergetica.target?.nome.toString()} \n'
+                              'Riscaldamento: ${immobili[index].riscaldamento.target?.descrizione.toString()} \n'
+                              'Stato: ${immobili[index].statoConservativo.target?.descrizione.toString()}' ,
                           style: const TextStyle(
                             fontSize: 12.0,
                           ),
@@ -102,6 +104,7 @@ class _ImmobiliRicercaRestListState extends State<ImmobiliRicercaRestList> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => DettaglioImmobile(
                         immobile: immobili[index],
+                        bindRest: true,
                       )
                   ));
                 }),
