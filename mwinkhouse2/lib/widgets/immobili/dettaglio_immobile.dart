@@ -4,13 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
+import 'package:mwinkhouse2/objbox/models/Colloquio.dart';
+import 'package:mwinkhouse2/objbox/models/Contatto.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
 import 'package:mwinkhouse2/main.dart';
 import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
+import 'package:mwinkhouse2/objbox/models/StanzaImmobile.dart';
 import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_stanze_immobile.dart';
 
+import '../../objbox/models/Anagrafica.dart';
+import '../../objbox/models/TipologiaColloquio.dart';
+import '../../objbox/models/TipologiaStanza.dart';
 import '../anagrafiche/lista_anagrafiche_proprieta.dart';
 import 'lista_colloqui_immobile.dart';
 
@@ -26,12 +32,16 @@ class DettaglioImmobile extends StatefulWidget {
   List<StatoConservativo> statoConservativo = [];
   List<ClasseEnergetica> classeEnergetica = [];
   List<Riscaldamento> riscaldamento = [];
+  List<TipologiaStanza> tipologiaStanza = [];
+  List<TipologiaColloquio> tipoColloquio = [];
 
   DettaglioImmobile({Key? key, required this.immobile, this.readonly=false, this.bindRest=false}) : super(key: key){
     tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
     statoConservativo = objectbox.statoConservativoBox.getAll();
     classeEnergetica = objectbox.classeEnergeticaBox.getAll();
     riscaldamento = objectbox.riscaldamentoBox.getAll();
+    tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
+    tipoColloquio = objectbox.tipologiaColloquioBox.getAll();
     if (bindRest){
       _bindRest();
       immobileIsFromDB = false;
@@ -46,7 +56,7 @@ class DettaglioImmobile extends StatefulWidget {
       bool findti = false;
       for(TipologiaImmobile tipo in tipologieImmobile){
         if (immobile.tipologiaImmobile.target?.descrizione?.toLowerCase() == tipo.descrizione?.toLowerCase()){
-          immobile.tipologiaImmobile.target?.codTipologiaImmobile = tipo.codTipologiaImmobile;
+          immobile.tipologiaImmobile.target = tipo;
           findti = true;
           break;
         }
@@ -58,7 +68,7 @@ class DettaglioImmobile extends StatefulWidget {
       bool findsc = false;
       for(StatoConservativo stato in statoConservativo){
         if (immobile.statoConservativo.target?.descrizione?.toLowerCase() == stato.descrizione?.toLowerCase()){
-          immobile.statoConservativo.target?.codStatoConservativo = stato.codStatoConservativo;
+          immobile.statoConservativo.target = stato;
           findsc = true;
           break;
         }
@@ -70,7 +80,7 @@ class DettaglioImmobile extends StatefulWidget {
       bool findr = false;
       for(Riscaldamento riscaldamento in riscaldamento){
         if (immobile.riscaldamento.target?.descrizione?.toLowerCase() == riscaldamento.descrizione?.toLowerCase()){
-          immobile.riscaldamento.target?.codRiscaldamento = riscaldamento.codRiscaldamento;
+          immobile.riscaldamento.target = riscaldamento;
           findr = true;
           break;
         }
@@ -82,7 +92,7 @@ class DettaglioImmobile extends StatefulWidget {
       bool findce = false;
       for(ClasseEnergetica classe in classeEnergetica){
         if (immobile.classeEnergetica.target?.nome?.toLowerCase() == classe.nome?.toLowerCase()){
-          immobile.classeEnergetica.target?.codClasseEnergetica = classe.codClasseEnergetica;
+          immobile.classeEnergetica.target = classe;
           findce = true;
           break;
         }
@@ -90,8 +100,39 @@ class DettaglioImmobile extends StatefulWidget {
       if (findce == false){
         immobile.classeEnergetica.target = null;
       }
-    }
 
+      var stanzeiterator = immobile.stanze.iterator;
+      while (stanzeiterator.moveNext()) {
+        bool findts = false;
+        for (TipologiaStanza tipostanza in tipologiaStanza) {
+          if (stanzeiterator.current.tipologiaStanza.target
+              ?.descrizione?.toLowerCase() == tipostanza.descrizione?.toLowerCase()) {
+            stanzeiterator.current.tipologiaStanza.target = tipostanza;
+            findts = true;
+            break;
+          }
+        }
+        if (findts == false){
+          stanzeiterator.current.tipologiaStanza.target = null;
+        }
+      }
+
+      var colloquioiterator = immobile.colloqui.iterator;
+      while (colloquioiterator.moveNext()) {
+        bool findts = false;
+        for (TipologiaColloquio tipoc in tipoColloquio) {
+          if (colloquioiterator.current.tipologiaColloquio.target
+              ?.descrizione?.toLowerCase() == tipoc.descrizione?.toLowerCase()) {
+            colloquioiterator.current.tipologiaColloquio.target = tipoc;
+            findts = true;
+            break;
+          }
+        }
+        if (findts == false){
+          colloquioiterator.current.tipologiaColloquio.target = null;
+        }
+      }
+    }
   }
 
   @override
@@ -153,9 +194,11 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
           child:Column(
             children: <Widget>[
               TextFormField(
+                style: TextStyle(color: (widget.immobileIsFromDB==true)?Colors.black:Colors.blue),
                 key: Key("origine:${(widget.immobileIsFromDB==true)?"base dati locale": "base dati remota"}"),
                 initialValue: "origine:${(widget.immobileIsFromDB==true)?"base dati locale": "base dati remota"}",
                 enabled: false,
+
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -388,6 +431,27 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
           heroTag: "Salva",
           onPressed: () {
             if (_formKey.currentState!.validate()) {
+              if (widget.bindRest == true){
+                widget.immobile.codImmobile = null;
+                Iterator<Anagrafica> ita = widget.immobile.proprietari.iterator;
+                while(ita.moveNext()){
+                  ita.current.codAnagrafica = null;
+                  Iterator<Contatto> itco = ita.current.contatti.iterator;
+                  while(itco.moveNext()){
+                    itco.current.codAnagrafica = null;
+                    itco.current.codContatto = null;
+                  }
+                }
+                Iterator<Colloquio> itc = widget.immobile.colloqui.iterator;
+                while(itc.moveNext()){
+                  itc.current.codColloquio = null;
+                }
+                Iterator<StanzaImmobile> its = widget.immobile.stanze.iterator;
+                while(its.moveNext()){
+                  its.current.codImmobile = null;
+                  its.current.codStanzaImmobile = null;
+                }
+              }
               objectbox.addImmobile(widget.immobile ?? Immobile());
               Navigator.pop(context);
             }else{

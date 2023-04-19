@@ -3,7 +3,7 @@ import 'package:mwinkhouse2/objbox/models/Colloquio.dart';
 import 'package:mwinkhouse2/objbox/models/Contatto.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
 import 'package:objectbox/objectbox.dart';
-
+import 'package:intl/intl.dart';
 import 'Agente.dart';
 import 'Appuntamento.dart';
 
@@ -45,16 +45,16 @@ class Anagrafica{
     instance.nome = json['nome'];
     instance.cognome = json['cognome'];
     instance.ragioneSociale= json['ragioneSociale'];
-    instance.indirizzo = json['indirizzo'] + json['ncivico'];
+    instance.indirizzo = json['indirizzo']??'' + ' ' + json['ncivico']??'';
     instance.provincia = json['provincia'];
     instance.cap = json['cap'];
     instance.citta = json['citta'];
-    instance.dataInserimento = DateTime.tryParse(json['dataInserimento']);
+    instance.dataInserimento = new DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataInserimento']);
     instance.commento = json['commento'];
     instance.storico = json['storico'];
     instance.codiceFiscale = json['codiceFiscale'];
     instance.partitaIva = json['nome'];
-    instance.classeCliente.target = ClasseCliente.fromJson(json['classeCliente']);
+    instance.classeCliente.target = (json['classeCliente']!=null)?ClasseCliente.fromJson(json['classeCliente']):null;
     // instance.agenteInseritore = ToOne<Agente>();
     if (json['contatti'] != null){
       instance.contatti.addAll(List<Contatto>.from(json['contatti'].map((model)=> Contatto.fromJson(model))));

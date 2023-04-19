@@ -8,7 +8,7 @@ import 'package:mwinkhouse2/objbox/models/StanzaImmobile.dart';
 import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
 import 'package:objectbox/objectbox.dart';
-
+import 'package:intl/intl.dart';
 import 'Anagrafica.dart';
 import 'Colloquio.dart';
 
@@ -65,8 +65,8 @@ class Immobile{
     instance.cap = json['cap'];
     instance.citta = json['citta'];
     instance.zona = json['zona'];
-    instance.dataInserimento = DateTime.tryParse(json['dataInserimento']);
-    instance.dataLibero = DateTime.tryParse(json['dataLibero']);
+    instance.dataInserimento = new DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataInserimento']);
+    instance.dataLibero = new DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataLibero']);
     instance.descrizione = json['descrizione'];
     instance.mutuoDescrizione = json['mutuoDescrizione'];
     instance.prezzo = json['prezzo'].toDouble();
@@ -87,6 +87,9 @@ class Immobile{
     }
     if (json['colloqui'] != null){
       instance.colloqui.addAll(List<Colloquio>.from(json['colloqui'].map((model)=> Colloquio.fromJson(model))));
+    }
+    if (json['anagrafichePropietarie'] != null){
+      instance.proprietari.addAll(List<Anagrafica>.from(json['anagrafichePropietarie'].map((model)=> Anagrafica.fromJson(model))));
     }
 
     return instance;

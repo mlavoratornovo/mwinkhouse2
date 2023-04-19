@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:mwinkhouse2/widgets/anagrafiche/lista_anagrafiche.dart';
+import 'package:mwinkhouse2/widgets/basedata/base_data.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_immobili.dart';
 import 'package:mwinkhouse2/widgets/settings/impostazioni.dart';
 import 'objbox/dao/objectbox.dart';
@@ -138,8 +139,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               FloatingActionButton(
                 heroTag: "datibase",
-                onPressed: () {},
-                child: const Icon(Icons.account_balance),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => BaseData()));
+                },
+
+                child: const Icon(Icons.category),
               ),
               FloatingActionButton(
                 heroTag: "impostazioni",

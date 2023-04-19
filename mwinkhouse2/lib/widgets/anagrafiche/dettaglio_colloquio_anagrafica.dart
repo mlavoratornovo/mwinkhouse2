@@ -40,6 +40,7 @@ class _DettaglioColloquioState extends State<DettaglioColloquio> {
         currentTime: DateTime.now()
     );
     if (newSelectedDate != null){
+      widget.colloquio?.dataColloquio = newSelectedDate;
       _tECDataInserimento.text = newSelectedDate.toString();
     }
   }

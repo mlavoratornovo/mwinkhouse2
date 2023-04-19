@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:mwinkhouse2/objbox/models/Agente.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaColloquio.dart';
 import 'package:objectbox/objectbox.dart';
-
+import 'package:intl/intl.dart';
 import 'Anagrafica.dart';
 import 'Immobile.dart';
 
@@ -39,8 +41,8 @@ class Colloquio{
     instance.immobileAbbinato.target = Immobile.fromJson(json['immobileAbbinato']);
     instance.tipologiaColloquio.target = new TipologiaColloquio();
     instance.tipologiaColloquio.target?.codTipologiaColloquio = json['codTipologiaColloquio'];
-    instance.dataInserimento = DateTime.tryParse(json['dataInserimento']);
-    instance.dataColloquio = DateTime.tryParse(json['dataColloquio']);
+    instance.dataInserimento = new DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataInserimento']);
+    instance.dataColloquio = new DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataColloquio']);
     instance.luogoIncontro = json['luogoIncontro'];
     instance.scadenziere = json['scadenziere'];
     instance.commentoAgenzia = json['commentoAgenzia'];
