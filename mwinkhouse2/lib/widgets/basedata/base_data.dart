@@ -493,7 +493,31 @@ class _BaseDataState extends State<BaseData> {
                                             },
                                           ),
                                     ),
-                                    Spacer(flex: 1),
+                                    Expanded(
+                                      child:TextButton(
+                                        child: Text("Cancella"),
+                                        style: TextButton.styleFrom(
+                                            foregroundColor: Colors.blue,
+                                            side: const BorderSide(
+                                                color: Colors.blue,
+                                                width: 1.0,
+                                                style: BorderStyle.solid)
+                                        ),
+                                        onPressed: () {
+                                          if (widget.tipologieImmobileSelected != null){
+                                            objectbox.tipologiaImmobileBox.remove(widget.tipologieImmobileSelected?.codTipologiaImmobile??0);
+                                            setState(() {
+                                              widget.tipologieImmobileSelected = null;
+                                              widget.tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
+                                            });
+                                          }else{
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Selezionare la tipologia')),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
                                     Expanded(
                                         child: TextButton(
                                           child: Text("Aggiungi"),
@@ -556,7 +580,31 @@ class _BaseDataState extends State<BaseData> {
                                     },
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                Expanded(
+                                  child:TextButton(
+                                    child: Text("Cancella"),
+                                    style: TextButton.styleFrom(
+                                        foregroundColor: Colors.blue,
+                                        side: const BorderSide(
+                                            color: Colors.blue,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)
+                                    ),
+                                    onPressed: () {
+                                      if (widget.statoConservativoSelected != null){
+                                        objectbox.statoConservativoBox.remove(widget.statoConservativoSelected?.codStatoConservativo??0);
+                                        setState(() {
+                                          widget.statoConservativoSelected = null;
+                                          widget.statoConservativo = objectbox.statoConservativoBox.getAll();
+                                        });
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare lo stato')),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
                                 Expanded(
                                     child: TextButton(
                                       child: Text("Aggiungi"),
@@ -620,7 +668,31 @@ class _BaseDataState extends State<BaseData> {
                                     },
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                Expanded(
+                                  child:TextButton(
+                                    child: Text("Cancella"),
+                                    style: TextButton.styleFrom(
+                                        foregroundColor: Colors.blue,
+                                        side: const BorderSide(
+                                            color: Colors.blue,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)
+                                    ),
+                                    onPressed: () {
+                                      if (widget.classeEnergeticaSelected != null){
+                                        objectbox.classeEnergeticaBox.remove(widget.classeEnergeticaSelected?.codClasseEnergetica??0);
+                                        setState(() {
+                                          widget.classeEnergeticaSelected = null;
+                                          widget.classeEnergetica = objectbox.classeEnergeticaBox.getAll();
+                                        });
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare la classe energetica')),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
                                 Expanded(
                                     child: TextButton(
                                       child: Text("Aggiungi"),
@@ -683,7 +755,31 @@ class _BaseDataState extends State<BaseData> {
                                     },
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                Expanded(
+                                  child:TextButton(
+                                    child: Text("Cancella"),
+                                    style: TextButton.styleFrom(
+                                        foregroundColor: Colors.blue,
+                                        side: const BorderSide(
+                                            color: Colors.blue,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)
+                                    ),
+                                    onPressed: () {
+                                      if (widget.riscaldamentoSelected != null){
+                                        objectbox.riscaldamentoBox.remove(widget.riscaldamentoSelected?.codRiscaldamento??0);
+                                        setState(() {
+                                          widget.riscaldamentoSelected = null;
+                                          widget.riscaldamento = objectbox.riscaldamentoBox.getAll();
+                                        });
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare il riscaldamento')),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
                                 Expanded(
                                     child: TextButton(
                                       child: Text("Aggiungi"),
@@ -746,7 +842,31 @@ class _BaseDataState extends State<BaseData> {
                                     },
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                Expanded(
+                                  child:TextButton(
+                                    child: Text("Cancella"),
+                                    style: TextButton.styleFrom(
+                                        foregroundColor: Colors.blue,
+                                        side: const BorderSide(
+                                            color: Colors.blue,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)
+                                    ),
+                                    onPressed: () {
+                                      if (widget.tipologiaStanzaSelected != null){
+                                        objectbox.tipologiaStanzaBox.remove(widget.tipologiaStanzaSelected?.codTipologiaStanza??0);
+                                        setState(() {
+                                          widget.tipologiaStanzaSelected = null;
+                                          widget.tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
+                                        });
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare la tipologia')),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
                                 Expanded(
                                     child: TextButton(
                                       child: Text("Aggiungi"),
@@ -772,7 +892,7 @@ class _BaseDataState extends State<BaseData> {
                         child: Column(
                           children: [
                             DropdownButton<ClasseCliente>(
-                              hint: Text('Classe Cliente'),
+                              hint: Text('Categoria Cliente'),
                               isExpanded: true,
                               value: null,
                               onChanged: (ClasseCliente? newValue) {
@@ -808,7 +928,31 @@ class _BaseDataState extends State<BaseData> {
                                     },
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                Expanded(
+                                  child:TextButton(
+                                    child: Text("Cancella"),
+                                    style: TextButton.styleFrom(
+                                        foregroundColor: Colors.blue,
+                                        side: const BorderSide(
+                                            color: Colors.blue,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)
+                                    ),
+                                    onPressed: () {
+                                      if (widget.classeClienteSelected != null){
+                                        objectbox.classeClienteBox.remove(widget.classeClienteSelected?.codClasseCliente??0);
+                                        setState(() {
+                                          widget.classeClienteSelected = null;
+                                          widget.classeCliente = objectbox.classeClienteBox.getAll();
+                                        });
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare la categoria')),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
                                 Expanded(
                                     child: TextButton(
                                       child: Text("Aggiungi"),
@@ -870,7 +1014,31 @@ class _BaseDataState extends State<BaseData> {
                                     },
                                   ),
                                 ),
-                                Spacer(flex: 1),
+                                Expanded(
+                                  child:TextButton(
+                                    child: Text("Cancella"),
+                                    style: TextButton.styleFrom(
+                                        foregroundColor: Colors.blue,
+                                        side: const BorderSide(
+                                            color: Colors.blue,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)
+                                    ),
+                                    onPressed: () {
+                                      if (widget.tipologiaContattoSelected != null){
+                                        objectbox.tipologiaContattoBox.remove(widget.tipologiaContattoSelected?.codTipologiaContatto??0);
+                                        setState(() {
+                                          widget.tipologiaContattoSelected = null;
+                                          widget.tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+                                        });
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare la tipologia')),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
                                 Expanded(
                                     child: TextButton(
                                       child: Text("Aggiungi"),

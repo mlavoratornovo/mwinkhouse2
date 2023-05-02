@@ -41,6 +41,9 @@ dependencies:
   maps_launcher: ^1.0.1
   flutter_settings_screens: ^0.2.2+1
   intl: ^0.18.0
+  camera:
+  path_provider:
+  path:
 
 dev_dependencies:
   flutter_test:

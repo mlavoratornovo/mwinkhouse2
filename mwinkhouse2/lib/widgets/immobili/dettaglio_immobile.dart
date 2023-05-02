@@ -12,6 +12,7 @@ import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
 import 'package:mwinkhouse2/objbox/models/StanzaImmobile.dart';
 import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
+import 'package:mwinkhouse2/widgets/immobili/lista_immagini_immobile.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_stanze_immobile.dart';
 
 import '../../objbox/models/Anagrafica.dart';
@@ -162,16 +163,22 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               PopupMenuItem(child: Text('Mappa'), value: 4),
             ],
               onSelected: (result) {
+                if (result == 0) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StanzeImmobileList(immobile:widget.immobile??Immobile())),
+                  );
+                }
                 if (result == 1) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => AnagraficheProprietaList(immobile:widget.immobile??Immobile())),
                   );
                 }
-                if (result == 0) {
+                if (result == 2) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => StanzeImmobileList(immobile:widget.immobile??Immobile())),
+                    MaterialPageRoute(builder: (context) => ImmaginiImmobiliList(immobile:widget.immobile??Immobile())),
                   );
                 }
                 if (result == 3) {
