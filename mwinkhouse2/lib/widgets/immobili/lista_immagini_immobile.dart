@@ -13,7 +13,7 @@ class ImmaginiImmobiliList extends StatefulWidget {
   Immobile immobile;
 
   ImmaginiImmobiliList ({Key? key, required this.immobile}) : super(key: key){
-    title = "Lista immagini : ${(immobile.indirizzo}";
+    title = "Lista immagini : ${immobile.indirizzo}";
   }
 
   @override
