@@ -15,7 +15,17 @@ import 'lista_immobili_ricerca.dart';
 class CriteriRicercaImmobileEditor extends StatefulWidget {
   final String title = 'Criteri ricerca immobile';
   final CriteriRicercaImmobile criteri = CriteriRicercaImmobile();
-  CriteriRicercaImmobileEditor({Key? key}) : super(key: key){}
+  List<TipologiaImmobile> tipologieImmobile = [];
+  List<StatoConservativo> statoConservativo = [];
+  List<ClasseEnergetica> classeEnergetica = [];
+  List<Riscaldamento> riscaldamento = [];
+
+  CriteriRicercaImmobileEditor({Key? key}) : super(key: key){
+    tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
+    statoConservativo = objectbox.statoConservativoBox.getAll();
+    classeEnergetica = objectbox.classeEnergeticaBox.getAll();
+    riscaldamento = objectbox.riscaldamentoBox.getAll();
+  }
 
   @override
   State<CriteriRicercaImmobileEditor> createState() => _CriteriRicercaImmobileEditorState();
@@ -23,18 +33,10 @@ class CriteriRicercaImmobileEditor extends StatefulWidget {
 
 class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEditor> {
 
-  List<TipologiaImmobile> tipologieImmobile = [];
-  List<StatoConservativo> statoConservativo = [];
-  List<ClasseEnergetica> classeEnergetica = [];
-  List<Riscaldamento> riscaldamento = [];
 
   final _formKey = GlobalKey<FormState>();
 
   _CriteriRicercaImmobileEditorState(){
-    tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
-    statoConservativo = objectbox.statoConservativoBox.getAll();
-    classeEnergetica = objectbox.classeEnergeticaBox.getAll();
-    riscaldamento = objectbox.riscaldamentoBox.getAll();
   }
 
   @override
@@ -61,6 +63,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                             flex: 1,
                             child: TextFormField(
                               decoration:const InputDecoration(
+                                  prefixIcon: Icon(Icons.network_wifi_sharp),
                                   labelText: "Provincia"
                               ),
                               onChanged: (text) {
@@ -73,6 +76,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                             flex: 1,
                             child: TextFormField(
                               decoration:const InputDecoration(
+                                  prefixIcon: Icon(Icons.network_wifi_sharp),
                                   labelText: "Cap"
                               ),
                               onChanged: (text) {
@@ -84,6 +88,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
+                            prefixIcon: Icon(Icons.network_wifi_sharp),
                             labelText: "Città"
                         ),
                         onChanged: (text) {
@@ -92,6 +97,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
+                            prefixIcon: Icon(Icons.network_wifi_sharp),
                             labelText: "Zona"
                         ),
                         onChanged: (text) {
@@ -100,6 +106,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
+                            prefixIcon: Icon(Icons.network_wifi_sharp),
                             labelText: "Indirizzo"
                         ),
                         onChanged: (text) {
@@ -225,7 +232,8 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                             widget.criteri.tipologiaImmobile = newValue;
                           });
                         },
-                        items: tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
+                        value: widget.criteri.tipologiaImmobile,
+                        items: widget.tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
                           return DropdownMenuItem<TipologiaImmobile>(
                             value: tipologiaImmobile,
                             child: Text(
@@ -243,7 +251,8 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                             widget.criteri.statoConservativo = newValue;
                           });
                         },
-                        items: statoConservativo.map((StatoConservativo statoConservativo) {
+                        value: widget.criteri.statoConservativo,
+                        items: widget.statoConservativo.map((StatoConservativo statoConservativo) {
                           return DropdownMenuItem<StatoConservativo>(
                             value: statoConservativo,
                             child: Text(
@@ -261,7 +270,8 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                             widget.criteri.classeEnergetica = newValue;
                           });
                         },
-                        items: classeEnergetica.map((ClasseEnergetica classeEnergetica) {
+                        value: widget.criteri.classeEnergetica,
+                        items: widget.classeEnergetica.map((ClasseEnergetica classeEnergetica) {
                           return DropdownMenuItem<ClasseEnergetica>(
                             value: classeEnergetica,
                             child: Text(
@@ -279,7 +289,8 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                             widget.criteri.riscaldamento = newValue;
                           });
                         },
-                        items: riscaldamento.map((Riscaldamento riscaldamento) {
+                        value: widget.criteri.riscaldamento,
+                        items: widget.riscaldamento.map((Riscaldamento riscaldamento) {
                           return DropdownMenuItem<Riscaldamento>(
                             value: riscaldamento,
                             child: Text(

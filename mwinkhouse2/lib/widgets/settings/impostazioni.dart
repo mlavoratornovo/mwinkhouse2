@@ -18,38 +18,38 @@ class _ImpostazioniState extends State<Impostazioni> {
     return SettingsScreen(
           title: "Impostazioni",
           children:[
-            ExpandableSettingsTile(
-            title: 'Immagini',
-            subtitle: '',
-            children: <Widget>[
-              DropDownSettingsTile<int>(
-                title: 'Fattore riduzione immagini',
-                settingKey: 'imageReductionFactor',
-                values: <int, String>{
-                  0: '0%',
-                  25: '25%',
-                  50: '50%',
-                  75: '75%',
-                },
-                selected: 0,
-                onChange: (value) {
-                  debugPrint('imageReductionFactor: $value days');
-                },
-              ),
-              SliderSettingsTile(
-                title: 'Qualità immagini salvate',
-                settingKey: 'imageQuality',
-                defaultValue: 20,
-                min: 0,
-                max: 100,
-                step: 1,
-                leading: Icon(Icons.image_sharp),
-                onChange: (value) {
-                debugPrint('imageQuality: $value');
-                },
-              ),
-            ],
-          ),
+          //   ExpandableSettingsTile(
+          //   title: 'Immagini',
+          //   subtitle: '',
+          //   children: <Widget>[
+          //     DropDownSettingsTile<int>(
+          //       title: 'Fattore riduzione immagini',
+          //       settingKey: 'imageReductionFactor',
+          //       values: <int, String>{
+          //         0: '0%',
+          //         25: '25%',
+          //         50: '50%',
+          //         75: '75%',
+          //       },
+          //       selected: 0,
+          //       onChange: (value) {
+          //         debugPrint('imageReductionFactor: $value days');
+          //       },
+          //     ),
+          //     SliderSettingsTile(
+          //       title: 'Qualità immagini salvate',
+          //       settingKey: 'imageQuality',
+          //       defaultValue: 20,
+          //       min: 0,
+          //       max: 100,
+          //       step: 1,
+          //       leading: Icon(Icons.image_sharp),
+          //       onChange: (value) {
+          //       debugPrint('imageQuality: $value');
+          //       },
+          //     ),
+          //   ],
+          // ),
           ExpandableSettingsTile(
           title: 'Installazione winkhouse',
           subtitle: '',

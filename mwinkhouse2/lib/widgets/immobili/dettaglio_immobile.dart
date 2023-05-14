@@ -51,7 +51,7 @@ class DettaglioImmobile extends StatefulWidget {
 
   void _bindRest(){
     if (immobile.codImmobile != null){
-      dbimm = objectbox.getImmobile(immobile.codImmobile??0)!;
+      dbimm = objectbox.getImmobileByRif(immobile.rif??"")!;
 
       //immobile.codImmobile = null;
       bool findti = false;
@@ -206,6 +206,27 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 initialValue: "origine:${(widget.immobileIsFromDB==true)?"base dati locale": "base dati remota"}",
                 enabled: false,
 
+              ),
+              TextFormField(
+                decoration:const InputDecoration(
+                  prefixIcon: Icon(Icons.key),
+                    labelText: "Codice riferimento"
+                ),
+                validator:  (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Codice riferimento dato obbligatorio';
+                  }else{
+                    if (objectbox.getImmobileByRif(value) != null){
+                      return 'Codice riferimento presente in archivio';
+                    }
+                  }
+                  return null;
+                },
+                onChanged: (text) {
+                  widget.immobile?.rif = text;
+                },
+                key: Key("${(widget.immobile.rif != null && widget.immobile.rif != '')? widget.immobile.rif:Random().nextInt(1000).toString()}"),
+                initialValue: "${widget.immobile.rif ?? ""}",
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

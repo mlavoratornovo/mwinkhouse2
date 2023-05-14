@@ -1,6 +1,8 @@
 
 import 'dart:async';
 import 'dart:ffi';
+import 'dart:io';
+
 
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
@@ -608,19 +610,30 @@ class ObjectBox {
   void removeImmobileEntity(Immobile immobile){
     store.runInTransaction(TxMode.write, () => {
 
-      immobile.colloqui.forEach((element) {
-        colloquioBox.remove(element.codColloquio??0);
-      }),
+      // immobile.colloqui.forEach((element) {
+      //   colloquioBox.remove(element.codColloquio??0);
+      // }),
       immobile.colloqui.removeRange(0, immobile.colloqui.length),
       immobile.colloqui.applyToDb(),
 
-      immobile.stanze.forEach((element) {
-        colloquioBox.remove(element.codStanzaImmobile??0);
-      }),
+      // immobile.stanze.forEach((element) {
+      //   colloquioBox.remove(element.codStanzaImmobile??0);
+      // }),
       immobile.stanze.removeRange(0, immobile.stanze.length),
       immobile.stanze.applyToDb(),
+      immobile.immagini.forEach((element) {
+        if (element.pathImmagine != null) {
+          File(element.pathImmagine ?? "").delete();
+        }
+      }),
+      immobile.immagini.removeRange(0, immobile.immagini.length),
+      immobile.immagini.applyToDb(),
       immobileBox.remove(immobile.codImmobile??0)
     });
+  }
+
+  Immobile? getImmobileByRif(String rif) {
+    return immobileBox.query(Immobile_.rif.equals(rif)).build().findFirst();
   }
 
   Stream<List<Immobile>> getImmobili({List<int> notin=const []}) {
@@ -644,19 +657,83 @@ class ObjectBox {
 
   Stream<List<Immobile>> searchImmobili({required CriteriRicercaImmobile criteri}){
 
-    QueryBuilder<Immobile> qBuilderImmobili = immobileBox.query(
-        ((criteri.prezzoDa!=0.0)?Immobile_.prezzo.greaterOrEqual(criteri.prezzoDa):Immobile_.prezzo.notNull()) &
-        ((criteri.prezzoA!=0.0)?Immobile_.prezzo.lessOrEqual(criteri.prezzoA):Immobile_.prezzo.notNull()) &
-        ((criteri.mqDa!=0)?Immobile_.mq.greaterOrEqual(criteri.mqDa):Immobile_.mq.notNull()) &
-        ((criteri.mqA!=0)?Immobile_.mq.lessOrEqual(criteri.mqA):Immobile_.mq.notNull()) &
-        ((criteri.annoCostruzioneDa!=0)?Immobile_.annoCostruzione.greaterOrEqual(criteri.annoCostruzioneDa):Immobile_.annoCostruzione.notNull()) &
-        ((criteri.annoCostruzioneA!=0)?Immobile_.annoCostruzione.lessOrEqual(criteri.annoCostruzioneA):Immobile_.annoCostruzione.notNull()) &
-        ((criteri.indirizzo!='')?Immobile_.indirizzo.contains(criteri.indirizzo):Immobile_.indirizzo.notNull()) &
-        ((criteri.zona!='')?Immobile_.zona.contains(criteri.zona):Immobile_.zona.notNull()) &
-        ((criteri.provincia!='')?Immobile_.provincia.contains(criteri.provincia):Immobile_.provincia.notNull()) &
-        ((criteri.cap!='')?Immobile_.cap.contains(criteri.zona):Immobile_.cap.notNull()) &
-        ((criteri.citta!='')?Immobile_.citta.contains(criteri.citta):Immobile_.citta.notNull())
-    );
+    Condition<Immobile>? params;
+
+    if (criteri.citta != ""){
+      params = Immobile_.citta.contains(criteri.citta);
+    }
+    if (criteri.zona != ""){
+      if (params == null){
+        params = Immobile_.zona.contains(criteri.zona);
+      }else{
+        params.and(Immobile_.zona.contains(criteri.zona));
+      }
+    }
+    if (criteri.indirizzo != ""){
+      if (params == null){
+        params = Immobile_.indirizzo.contains(criteri.indirizzo);
+      }else{
+        params.and(Immobile_.indirizzo.contains(criteri.indirizzo));
+      }
+    }
+    if (criteri.provincia != ""){
+      if (params == null){
+        params = Immobile_.provincia.contains(criteri.provincia);
+      }else{
+        params.and(Immobile_.provincia.contains(criteri.provincia));
+      }
+    }
+    if (criteri.cap != ""){
+      if (params == null){
+        params = Immobile_.cap.contains(criteri.cap);
+      }else{
+        params.and(Immobile_.cap.contains(criteri.cap));
+      }
+    }
+    if (criteri.annoCostruzioneA != 0){
+      if (params == null){
+        params = Immobile_.annoCostruzione.lessOrEqual(criteri.annoCostruzioneA);
+      }else{
+        params.and(Immobile_.annoCostruzione.lessOrEqual(criteri.annoCostruzioneA));
+      }
+    }
+    if (criteri.annoCostruzioneDa != 0){
+      if (params == null){
+        params = Immobile_.annoCostruzione.greaterOrEqual(criteri.annoCostruzioneDa);
+      }else{
+        params.and(Immobile_.annoCostruzione.greaterOrEqual(criteri.annoCostruzioneDa));
+      }
+    }
+    if (criteri.prezzoA != 0){
+      if (params == null){
+        params = Immobile_.prezzo.lessOrEqual(criteri.prezzoA);
+      }else{
+        params.and(Immobile_.prezzo.lessOrEqual(criteri.prezzoA));
+      }
+    }
+    if (criteri.prezzoDa != 0){
+      if (params == null){
+        params = Immobile_.prezzo.greaterOrEqual(criteri.prezzoDa);
+      }else{
+        params.and(Immobile_.prezzo.greaterOrEqual(criteri.prezzoDa));
+      }
+    }
+    if (criteri.mqA != 0){
+      if (params == null){
+        params = Immobile_.mq.lessOrEqual(criteri.mqA);
+      }else{
+        params.and(Immobile_.mq.lessOrEqual(criteri.mqA));
+      }
+    }
+    if (criteri.mqDa != 0){
+      if (params == null){
+        params = Immobile_.mq.greaterOrEqual(criteri.mqDa);
+      }else{
+        params.and(Immobile_.mq.greaterOrEqual(criteri.mqDa));
+      }
+    }
+
+    QueryBuilder<Immobile> qBuilderImmobili = immobileBox.query(params);
 
     final statoConservativo = criteri.statoConservativo;
     if (statoConservativo!=null && statoConservativo.codStatoConservativo != null){
