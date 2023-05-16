@@ -340,12 +340,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                     (widget.criteri.cap.trim() != '') ||
                     (widget.criteri.citta.trim() != '') ||
                     (widget.criteri.zona.trim() != '') ||
-                    (widget.criteri.indirizzo?.trim() != '') ||
-                    (widget.criteri.prezzoDa != 0.0) || (widget.criteri.prezzoA != 0.0) ||
-                    (widget.criteri.mqDa != 0) || (widget.criteri.mqA != 0) ||
-                    (widget.criteri.annoCostruzioneDa != 0) || (widget.criteri.annoCostruzioneA != 0) ||
-                    (widget.criteri.classeEnergetica != null) || (widget.criteri.riscaldamento != null) ||
-                    (widget.criteri.tipologiaImmobile != null) || (widget.criteri.statoConservativo != null)
+                    (widget.criteri.indirizzo?.trim() != '')
                 ) {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ImmobiliRicercaRestList(criteri:widget.criteri)));
