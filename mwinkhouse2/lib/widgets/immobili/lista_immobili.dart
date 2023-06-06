@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
+import 'package:mwinkhouse2/widgets/immobili/criteri_ricerca_immobili_editor_rest.dart';
 import 'package:mwinkhouse2/widgets/immobili/dettaglio_immobile.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
 
@@ -144,7 +145,8 @@ class _ImmobiliListState extends State<ImmobiliList> {
         title: Text(widget.title),
         actions: [
           PopupMenuButton(itemBuilder: (context)=>const [
-            PopupMenuItem(child: Text('Ricerca'), value: 0),
+            PopupMenuItem(value: 0, child: Text('Ricerca')),
+            PopupMenuItem(value: 1, child: Text('Ricerca remota')),
           ],
             onSelected: (result) {
               if (result == 0) {
@@ -153,8 +155,16 @@ class _ImmobiliListState extends State<ImmobiliList> {
                   MaterialPageRoute(builder: (context) => CriteriRicercaImmobileEditor())
                 );
               }
+              if (result == 1) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>
+                        CriteriRicercaImmobileEditorRest())
+                );
+              }
             },
-          )]
+          ),
+        ]
     ),
     body: Center(
     // Center is a layout widget. It takes a single child and positions it

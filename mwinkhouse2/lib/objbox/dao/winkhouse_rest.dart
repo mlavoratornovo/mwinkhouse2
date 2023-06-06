@@ -1,7 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
+import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
+import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
+import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
 
 import '../models/CriteriRicercaImmobile.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +20,10 @@ class WinkhouseRest{
   static String COLUMN_CAP_IMMOBILE = 'CAP';
   static String COLUMN_ZONA_IMMOBILE = 'ZONA';
   static String COLUMN_INDIRIZZO_IMMOBILE = 'INDIRIZZO';
+  static String COLUMN_CODRISCALDAMENTO = 'CODRISCALDAMENTO';
+  static String COLUMN_CODSTATO = 'CODSTATO';
+  static String COLUMN_CODTIPOLOGIA = 'CODTIPOLOGIA';
+  static String COLUMN_CODCLASSEENERGETICA = 'CODCLASSEENERGETICA';
 
   String getWinkhouseIp(){
     return Settings.getValue<String>("ipWinkhouse", "127.0.0.1");
@@ -68,12 +76,41 @@ class WinkhouseRest{
           valueDa: criteri.cap);
       criteriRicerca.add(crr);
     }
+    if (criteri.riscaldamento != null){
+      CriterioRicercaRest crr = CriterioRicercaRest(
+          searchType: SEARCH_TYPE_IMMOBILE,
+          columnName: COLUMN_CODRISCALDAMENTO,
+          valueDa: criteri.riscaldamento.codRiscaldamento.toString());
+      criteriRicerca.add(crr);
+    }
+    if (criteri.statoConservativo != null){
+      CriterioRicercaRest crr = CriterioRicercaRest(
+          searchType: SEARCH_TYPE_IMMOBILE,
+          columnName: COLUMN_CODSTATO,
+          valueDa: criteri.statoConservativo.codStatoConservativo.toString());
+      criteriRicerca.add(crr);
+    }
+    if (criteri.tipologiaImmobile != null){
+      CriterioRicercaRest crr = CriterioRicercaRest(
+          searchType: SEARCH_TYPE_IMMOBILE,
+          columnName: COLUMN_CODRISCALDAMENTO,
+          valueDa: criteri.tipologiaImmobile.codTipologiaImmobile.toString());
+      criteriRicerca.add(crr);
+    }
+    if (criteri.classeEnergetica != null){
+      CriterioRicercaRest crr = CriterioRicercaRest(
+          searchType: SEARCH_TYPE_IMMOBILE,
+          columnName: WinkhouseRest.COLUMN_CODCLASSEENERGETICA,
+          valueDa: criteri.classeEnergetica.codClasseEnergetica.toString());
+      criteriRicerca.add(crr);
+    }
 
     return criteriRicerca;
   }
 
   Stream<List<Immobile>> findImmobili({criteri:CriteriRicercaImmobile}) async*{
-    List<Immobile> immobili = List<Immobile>.empty(growable: true);
+    //List<Immobile> immobili = List<Immobile>.empty(growable: true);
+    Map<int,Immobile> mimmobili = <int,Immobile>{};
     Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/search");
 
       List<CriterioRicercaRest> criteriRicerca = buildBodyObj(criteri: criteri);
@@ -84,12 +121,13 @@ class WinkhouseRest{
             body: jsonEncode(criteriRicerca[i])
         );
         if (response.statusCode == 200) {
-          // If the server did return a 200 OK response,
-          // then parse the JSON.
           Iterable l = json.decode(response.body);
-          immobili.addAll(List<Immobile>.from(l.map((model)=> Immobile.fromJson(model))));
-
-          yield immobili;
+          List<Immobile> list = List<Immobile>.from(l.map((model)=> Immobile.fromJson(model)));
+          for(final e in list){
+            mimmobili[e.codImmobile??0] = e;
+            var currentElement = e;
+          }
+          yield mimmobili.values.toList();
         } else {
           // If the server did not return a 200 OK response,
           // then throw an exception.
@@ -98,7 +136,59 @@ class WinkhouseRest{
 
       }
 
-      yield immobili;
+      yield mimmobili.values.toList();
+  }
+
+  Future<List<TipologiaImmobile>> getTipologieImmobili() async{
+    List<TipologiaImmobile> tipologieImmobili = List<TipologiaImmobile>.empty(growable: true);
+    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/core/search?tipo=ti");
+    final response = await http.get(findUrl, headers:getHeaders());
+    if (response.statusCode == 200) {
+      Iterable l = json.decode(response.body);
+      tipologieImmobili.addAll(List<TipologiaImmobile>.from(l.map((model)=> TipologiaImmobile.fromJson(model))));
+      return tipologieImmobili;
+    } else {
+      throw Exception('Errore caricamento tipologie immobili');
+    }
+  }
+
+  Future<List<StatoConservativo>> getStatoConservativo() async {
+    List<StatoConservativo> statoConservativo = List<StatoConservativo>.empty(growable: true);
+    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/core/search?tipo=sc");
+    final response = await http.get(findUrl, headers:getHeaders());
+    if (response.statusCode == 200) {
+      Iterable l = json.decode(response.body);
+      statoConservativo.addAll(List<StatoConservativo>.from(l.map((model)=> StatoConservativo.fromJson(model))));
+      return statoConservativo;
+    } else {
+      throw Exception('Errore caricamento stati conservativi');
+    }
+  }
+
+  Future<List<Riscaldamento>> getRiscaldamento() async {
+    List<Riscaldamento> riscaldamento = List<Riscaldamento>.empty(growable: true);
+    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/core/search?tipo=ri");
+    final response = await http.get(findUrl, headers:getHeaders());
+    if (response.statusCode == 200) {
+      Iterable l = json.decode(response.body);
+      riscaldamento.addAll(List<Riscaldamento>.from(l.map((model)=> Riscaldamento.fromJson(model))));
+      return riscaldamento;
+    } else {
+      throw Exception('Errore caricamento riscaldamenti');
+    }
+  }
+
+  Future<List<ClasseEnergetica>> getClasseEnergetica() async {
+    List<ClasseEnergetica> classeEnergetica = List<ClasseEnergetica>.empty(growable: true);
+    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/core/search?tipo=ce");
+    final response = await http.get(findUrl, headers:getHeaders());
+    if (response.statusCode == 200) {
+      Iterable l = json.decode(response.body);
+      classeEnergetica.addAll(List<ClasseEnergetica>.from(l.map((model)=> ClasseEnergetica.fromJson(model))));
+      return classeEnergetica;
+    } else {
+      throw Exception('Errore caricamento classi energetiche');
+    }
   }
 
 }

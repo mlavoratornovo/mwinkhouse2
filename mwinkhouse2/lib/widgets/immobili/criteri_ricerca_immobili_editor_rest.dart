@@ -8,35 +8,53 @@ import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_immobili_ricerca_rest.dart';
 
+import '../../objbox/dao/winkhouse_rest.dart';
 import '../../objbox/models/Anagrafica.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import 'lista_immobili_ricerca.dart';
 
-class CriteriRicercaImmobileEditor extends StatefulWidget {
-  final String title = 'Ricerca immobile';
+class CriteriRicercaImmobileEditorRest extends StatefulWidget {
+  final String title = 'Ricerca immobile Remota';
   final CriteriRicercaImmobile criteri = CriteriRicercaImmobile();
   List<TipologiaImmobile> tipologieImmobile = [];
   List<StatoConservativo> statoConservativo = [];
   List<ClasseEnergetica> classeEnergetica = [];
   List<Riscaldamento> riscaldamento = [];
+  late WinkhouseRest winkhouseRest;
 
-  CriteriRicercaImmobileEditor({Key? key}) : super(key: key){
-    tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
-    statoConservativo = objectbox.statoConservativoBox.getAll();
-    classeEnergetica = objectbox.classeEnergeticaBox.getAll();
-    riscaldamento = objectbox.riscaldamentoBox.getAll();
+  CriteriRicercaImmobileEditorRest({Key? key}) : super(key: key){
+    createState();
+    winkhouseRest = WinkhouseRest();
   }
 
+
+
   @override
-  State<CriteriRicercaImmobileEditor> createState() => _CriteriRicercaImmobileEditorState();
+  State<CriteriRicercaImmobileEditorRest> createState() => _CriteriRicercaImmobileEditorState();
 }
 
-class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEditor> {
+class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEditorRest> {
 
 
   final _formKey = GlobalKey<FormState>();
 
   _CriteriRicercaImmobileEditorState(){
+    fillcombo();
+  }
+
+  Future<void> fillcombo() async {
+
+      widget.winkhouseRest.getTipologieImmobili().then((value) =>  setState(() {widget.tipologieImmobile = value;}));
+      widget.winkhouseRest.getStatoConservativo().then((value) => setState(() {widget.statoConservativo = value;}));
+      widget.winkhouseRest.getClasseEnergetica().then((value) => setState(() {widget.classeEnergetica = value;}));
+      widget.winkhouseRest.getRiscaldamento().then((value) => setState(() {widget.riscaldamento = value;}));
+
+  }
+
+
+  @override
+  void initState() {
+    fillcombo();
   }
 
   @override
@@ -47,7 +65,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
           // the App.build method, and use it to set our appbar title.
             title: Text(widget.title),
         ),
-        body: Center(
+        body: Container(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
           child: Form(
@@ -63,7 +81,6 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                             flex: 1,
                             child: TextFormField(
                               decoration:const InputDecoration(
-
                                   labelText: "Provincia"
                               ),
                               onChanged: (text) {
@@ -76,7 +93,6 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                             flex: 1,
                             child: TextFormField(
                               decoration:const InputDecoration(
-
                                   labelText: "Cap"
                               ),
                               onChanged: (text) {
@@ -109,117 +125,6 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                         onChanged: (text) {
                           widget.criteri.indirizzo = text;
                         },
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            // optional flex property if flex is 1 because the default flex is 1
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Prezzo da "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.prezzoDa = double.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Prezzo a "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.prezzoA = double.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            // optional flex property if flex is 1 because the default flex is 1
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Mq da "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.mqDa = int.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Mq a "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.mqA = int.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            // optional flex property if flex is 1 because the default flex is 1
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Anno costruzione da "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.annoCostruzioneDa = int.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Anno costruzione a "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.annoCostruzioneA = int.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                        ],
                       ),
                       DropdownButton<TipologiaImmobile>(
                         isExpanded: true,
@@ -305,31 +210,29 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end,
-          children: [FloatingActionButton(
-          heroTag: "Cerca",
-          onPressed: () {
-            if ((widget.criteri.provincia.trim() != '') ||
-                (widget.criteri.cap.trim() != '') ||
-                (widget.criteri.citta.trim() != '') ||
-                (widget.criteri.zona.trim() != '') ||
-                (widget.criteri.indirizzo?.trim() != '') ||
-                (widget.criteri.prezzoDa != 0.0) || (widget.criteri.prezzoA != 0.0) ||
-                (widget.criteri.mqDa != 0) || (widget.criteri.mqA != 0) ||
-                (widget.criteri.annoCostruzioneDa != 0) || (widget.criteri.annoCostruzioneA != 0) ||
-                (widget.criteri.classeEnergetica != null) || (widget.criteri.riscaldamento != null) ||
-                (widget.criteri.tipologiaImmobile != null) || (widget.criteri.statoConservativo != null)
-            ) {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ImmobiliRicercaList(criteri:widget.criteri)));
-              }
-            else{
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Dati non validi impossibile procedere')),
-              );
-            }
-          },
-          child: const Icon(Icons.find_in_page),
-        ),
+          children: [
+            FloatingActionButton(
+              heroTag: "CercaRest",
+              onPressed: () {
+                if ((widget.criteri.provincia.trim() != '') ||
+                    (widget.criteri.cap.trim() != '') ||
+                    (widget.criteri.citta.trim() != '') ||
+                    (widget.criteri.zona.trim() != '') ||
+                    (widget.criteri.indirizzo?.trim() != '') ||
+                    (widget.criteri.classeEnergetica != null) || (widget.criteri.riscaldamento != null) ||
+                    (widget.criteri.tipologiaImmobile != null) || (widget.criteri.statoConservativo != null)
+                ) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ImmobiliRicercaRestList(criteri:widget.criteri)));
+                }
+                else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Dati non validi impossibile procedere')),
+                  );
+                }
+              },
+              child: const Icon(Icons.network_wifi_sharp),
+            )
         ])
     );
   }

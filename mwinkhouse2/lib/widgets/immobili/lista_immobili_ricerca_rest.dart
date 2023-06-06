@@ -20,7 +20,7 @@ class ImmobiliRicercaRestList extends StatefulWidget {
   CriteriRicercaImmobile? criteri;
   late WinkhouseRest winkhouseRest;
   ImmobiliRicercaRestList({Key? key,this.criteri}) : super(key: key){
-    this.winkhouseRest = WinkhouseRest();
+    winkhouseRest = WinkhouseRest();
   }
 
   @override
