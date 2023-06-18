@@ -4,6 +4,7 @@ import 'package:mwinkhouse2/widgets/immobili/criteri_ricerca_immobili_editor_res
 import 'package:mwinkhouse2/widgets/immobili/dettaglio_immobile.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
 
+import '../../objbox/dao/winkhouse_rest.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import '../../objbox/models/Immobile.dart';
 import '../../main.dart';
@@ -15,14 +16,17 @@ import 'criteri_ricerca_immobili_editor.dart';
 /// Each task has a check button to mark it completed and an edit button to
 /// update it. A task can also be swiped away to remove it.
 class ImmobiliList extends StatefulWidget {
+  late WinkhouseRest winkhouseRest;
   final String title = 'Lista immobili';
   Anagrafica? anagrafica;
+  bool validConnection = false;
   List<int> idImmobili = [];
 
   ImmobiliList({Key? key,this.anagrafica}) : super(key: key){
     for (var i = 0; i < (anagrafica?.proprieta.length ?? 0); i++ ){
       idImmobili.add(anagrafica?.proprieta[i].codImmobile ?? 0);
     }
+    winkhouseRest = WinkhouseRest();
   }
 
   @override
@@ -44,7 +48,20 @@ class _ImmobiliListState extends State<ImmobiliList> {
   List<int> selected = [];
   _ImmobiliListState(this.anagrafica,this.idImmobili);
 
+  Future<void> checkcon() async {
 
+    widget.winkhouseRest.getTipologieImmobili()
+        .then((value) =>  setState(() {widget.validConnection = true;}))
+        .catchError((error, stack){
+          widget.validConnection = false;
+    });
+
+  }
+
+  @override
+  void initState() {
+    checkcon();
+  }
   void _onCheckboxSelect(bool select, int codImmobile){
     if (select == true) {
       setState(() {
@@ -94,7 +111,7 @@ class _ImmobiliListState extends State<ImmobiliList> {
               child: Container(
                 decoration: const BoxDecoration(
                     border:
-                    Border(bottom: BorderSide(color: Colors.black12))),
+                    Border(bottom: BorderSide(width:2.0, color: Colors.black12))),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 18.0, horizontal: 10.0),
@@ -146,7 +163,7 @@ class _ImmobiliListState extends State<ImmobiliList> {
         actions: [
           PopupMenuButton(itemBuilder: (context)=>const [
             PopupMenuItem(value: 0, child: Text('Ricerca')),
-            PopupMenuItem(value: 1, child: Text('Ricerca remota')),
+            PopupMenuItem(value: 1, child: Text('Ricerca remota'))
           ],
             onSelected: (result) {
               if (result == 0) {
@@ -156,11 +173,17 @@ class _ImmobiliListState extends State<ImmobiliList> {
                 );
               }
               if (result == 1) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>
-                        CriteriRicercaImmobileEditorRest())
-                );
+                if (widget.validConnection) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>
+                          CriteriRicercaImmobileEditorRest())
+                  );
+                }else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('ip e porta winkouse non impostati o sbagliati')),
+                  );
+                }
               }
             },
           ),

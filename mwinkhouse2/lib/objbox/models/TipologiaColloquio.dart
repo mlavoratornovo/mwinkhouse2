@@ -3,6 +3,8 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class TipologiaColloquio{
 
+  TipologiaColloquio():super();
+
   @Id()
   int? codTipologiaColloquio;
 
@@ -13,4 +15,12 @@ class TipologiaColloquio{
 
   @override
   int get hashCode => super.hashCode;
+
+  factory TipologiaColloquio.fromJson(Map<String, dynamic> json){
+    TipologiaColloquio instance = TipologiaColloquio();
+    instance.codTipologiaColloquio = json['codTipologiaColloquio'];
+    instance.descrizione = json['descrizione'];
+    return instance;
+  }
+
 }

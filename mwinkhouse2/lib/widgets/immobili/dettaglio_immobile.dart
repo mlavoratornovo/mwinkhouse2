@@ -216,7 +216,8 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   if (value == null || value.isEmpty) {
                     return 'Codice riferimento dato obbligatorio';
                   }else{
-                    if (objectbox.getImmobileByRif(value) != null){
+                    Immobile? i = objectbox.getImmobileByRif(value);
+                    if ( i != null && i.codImmobile != widget.immobile.codImmobile){
                       return 'Codice riferimento presente in archivio';
                     }
                   }

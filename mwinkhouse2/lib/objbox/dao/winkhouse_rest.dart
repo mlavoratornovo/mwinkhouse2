@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
 import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
 import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
+import 'package:mwinkhouse2/objbox/models/TipologiaContatto.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
+import 'package:mwinkhouse2/objbox/models/TipologiaStanza.dart';
 
 import '../models/CriteriRicercaImmobile.dart';
 import 'package:http/http.dart' as http;
@@ -111,7 +114,7 @@ class WinkhouseRest{
   Stream<List<Immobile>> findImmobili({criteri:CriteriRicercaImmobile}) async*{
     //List<Immobile> immobili = List<Immobile>.empty(growable: true);
     Map<int,Immobile> mimmobili = <int,Immobile>{};
-    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/search");
+    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}:${this.getWinkhousePort()}/search");
 
       List<CriterioRicercaRest> criteriRicerca = buildBodyObj(criteri: criteri);
       for(var i=0;i<criteriRicerca.length;i++){
@@ -141,7 +144,7 @@ class WinkhouseRest{
 
   Future<List<TipologiaImmobile>> getTipologieImmobili() async{
     List<TipologiaImmobile> tipologieImmobili = List<TipologiaImmobile>.empty(growable: true);
-    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/core/search?tipo=ti");
+    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}:${this.getWinkhousePort()}/core/search?tipo=ti");
     final response = await http.get(findUrl, headers:getHeaders());
     if (response.statusCode == 200) {
       Iterable l = json.decode(response.body);
@@ -154,7 +157,7 @@ class WinkhouseRest{
 
   Future<List<StatoConservativo>> getStatoConservativo() async {
     List<StatoConservativo> statoConservativo = List<StatoConservativo>.empty(growable: true);
-    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/core/search?tipo=sc");
+    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}:${this.getWinkhousePort()}/core/search?tipo=sc");
     final response = await http.get(findUrl, headers:getHeaders());
     if (response.statusCode == 200) {
       Iterable l = json.decode(response.body);
@@ -167,7 +170,7 @@ class WinkhouseRest{
 
   Future<List<Riscaldamento>> getRiscaldamento() async {
     List<Riscaldamento> riscaldamento = List<Riscaldamento>.empty(growable: true);
-    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/core/search?tipo=ri");
+    Uri findUrl = Uri.parse("${getWinkhouseIp()}:${getWinkhousePort()}/core/search?tipo=ri");
     final response = await http.get(findUrl, headers:getHeaders());
     if (response.statusCode == 200) {
       Iterable l = json.decode(response.body);
@@ -180,7 +183,7 @@ class WinkhouseRest{
 
   Future<List<ClasseEnergetica>> getClasseEnergetica() async {
     List<ClasseEnergetica> classeEnergetica = List<ClasseEnergetica>.empty(growable: true);
-    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}/core/search?tipo=ce");
+    Uri findUrl = Uri.parse("${getWinkhouseIp()}:${getWinkhousePort()}/core/search?tipo=ce");
     final response = await http.get(findUrl, headers:getHeaders());
     if (response.statusCode == 200) {
       Iterable l = json.decode(response.body);
@@ -191,4 +194,42 @@ class WinkhouseRest{
     }
   }
 
+  Future<List<TipologiaStanza>> getTipologiaStanza() async {
+    List<TipologiaStanza> tipologiaStanza = List<TipologiaStanza>.empty(growable: true);
+    Uri findUrl = Uri.parse("${getWinkhouseIp()}:${getWinkhousePort()}/core/search?tipo=ts");
+    final response = await http.get(findUrl, headers:getHeaders());
+    if (response.statusCode == 200) {
+      Iterable l = json.decode(response.body);
+      tipologiaStanza.addAll(List<TipologiaStanza>.from(l.map((model)=> TipologiaStanza.fromJson(model))));
+      return tipologiaStanza;
+    } else {
+      throw Exception('Errore caricamento classi energetiche');
+    }
+  }
+
+  Future<List<TipologiaContatto>> getTipologiaContatto() async {
+    List<TipologiaContatto> tipologiaContatto = List<TipologiaContatto>.empty(growable: true);
+    Uri findUrl = Uri.parse("${getWinkhouseIp()}:${getWinkhousePort()}/core/search?tipo=tcon");
+    final response = await http.get(findUrl, headers:getHeaders());
+    if (response.statusCode == 200) {
+      Iterable l = json.decode(response.body);
+      tipologiaContatto.addAll(List<TipologiaContatto>.from(l.map((model)=> TipologiaContatto.fromJson(model))));
+      return tipologiaContatto;
+    } else {
+      throw Exception('Errore caricamento classi energetiche');
+    }
+  }
+
+  Future<List<ClasseCliente>> getClassiClienti() async {
+    List<ClasseCliente> classeCliente = List<ClasseCliente>.empty(growable: true);
+    Uri findUrl = Uri.parse("${getWinkhouseIp()}:${getWinkhousePort()}/core/search?tipo=cc");
+    final response = await http.get(findUrl, headers:getHeaders());
+    if (response.statusCode == 200) {
+      Iterable l = json.decode(response.body);
+      classeCliente.addAll(List<ClasseCliente>.from(l.map((model)=> ClasseCliente.fromJson(model))));
+      return classeCliente;
+    } else {
+      throw Exception('Errore caricamento classi clienti');
+    }
+  }
 }

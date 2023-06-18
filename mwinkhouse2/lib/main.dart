@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 matchTextDirection: true,height: 100,
               )
 */
-               Image.asset('assets/images/winkhouse450.png')
+               Image.asset('assets/images/winkhouse450.png', scale: 2.0)
             ],
           ),
         ),

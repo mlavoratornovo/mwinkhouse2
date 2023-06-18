@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
 import '../../main.dart';
+import '../../objbox/dao/winkhouse_rest.dart';
 import '../../objbox/models/ClasseCliente.dart';
 import '../../objbox/models/ClasseEnergetica.dart';
 import '../../objbox/models/Riscaldamento.dart';
@@ -15,6 +17,14 @@ import '../../objbox/models/TipologiaStanza.dart';
 class BaseData extends StatefulWidget {
 
   final String title = 'Categorie';
+  final Icon addIcon = const Icon(Icons.add_box_outlined,color: Colors.white);
+  final Icon editIcon = const Icon(Icons.edit_outlined,color: Colors.white);
+  final Icon deleteIcon = const Icon(Icons.delete_outline_outlined,color: Colors.white);
+  final Icon saveIcon = const Icon(Icons.save_outlined,color: Colors.white);
+  final Icon syncIcon = const Icon(Icons.screen_rotation_alt_outlined,color: Colors.white);
+
+  late WinkhouseRest winkhouseRest;
+  bool validConnection = false;
 
   List<TipologiaImmobile> tipologieImmobile = [];
   List<StatoConservativo> statoConservativo = [];
@@ -40,6 +50,7 @@ class BaseData extends StatefulWidget {
     tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
     classeCliente = objectbox.classeClienteBox.getAll();
     tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+    winkhouseRest = WinkhouseRest();
   }
 
   @override
@@ -52,13 +63,23 @@ class _BaseDataState extends State<BaseData> {
 
   _BaseDataState();
 
+  Future<void> checkcon() async {
+
+    widget.winkhouseRest.getTipologieImmobili()
+        .then((value) =>  setState(() {widget.validConnection = true;}))
+        .catchError((error, stack){
+      widget.validConnection = false;
+    });
+
+  }
+
   Future<dynamic> _openPopUp(BuildContext context, String type) async {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             content: Container(
-              height: 150,
+              height: ((type=='ClasseEnergetica')?200:110),
               child: Form(
                   key: _formKey,
                 child:Column(
@@ -93,12 +114,10 @@ class _BaseDataState extends State<BaseData> {
       widgets.add(
           TextButton(
             style: TextButton.styleFrom(
-                foregroundColor: Colors.blue,
-                side: const BorderSide(
-                    color: Colors.blue,
-                    width: 1.0,
-                    style: BorderStyle.solid)
+              backgroundColor: Colors.blue,
+              shape: CircleBorder(),
             ),
+            child: widget.saveIcon,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 if (widget.tipologieImmobileSelected != null) {
@@ -118,8 +137,7 @@ class _BaseDataState extends State<BaseData> {
               }
               Navigator.of(context).pop();
             },
-            child: const Text("Salva"),
-        )
+          ),
       );
     }
     if (type == 'StatoConservativo'){
@@ -143,12 +161,10 @@ class _BaseDataState extends State<BaseData> {
       widgets.add(
           TextButton(
             style: TextButton.styleFrom(
-                foregroundColor: Colors.blue,
-                side: const BorderSide(
-                    color: Colors.blue,
-                    width: 1.0,
-                    style: BorderStyle.solid)
+              backgroundColor: Colors.blue,
+              shape: CircleBorder(),
             ),
+            child: widget.saveIcon,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 if (widget.statoConservativoSelected != null) {
@@ -167,8 +183,7 @@ class _BaseDataState extends State<BaseData> {
               }
               Navigator.of(context).pop();
             },
-            child: const Text("Salva"),
-          )
+          ),
       );
 
     }
@@ -176,7 +191,7 @@ class _BaseDataState extends State<BaseData> {
       widgets.add(
           TextFormField(
             decoration:const InputDecoration(
-                labelText: "Classe Energetica"
+                labelText: "Nome classe energetica"
             ),
             validator:  (value) {
               if (value == null || value.isEmpty) {
@@ -191,14 +206,29 @@ class _BaseDataState extends State<BaseData> {
           )
       );
       widgets.add(
+          TextFormField(
+            decoration:const InputDecoration(
+                labelText: "Descrizione classe energetica"
+            ),
+            validator:  (value) {
+              if (value == null || value.isEmpty) {
+                return 'Inserire la descrizione';
+              }
+              return null;
+            },
+            onChanged: (text) {
+              widget.classeEnergeticaSelected?.descrizione = text;
+            },
+            initialValue: "${(widget.classeEnergeticaSelected?.descrizione == null)?"":widget.classeEnergeticaSelected?.descrizione}",
+          )
+      );
+      widgets.add(
           TextButton(
             style: TextButton.styleFrom(
-                foregroundColor: Colors.blue,
-                side: const BorderSide(
-                    color: Colors.blue,
-                    width: 1.0,
-                    style: BorderStyle.solid)
+              backgroundColor: Colors.blue,
+              shape: CircleBorder(),
             ),
+            child: widget.saveIcon,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 if (widget.classeEnergeticaSelected != null) {
@@ -218,8 +248,7 @@ class _BaseDataState extends State<BaseData> {
               }
               Navigator.of(context).pop();
             },
-            child: const Text("Salva"),
-          )
+          ),
       );
 
     }
@@ -244,12 +273,10 @@ class _BaseDataState extends State<BaseData> {
       widgets.add(
           TextButton(
             style: TextButton.styleFrom(
-                foregroundColor: Colors.blue,
-                side: const BorderSide(
-                    color: Colors.blue,
-                    width: 1.0,
-                    style: BorderStyle.solid)
+              backgroundColor: Colors.blue,
+              shape: CircleBorder(),
             ),
+            child: widget.saveIcon,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 if (widget.riscaldamentoSelected != null) {
@@ -270,8 +297,8 @@ class _BaseDataState extends State<BaseData> {
               }
               Navigator.of(context).pop();
             },
-            child: const Text("Salva"),
-          )
+          ),
+
       );
 
     }
@@ -296,12 +323,10 @@ class _BaseDataState extends State<BaseData> {
       widgets.add(
           TextButton(
             style: TextButton.styleFrom(
-                foregroundColor: Colors.blue,
-                side: const BorderSide(
-                    color: Colors.blue,
-                    width: 1.0,
-                    style: BorderStyle.solid)
+              backgroundColor: Colors.blue,
+              shape: CircleBorder(),
             ),
+            child: widget.saveIcon,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 if (widget.tipologiaStanzaSelected != null) {
@@ -321,8 +346,7 @@ class _BaseDataState extends State<BaseData> {
               }
               Navigator.of(context).pop();
             },
-            child: const Text("Salva"),
-          )
+          ),
       );
 
     }
@@ -347,12 +371,10 @@ class _BaseDataState extends State<BaseData> {
       widgets.add(
           TextButton(
             style: TextButton.styleFrom(
-                foregroundColor: Colors.blue,
-                side: const BorderSide(
-                    color: Colors.blue,
-                    width: 1.0,
-                    style: BorderStyle.solid)
+              backgroundColor: Colors.blue,
+              shape: CircleBorder(),
             ),
+            child: widget.saveIcon,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 if (widget.classeClienteSelected != null) {
@@ -372,12 +394,10 @@ class _BaseDataState extends State<BaseData> {
               }
               Navigator.of(context).pop();
             },
-            child: const Text("Salva"),
-          )
+          ),
       );
-
     }
-    if (type == 'Tipologia Contatto'){
+    if (type == 'TipologiaContatto'){
       widgets.add(
           TextFormField(
             decoration:const InputDecoration(
@@ -398,12 +418,10 @@ class _BaseDataState extends State<BaseData> {
       widgets.add(
           TextButton(
             style: TextButton.styleFrom(
-                foregroundColor: Colors.blue,
-                side: const BorderSide(
-                    color: Colors.blue,
-                    width: 1.0,
-                    style: BorderStyle.solid)
+              backgroundColor: Colors.blue,
+              shape: CircleBorder(),
             ),
+            child: widget.saveIcon,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 if (widget.tipologiaContattoSelected != null) {
@@ -423,12 +441,387 @@ class _BaseDataState extends State<BaseData> {
               }
               Navigator.of(context).pop();
             },
-            child: const Text("Salva"),
-          )
+          ),
       );
 
     }
     return widgets;
+  }
+
+  Future<void> _syncData(BuildContext context, String type) async {
+    if (widget.validConnection == true){
+      int dataMode = Settings.getValue<int>("baseDataMergeMode", 0);
+      switch(type){
+        case 'TipologiaImmobile':
+          List<TipologiaImmobile> winkTipologieImmobili = await widget.winkhouseRest.getTipologieImmobili();
+          switch(dataMode) {
+            case 0:
+              for (final e in winkTipologieImmobili){
+                e.codTipologiaImmobile = null;
+              }
+              objectbox.tipologiaImmobileBox.putMany(winkTipologieImmobili);
+              setState(() {});
+              break;
+            case 1:
+              List<TipologiaImmobile> obTipologieImmobili = objectbox.tipologiaImmobileBox.getAll();
+              for(final e in winkTipologieImmobili){
+                try {
+                  TipologiaImmobile ti = obTipologieImmobili.firstWhere((
+                      element) =>
+                  element.codTipologiaImmobile == e.codTipologiaImmobile);
+                  ti.descrizione = e.descrizione;
+                }on StateError {
+                  e.codTipologiaImmobile = null;
+                  obTipologieImmobili.add(e);
+                }
+              }
+              objectbox.tipologiaImmobileBox.putMany(obTipologieImmobili);
+              setState(() {});
+              break;
+            case 2:
+              List<TipologiaImmobile> obTipologieImmobili = objectbox.tipologiaImmobileBox.getAll();
+              for(final e in winkTipologieImmobili){
+                try {
+                  TipologiaImmobile ti = obTipologieImmobili.firstWhere((
+                      element) =>
+                  element.descrizione == e.descrizione);
+                  ti.codTipologiaImmobile = e.codTipologiaImmobile;
+                }on StateError {
+                  e.codTipologiaImmobile = null;
+                  obTipologieImmobili.add(e);
+                }
+              }
+              objectbox.tipologiaImmobileBox.putMany(obTipologieImmobili);
+              setState(() {});
+              break;
+            case 3:
+              for (final e in winkTipologieImmobili){
+                e.codTipologiaImmobile = null;
+              }
+              objectbox.tipologiaImmobileBox.removeAll();
+              objectbox.tipologiaImmobileBox.putMany(winkTipologieImmobili);
+              break;
+          }
+          break;
+        case 'StatoConservativo':
+          List<StatoConservativo> winkStatoConservativo = await widget.winkhouseRest.getStatoConservativo();
+          switch(dataMode) {
+            case 0:
+              for (final e in winkStatoConservativo){
+                e.codStatoConservativo = null;
+              }
+              objectbox.statoConservativoBox.putMany(winkStatoConservativo);
+              setState(() {});
+              break;
+            case 1:
+              List<StatoConservativo> obStatoConservativo = objectbox.statoConservativoBox.getAll();
+              for(final e in winkStatoConservativo){
+                try {
+                  StatoConservativo ti = obStatoConservativo.firstWhere((
+                      element) =>
+                  element.codStatoConservativo == e.codStatoConservativo);
+                  ti.descrizione = e.descrizione;
+                }on StateError {
+                  e.codStatoConservativo = null;
+                  obStatoConservativo.add(e);
+                }
+              }
+              objectbox.statoConservativoBox.putMany(obStatoConservativo);
+              setState(() {});
+              break;
+            case 2:
+              List<StatoConservativo> obStatoConservativo = objectbox.statoConservativoBox.getAll();
+              for(final e in winkStatoConservativo){
+                try {
+                  StatoConservativo ti = obStatoConservativo.firstWhere((
+                      element) =>
+                  element.descrizione == e.descrizione);
+                  ti.codStatoConservativo = e.codStatoConservativo;
+                }on StateError {
+                  e.codStatoConservativo = null;
+                  obStatoConservativo.add(e);
+                }
+              }
+              objectbox.statoConservativoBox.putMany(obStatoConservativo);
+              setState(() {});
+              break;
+            case 3:
+              for (final e in winkStatoConservativo){
+                e.codStatoConservativo = null;
+              }
+              objectbox.statoConservativoBox.removeAll();
+              objectbox.statoConservativoBox.putMany(winkStatoConservativo);
+              break;
+          }
+          break;
+        case 'ClasseEnergetica':
+          List<ClasseEnergetica> winkClasseEnergetica = await widget.winkhouseRest.getClasseEnergetica();
+          switch(dataMode) {
+            case 0:
+              for (final e in winkClasseEnergetica){
+                e.codClasseEnergetica = null;
+              }
+              objectbox.classeEnergeticaBox.putMany(winkClasseEnergetica);
+              setState(() {});
+              break;
+            case 1:
+              List<ClasseEnergetica> obClasseEnergetica = objectbox.classeEnergeticaBox.getAll();
+              for(final e in winkClasseEnergetica){
+                try {
+                  ClasseEnergetica ti = obClasseEnergetica.firstWhere((
+                      element) =>
+                  element.codClasseEnergetica == e.codClasseEnergetica);
+                  ti.descrizione = e.descrizione;
+                  ti.nome = e.nome;
+                }on StateError {
+                  e.codClasseEnergetica = null;
+                  obClasseEnergetica.add(e);
+                }
+              }
+              objectbox.classeEnergeticaBox.putMany(obClasseEnergetica);
+              setState(() {});
+              break;
+            case 2:
+              List<ClasseEnergetica> obClasseEnergetica = objectbox.classeEnergeticaBox.getAll();
+              for(final e in winkClasseEnergetica){
+                try {
+                  ClasseEnergetica ti = obClasseEnergetica.firstWhere((
+                      element) =>
+                  element.nome == e.nome);
+                  ti.codClasseEnergetica = e.codClasseEnergetica;
+                  ti.descrizione = e.descrizione;
+                }on StateError {
+                  e.codClasseEnergetica = null;
+                  obClasseEnergetica.add(e);
+                }
+              }
+              objectbox.classeEnergeticaBox.putMany(obClasseEnergetica);
+              setState(() {});
+              break;
+            case 3:
+              for (final e in winkClasseEnergetica){
+                e.codClasseEnergetica = null;
+              }
+              objectbox.classeEnergeticaBox.removeAll();
+              objectbox.classeEnergeticaBox.putMany(winkClasseEnergetica);
+              break;
+          }
+          break;
+        case 'Riscaldamento':
+          List<Riscaldamento> winkRiscaldamento = await widget.winkhouseRest.getRiscaldamento();
+          switch(dataMode) {
+            case 0:
+              for (final e in winkRiscaldamento){
+                e.codRiscaldamento = null;
+              }
+              objectbox.riscaldamentoBox.putMany(winkRiscaldamento);
+              setState(() {});
+              break;
+            case 1:
+              List<Riscaldamento> obRiscaldamento = objectbox.riscaldamentoBox.getAll();
+              for(final e in winkRiscaldamento){
+                try {
+                  Riscaldamento ti = obRiscaldamento.firstWhere((
+                      element) =>
+                  element.codRiscaldamento == e.codRiscaldamento);
+                  ti.descrizione = e.descrizione;
+                }on StateError {
+                  e.codRiscaldamento = null;
+                  obRiscaldamento.add(e);
+                }
+              }
+              objectbox.riscaldamentoBox.putMany(obRiscaldamento);
+              setState(() {});
+              break;
+            case 2:
+              List<Riscaldamento> obRiscaldamento = objectbox.riscaldamentoBox.getAll();
+              for(final e in winkRiscaldamento){
+                try {
+                  Riscaldamento ti = obRiscaldamento.firstWhere((
+                      element) =>
+                  element.descrizione == e.descrizione);
+                  ti.codRiscaldamento = e.codRiscaldamento;
+                }on StateError {
+                  e.codRiscaldamento = null;
+                  obRiscaldamento.add(e);
+                }
+              }
+              objectbox.riscaldamentoBox.putMany(obRiscaldamento);
+              setState(() {});
+              break;
+            case 3:
+              for (final e in winkRiscaldamento){
+                e.codRiscaldamento = null;
+              }
+              objectbox.riscaldamentoBox.removeAll();
+              objectbox.riscaldamentoBox.putMany(winkRiscaldamento);
+              break;
+          }
+          break;
+        case 'TipologiaStanza':
+          List<TipologiaStanza> winkTipologiaStanza = await widget.winkhouseRest.getTipologiaStanza();
+          switch(dataMode) {
+            case 0:
+              for (final e in winkTipologiaStanza){
+                e.codTipologiaStanza = null;
+              }
+              objectbox.tipologiaStanzaBox.putMany(winkTipologiaStanza);
+              setState(() {});
+              break;
+            case 1:
+              List<TipologiaStanza> obTipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
+              for(final e in winkTipologiaStanza){
+                try {
+                  TipologiaStanza ti = obTipologiaStanza.firstWhere((
+                      element) =>
+                  element.codTipologiaStanza == e.codTipologiaStanza);
+                  ti.descrizione = e.descrizione;
+                }on StateError {
+                  e.codTipologiaStanza = null;
+                  obTipologiaStanza.add(e);
+                }
+              }
+              objectbox.tipologiaStanzaBox.putMany(obTipologiaStanza);
+              setState(() {});
+              break;
+            case 2:
+              List<TipologiaStanza> obTipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
+              for(final e in winkTipologiaStanza){
+                try {
+                  TipologiaStanza ti = obTipologiaStanza.firstWhere((
+                      element) =>
+                  element.descrizione == e.descrizione);
+                  ti.codTipologiaStanza = e.codTipologiaStanza;
+                }on StateError {
+                  e.codTipologiaStanza = null;
+                  obTipologiaStanza.add(e);
+                }
+              }
+              objectbox.tipologiaStanzaBox.putMany(obTipologiaStanza);
+              setState(() {});
+              break;
+            case 3:
+              for (final e in winkTipologiaStanza){
+                e.codTipologiaStanza = null;
+              }
+              objectbox.tipologiaStanzaBox.removeAll();
+              objectbox.tipologiaStanzaBox.putMany(winkTipologiaStanza);
+              break;
+          }
+          break;
+        case 'ClasseCliente':
+          List<ClasseCliente> winkClasseCliente = await widget.winkhouseRest.getClassiClienti();
+          switch(dataMode) {
+            case 0:
+              for (final e in winkClasseCliente){
+                e.codClasseCliente = null;
+              }
+              objectbox.classeClienteBox.putMany(winkClasseCliente);
+              setState(() {});
+              break;
+            case 1:
+              List<ClasseCliente> obClasseCliente = objectbox.classeClienteBox.getAll();
+              for(final e in winkClasseCliente){
+                try {
+                  ClasseCliente ti = obClasseCliente.firstWhere((
+                      element) =>
+                  element.codClasseCliente == e.codClasseCliente);
+                  ti.descrizione = e.descrizione;
+                }on StateError {
+                  e.codClasseCliente = null;
+                  obClasseCliente.add(e);
+                }
+              }
+              objectbox.classeClienteBox.putMany(obClasseCliente);
+              setState(() {});
+              break;
+            case 2:
+              List<ClasseCliente> obClasseCliente = objectbox.classeClienteBox.getAll();
+              for(final e in winkClasseCliente){
+                try {
+                  ClasseCliente ti = obClasseCliente.firstWhere((
+                      element) =>
+                  element.descrizione == e.descrizione);
+                  ti.codClasseCliente = e.codClasseCliente;
+                }on StateError {
+                  e.codClasseCliente = null;
+                  obClasseCliente.add(e);
+                }
+              }
+              objectbox.classeClienteBox.putMany(obClasseCliente);
+              setState(() {});
+              break;
+            case 3:
+              for (final e in winkClasseCliente){
+                e.codClasseCliente = null;
+              }
+              objectbox.classeClienteBox.removeAll();
+              objectbox.classeClienteBox.putMany(winkClasseCliente);
+              break;
+          }
+          break;
+        case 'TipologiaContatto':
+          List<TipologiaContatto> winkTipologiaContatto = await widget.winkhouseRest.getTipologiaContatto();
+          switch(dataMode) {
+            case 0:
+              for (final e in winkTipologiaContatto){
+                e.codTipologiaContatto = null;
+              }
+              objectbox.tipologiaContattoBox.putMany(winkTipologiaContatto);
+              setState(() {});
+              break;
+            case 1:
+              List<TipologiaContatto> obTipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+              for(final e in winkTipologiaContatto){
+                try {
+                  TipologiaContatto ti = obTipologiaContatto.firstWhere((
+                      element) =>
+                  element.codTipologiaContatto == e.codTipologiaContatto);
+                  ti.descrizione = e.descrizione;
+                }on StateError {
+                  e.codTipologiaContatto = null;
+                  obTipologiaContatto.add(e);
+                }
+              }
+              objectbox.tipologiaContattoBox.putMany(obTipologiaContatto);
+              setState(() {});
+              break;
+            case 2:
+              List<TipologiaContatto> obTipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+              for(final e in winkTipologiaContatto){
+                try {
+                  TipologiaContatto ti = obTipologiaContatto.firstWhere((
+                      element) =>
+                  element.descrizione == e.descrizione);
+                  ti.codTipologiaContatto = e.codTipologiaContatto;
+                }on StateError {
+                  e.codTipologiaContatto = null;
+                  obTipologiaContatto.add(e);
+                }
+              }
+              objectbox.tipologiaContattoBox.putMany(obTipologiaContatto);
+              setState(() {});
+              break;
+            case 3:
+              for (final e in winkTipologiaContatto){
+                e.codTipologiaContatto = null;
+              }
+              objectbox.tipologiaContattoBox.removeAll();
+              objectbox.tipologiaContattoBox.putMany(winkTipologiaContatto);
+              break;
+          }
+          break;
+      }
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Impossibile connettersi a winkhouse controllare le impostazioni')),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    checkcon();
   }
 
   @override
@@ -477,32 +870,44 @@ class _BaseDataState extends State<BaseData> {
                                 ),
                               Row(
                                   children: [
-
                                     Expanded(
-                                          child:TextButton(
-                                            child: Text("Modifica"),
-                                            style: TextButton.styleFrom(
-                                              foregroundColor: Colors.blue,
-                                              side: const BorderSide(
-                                                  color: Colors.blue,
-                                                  width: 1.0,
-                                                  style: BorderStyle.solid)
-                                            ),
-                                            onPressed: () {
-                                              _openPopUp(context,'TipologiaImmobile');
-                                            },
+                                        child:TextButton(
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: Colors.blue,
+                                            shape: CircleBorder(),
                                           ),
+                                          child: widget.addIcon,
+                                          onPressed: () {
+                                            widget.tipologieImmobileSelected = TipologiaImmobile();
+                                            _openPopUp(context,'TipologiaImmobile');
+                                          },
+                                        ),
+                                    ),
+                                    Expanded(
+                                        child:TextButton(
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: Colors.blue,
+                                            shape: CircleBorder(),
+                                          ),
+                                          child: widget.editIcon,
+                                          onPressed: () {
+                                            if (widget.tipologieImmobileSelected != null){
+                                              _openPopUp(context,'TipologiaImmobile');
+                                            }else{
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                const SnackBar(content: Text('Selezionare lo tipologia')),
+                                              );
+                                            }
+                                          },
+                                        ),
                                     ),
                                     Expanded(
                                       child:TextButton(
-                                        child: Text("Cancella"),
                                         style: TextButton.styleFrom(
-                                            foregroundColor: Colors.blue,
-                                            side: const BorderSide(
-                                                color: Colors.blue,
-                                                width: 1.0,
-                                                style: BorderStyle.solid)
+                                          backgroundColor: Colors.blue,
+                                          shape: CircleBorder(),
                                         ),
+                                        child: widget.deleteIcon,
                                         onPressed: () {
                                           if (widget.tipologieImmobileSelected != null){
                                             objectbox.tipologiaImmobileBox.remove(widget.tipologieImmobileSelected?.codTipologiaImmobile??0);
@@ -519,20 +924,16 @@ class _BaseDataState extends State<BaseData> {
                                       ),
                                     ),
                                     Expanded(
-                                        child: TextButton(
-                                          child: Text("Aggiungi"),
+                                        child:TextButton(
                                           style: TextButton.styleFrom(
-                                            foregroundColor: Colors.blue,
-                                            side: const BorderSide(
-                                              color: Colors.blue,
-                                              width: 1.0,
-                                              style: BorderStyle.solid)
+                                            backgroundColor: Colors.blue,
+                                            shape: CircleBorder(),
                                           ),
+                                          child: widget.syncIcon,
                                           onPressed: () {
-                                            widget.tipologieImmobileSelected = TipologiaImmobile();
-                                            _openPopUp(context,'TipologiaImmobile');
+                                            _syncData(context, 'TipologiaImmobile');
                                           },
-                                        )
+                                        ),
                                     ),
                                   ],
                               ),
@@ -545,7 +946,7 @@ class _BaseDataState extends State<BaseData> {
                             DropdownButton<StatoConservativo>(
                               hint: Text('Stato Conservativo'),
                               isExpanded: true,
-                              value: null,
+                              value: widget.statoConservativoSelected,
                               onChanged: (StatoConservativo? newValue) {
                                 setState(() {
                                   widget.statoConservativoSelected = newValue;
@@ -564,32 +965,44 @@ class _BaseDataState extends State<BaseData> {
                             ),
                             Row(
                               children: [
-
+                                Expanded(
+                                    child:TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
+                                      ),
+                                      child: widget.addIcon,
+                                      onPressed: () {
+                                        widget.statoConservativoSelected = StatoConservativo();
+                                        _openPopUp(context,'StatoConservativo');
+                                      },
+                                    ),
+                                ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Modifica"),
                                     style: TextButton.styleFrom(
-                                      foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.editIcon,
                                     onPressed: () {
-                                      _openPopUp(context,'StatoConservativo');
+                                      if (widget.statoConservativoSelected != null){
+                                        _openPopUp(context,'StatoConservativo');
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare lo stato')),
+                                        );
+                                      }
                                     },
                                   ),
                                 ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Cancella"),
                                     style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.deleteIcon,
                                     onPressed: () {
                                       if (widget.statoConservativoSelected != null){
                                         objectbox.statoConservativoBox.remove(widget.statoConservativoSelected?.codStatoConservativo??0);
@@ -606,21 +1019,18 @@ class _BaseDataState extends State<BaseData> {
                                   ),
                                 ),
                                 Expanded(
-                                    child: TextButton(
-                                      child: Text("Aggiungi"),
-                                      style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                          side: const BorderSide(
-                                              color: Colors.blue,
-                                              width: 1.0,
-                                              style: BorderStyle.solid)
-                                      ),
-                                      onPressed: () {
-                                        widget.statoConservativoSelected = StatoConservativo();
-                                        _openPopUp(context,'StatoConservativo');
-                                      },
-                                    )
+                                  child:TextButton(
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
+                                    ),
+                                    child: widget.syncIcon,
+                                    onPressed: () {
+                                      _syncData(context, 'StatoConservativo');
+                                    },
+                                  ),
                                 ),
+
                               ],
                             ),
                            ],
@@ -632,7 +1042,7 @@ class _BaseDataState extends State<BaseData> {
                             DropdownButton<ClasseEnergetica>(
                               hint: Text('Classe Energetica'),
                               isExpanded: true,
-                              value: null,
+                              value: widget.classeEnergeticaSelected,
                               onChanged: (ClasseEnergetica? newValue) {
                                 setState(() {
                                   widget.classeEnergeticaSelected = newValue;
@@ -652,32 +1062,44 @@ class _BaseDataState extends State<BaseData> {
                             ),
                             Row(
                               children: [
-
+                                Expanded(
+                                    child:TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
+                                      ),
+                                      child: widget.addIcon,
+                                      onPressed: () {
+                                        widget.classeEnergeticaSelected = ClasseEnergetica();
+                                        _openPopUp(context,'ClasseEnergetica');
+                                      },
+                                    ),
+                                ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Modifica"),
                                     style: TextButton.styleFrom(
-                                      foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.editIcon,
                                     onPressed: () {
-                                      _openPopUp(context,'ClasseEnergetica');
+                                      if (widget.classeEnergeticaSelected != null){
+                                        _openPopUp(context,'ClasseEnergetica');
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare la classe energetica')),
+                                        );
+                                      }
                                     },
                                   ),
                                 ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Cancella"),
                                     style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.deleteIcon,
                                     onPressed: () {
                                       if (widget.classeEnergeticaSelected != null){
                                         objectbox.classeEnergeticaBox.remove(widget.classeEnergeticaSelected?.codClasseEnergetica??0);
@@ -694,20 +1116,16 @@ class _BaseDataState extends State<BaseData> {
                                   ),
                                 ),
                                 Expanded(
-                                    child: TextButton(
-                                      child: Text("Aggiungi"),
+                                    child:TextButton(
                                       style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                          side: const BorderSide(
-                                              color: Colors.blue,
-                                              width: 1.0,
-                                              style: BorderStyle.solid)
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
                                       ),
+                                      child: widget.syncIcon,
                                       onPressed: () {
-                                        widget.classeEnergeticaSelected = ClasseEnergetica();
-                                        _openPopUp(context,'ClasseEnergetica');
+                                        _syncData(context, 'ClasseEnergetica');
                                       },
-                                    )
+                                    ),
                                 ),
                               ],
                             ),
@@ -720,7 +1138,7 @@ class _BaseDataState extends State<BaseData> {
                             DropdownButton<Riscaldamento>(
                               hint: Text('Riscaldamento'),
                               isExpanded: true,
-                              value: null,
+                              value: widget.riscaldamentoSelected,
                               onChanged: (Riscaldamento? newValue) {
                                 setState(() {
                                   widget.riscaldamentoSelected = newValue;
@@ -739,32 +1157,44 @@ class _BaseDataState extends State<BaseData> {
                             ),
                             Row(
                               children: [
-
+                                Expanded(
+                                    child:TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
+                                      ),
+                                      child: widget.addIcon,
+                                      onPressed: () {
+                                        widget.riscaldamentoSelected = Riscaldamento();
+                                        _openPopUp(context,'Riscaldamento');
+                                      },
+                                    ),
+                                ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Modifica"),
                                     style: TextButton.styleFrom(
-                                      foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.editIcon,
                                     onPressed: () {
-                                      _openPopUp(context,'Riscaldamento');
+                                      if (widget.riscaldamentoSelected != null){
+                                        _openPopUp(context,'Riscaldamento');
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare il riscaldamento')),
+                                        );
+                                      }
                                     },
                                   ),
                                 ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Cancella"),
                                     style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.deleteIcon,
                                     onPressed: () {
                                       if (widget.riscaldamentoSelected != null){
                                         objectbox.riscaldamentoBox.remove(widget.riscaldamentoSelected?.codRiscaldamento??0);
@@ -781,20 +1211,16 @@ class _BaseDataState extends State<BaseData> {
                                   ),
                                 ),
                                 Expanded(
-                                    child: TextButton(
-                                      child: Text("Aggiungi"),
+                                    child:TextButton(
                                       style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                          side: const BorderSide(
-                                              color: Colors.blue,
-                                              width: 1.0,
-                                              style: BorderStyle.solid)
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
                                       ),
+                                      child: widget.syncIcon,
                                       onPressed: () {
-                                        widget.riscaldamentoSelected = Riscaldamento();
-                                        _openPopUp(context,'Riscaldamento');
+                                        _syncData(context, 'Riscaldamento');
                                       },
-                                    )
+                                    ),
                                 ),
                               ],
                             ),
@@ -807,7 +1233,7 @@ class _BaseDataState extends State<BaseData> {
                             DropdownButton<TipologiaStanza>(
                               hint: Text('Tipologie stanze'),
                               isExpanded: true,
-                              value: null,
+                              value: widget.tipologiaStanzaSelected,
                               onChanged: (TipologiaStanza? newValue) {
                                 setState(() {
                                   widget.tipologiaStanzaSelected = newValue;
@@ -826,32 +1252,44 @@ class _BaseDataState extends State<BaseData> {
                             ),
                             Row(
                               children: [
-
+                                Expanded(
+                                    child:TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
+                                      ),
+                                      child: widget.addIcon,
+                                      onPressed: () {
+                                        widget.tipologiaStanzaSelected = TipologiaStanza();
+                                        _openPopUp(context,'TipologiaStanza');
+                                      },
+                                    ),
+                                ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Modifica"),
                                     style: TextButton.styleFrom(
-                                      foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.editIcon,
                                     onPressed: () {
-                                      _openPopUp(context,'TipologiaStanza');
+                                      if (widget.tipologiaStanzaSelected != null){
+                                        _openPopUp(context,'TipologiaStanza');
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare la tipologia')),
+                                        );
+                                      }
                                     },
                                   ),
                                 ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Cancella"),
                                     style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.deleteIcon,
                                     onPressed: () {
                                       if (widget.tipologiaStanzaSelected != null){
                                         objectbox.tipologiaStanzaBox.remove(widget.tipologiaStanzaSelected?.codTipologiaStanza??0);
@@ -868,20 +1306,16 @@ class _BaseDataState extends State<BaseData> {
                                   ),
                                 ),
                                 Expanded(
-                                    child: TextButton(
-                                      child: Text("Aggiungi"),
+                                    child:TextButton(
                                       style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                          side: const BorderSide(
-                                              color: Colors.blue,
-                                              width: 1.0,
-                                              style: BorderStyle.solid)
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
                                       ),
+                                      child: widget.syncIcon,
                                       onPressed: () {
-                                        widget.tipologiaStanzaSelected = TipologiaStanza();
-                                        _openPopUp(context,'TipologiaStanza');
+                                        _syncData(context, 'TipologiaStanza');
                                       },
-                                    )
+                                    ),
                                 ),
                               ],
                             ),
@@ -894,7 +1328,7 @@ class _BaseDataState extends State<BaseData> {
                             DropdownButton<ClasseCliente>(
                               hint: Text('Categoria Cliente'),
                               isExpanded: true,
-                              value: null,
+                              value:  widget.classeClienteSelected,
                               onChanged: (ClasseCliente? newValue) {
                                 setState(() {
                                   widget.classeClienteSelected = newValue;
@@ -914,30 +1348,43 @@ class _BaseDataState extends State<BaseData> {
                             Row(
                               children: [
                                 Expanded(
-                                  child:TextButton(
-                                    child: Text("Modifica"),
-                                    style: TextButton.styleFrom(
-                                      foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                    child:TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
+                                      ),
+                                      child: widget.addIcon,
+                                      onPressed: () {
+                                        widget.classeClienteSelected = ClasseCliente();
+                                        _openPopUp(context, 'ClasseCliente');
+                                      },
                                     ),
+                                ),
+                                Expanded(
+                                  child:TextButton(
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
+                                    ),
+                                    child: widget.editIcon,
                                     onPressed: () {
-                                      _openPopUp(context, 'ClasseCliente');
+                                      if (widget.classeClienteSelected != null){
+                                        _openPopUp(context, 'ClasseCliente');
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare la categoria')),
+                                        );
+                                      }
                                     },
                                   ),
                                 ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Cancella"),
                                     style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.deleteIcon,
                                     onPressed: () {
                                       if (widget.classeClienteSelected != null){
                                         objectbox.classeClienteBox.remove(widget.classeClienteSelected?.codClasseCliente??0);
@@ -954,20 +1401,16 @@ class _BaseDataState extends State<BaseData> {
                                   ),
                                 ),
                                 Expanded(
-                                    child: TextButton(
-                                      child: Text("Aggiungi"),
+                                    child:TextButton(
                                       style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                          side: const BorderSide(
-                                              color: Colors.blue,
-                                              width: 1.0,
-                                              style: BorderStyle.solid)
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
                                       ),
+                                      child: widget.syncIcon,
                                       onPressed: () {
-                                        widget.classeClienteSelected = ClasseCliente();
-                                        _openPopUp(context, 'ClasseCliente');
+                                        _syncData(context, 'ClasseCliente');
                                       },
-                                    )
+                                    ),
                                 ),
                               ],
                             ),
@@ -980,7 +1423,7 @@ class _BaseDataState extends State<BaseData> {
                             DropdownButton<TipologiaContatto>(
                               hint: Text('Tipologia Contatto'),
                               isExpanded: true,
-                              value: null,
+                              value: widget.tipologiaContattoSelected,
                               onChanged: (TipologiaContatto? newValue) {
                                 setState(() {
                                   widget.tipologiaContattoSelected = newValue;
@@ -1000,30 +1443,43 @@ class _BaseDataState extends State<BaseData> {
                             Row(
                               children: [
                                 Expanded(
-                                  child:TextButton(
-                                    child: Text("Modifica"),
-                                    style: TextButton.styleFrom(
-                                      foregroundColor: Colors.blue,
-                                      side: const BorderSide(
-                                          color: Colors.blue,
-                                          width: 1.0,
-                                          style: BorderStyle.solid)
+                                    child:TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
+                                      ),
+                                      child: widget.addIcon,
+                                      onPressed: () {
+                                        widget.tipologiaContattoSelected = TipologiaContatto();
+                                        _openPopUp(context, 'TipologiaContatto');
+                                      },
                                     ),
+                                ),
+                                Expanded(
+                                  child:TextButton(
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
+                                    ),
+                                    child: widget.editIcon,
                                     onPressed: () {
-                                      _openPopUp(context, 'TipologiaContatto');
+                                      if (widget.tipologiaContattoSelected != null){
+                                        _openPopUp(context,'TipologiaContatto');
+                                      }else{
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Selezionare lo tipologia')),
+                                        );
+                                      }
                                     },
                                   ),
                                 ),
                                 Expanded(
                                   child:TextButton(
-                                    child: Text("Cancella"),
                                     style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                      backgroundColor: Colors.blue,
+                                      shape: CircleBorder(),
                                     ),
+                                    child: widget.deleteIcon,
                                     onPressed: () {
                                       if (widget.tipologiaContattoSelected != null){
                                         objectbox.tipologiaContattoBox.remove(widget.tipologiaContattoSelected?.codTipologiaContatto??0);
@@ -1040,20 +1496,16 @@ class _BaseDataState extends State<BaseData> {
                                   ),
                                 ),
                                 Expanded(
-                                    child: TextButton(
-                                      child: Text("Aggiungi"),
+                                    child:TextButton(
                                       style: TextButton.styleFrom(
-                                        foregroundColor: Colors.blue,
-                                        side: const BorderSide(
-                                            color: Colors.blue,
-                                            width: 1.0,
-                                            style: BorderStyle.solid)
+                                        backgroundColor: Colors.blue,
+                                        shape: CircleBorder(),
                                       ),
+                                      child: widget.syncIcon,
                                       onPressed: () {
-                                        widget.tipologiaContattoSelected = TipologiaContatto();
-                                        _openPopUp(context, 'TipologiaContatto');
+                                        _syncData(context, 'TipologiaContatto');
                                       },
-                                    )
+                                    ),
                                 ),
                               ],
                             ),
