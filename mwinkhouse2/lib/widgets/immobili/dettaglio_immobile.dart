@@ -153,7 +153,23 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
         appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+            title: Row(
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                          builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.0',)
+                      ),  (r){
+                        return false;
+                      });
+                    },
+                    child: const Image(image: AssetImage("assets/images/wink75.png")),
+                  ),
+                  Text(widget.title)]
+            ),
           actions: [
             PopupMenuButton(itemBuilder: (context)=>const [
               PopupMenuItem(child: Text('Stanze'), value: 0),

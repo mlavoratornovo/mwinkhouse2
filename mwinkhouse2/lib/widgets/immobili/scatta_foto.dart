@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 import 'dettaglio_foto.dart';
 
@@ -49,7 +50,26 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Scatta una foto')),
+      appBar: AppBar(
+        title: Row(
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                      builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.0',)
+                  ),  (r){
+                    return false;
+                  });
+                },
+                child: const Image(image: AssetImage("assets/images/wink75.png")),
+              ),
+              const SizedBox(width: 4),
+              const Text('Scatta una foto')]
+        ),
+      ),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.

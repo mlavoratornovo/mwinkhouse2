@@ -22,9 +22,26 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Salva la foto')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
+      appBar: AppBar(
+        title: Row(
+          children: [
+            TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20),
+                ),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                    builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.0',)
+                ),  (r){
+                  return false;
+                });
+              },
+              child: const Image(image: AssetImage("assets/images/wink75.png")),
+            ),
+            const SizedBox(width: 4),
+            Text('Salva la foto')]
+        )
+      ),
       body: Image.file(fimg),
       floatingActionButton: FloatingActionButton(
         // Provide an onPressed callback.

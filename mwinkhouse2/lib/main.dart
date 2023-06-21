@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Winkhouse 2'),
+      home: const MyHomePage(title: 'Winkhouse 2.0.0'),
     );
   }
 }
@@ -72,91 +72,244 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
     return Scaffold(
         appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
+
+          title: Row(
+              children: [
+                const Image(image: AssetImage("assets/images/wink75.png")),
+                const SizedBox(width: 4),
+                Text(widget.title)]
+          ),
+
         ),
         body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
+
           child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Invoke "debug painting" (press "p" in the console, choose the
-            // "Toggle Debug Paint" action from the Flutter Inspector in Android
-            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-            // to see the wireframe for each widget.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-/*
-              SvgPicture.asset('assets/images/icon_flutter.svg',
-                color: Colors.blueGrey[100],
-                matchTextDirection: true,height: 100,
-              )
-*/
-               Image.asset('assets/images/winkhouse450.png', scale: 2.0)
-            ],
-          ),
-        ),
-
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FloatingActionButton(
-                heroTag: "immobili",
-                onPressed: () {
+              InkWell(
+                onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ImmobiliList()));
                 },
-                child: const Icon(Icons.home),
+                child:Container(
+                  constraints: const BoxConstraints.expand(width:280,height:150.0),
+                  decoration: const BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.blueGrey,
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 0)
+                        )
+                    ],
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/immobili.jpg"),
+                          fit: BoxFit.cover,
+                          opacity: 1
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Implement the stroke
+                      Text(
+                        'IMMOBILI',
+                        style: TextStyle(
+                          fontSize: 30,
+                          letterSpacing: 5,
+                          fontWeight: FontWeight.bold,
+                          foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 5
+                            ..color = Colors.blue,
+                        ),
+                      ),
+                      // The text inside
+                      const Text(
+                        'IMMOBILI',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 30,
+                          letterSpacing: 5,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ]),
+                ),
               ),
-              FloatingActionButton(
-                heroTag: "anagrafiche",
-                onPressed: () {
+              const SizedBox(height: 13),
+              InkWell(
+                onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => AnagraficheList()));
                 },
-                child: const Icon(Icons.account_box),
+                child:Container(
+                  constraints: const BoxConstraints.expand(width:280,height:140.0),
+                  decoration: const BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.blueGrey,
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 0)
+                        )
+                      ],
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/anagrafiche.jpg"),
+                        fit: BoxFit.cover,
+                        opacity: 1
+                    ),
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                  ),
+                  child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Implement the stroke
+                        Text(
+                          'ANAGRAFICHE',
+                          style: TextStyle(
+                            fontSize: 30,
+                            letterSpacing: 5,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 5
+                              ..color = Colors.blue,
+                          ),
+                        ),
+                        // The text inside
+                        const Text(
+                          'ANAGRAFICHE',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 30,
+                            letterSpacing: 5,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ]
+                  ),
+                ),
               ),
-              FloatingActionButton(
-                heroTag: "datibase",
-                onPressed: () {
+              const SizedBox(height: 13),
+              InkWell(
+                onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => BaseData()));
                 },
-
-                child: const Icon(Icons.category),
+                child:Container(
+                        constraints: const BoxConstraints.expand(width:280,height:140.0),
+                        decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.blueGrey,
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 0)
+                              )
+                            ],
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/categorie.jpg"),
+                              fit: BoxFit.fill,
+                              opacity: 1
+                          ),
+                            borderRadius: BorderRadius.all(Radius.circular(20))
+                        ),
+                  child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Implement the stroke
+                        Text(
+                          'CATEGORIE',
+                          style: TextStyle(
+                            fontSize: 30,
+                            letterSpacing: 5,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 5
+                              ..color = Colors.blue,
+                          ),
+                        ),
+                        // The text inside
+                        const Text(
+                          'CATEGORIE',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 30,
+                            letterSpacing: 5,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ]
+                  ),
+                ),
               ),
-              FloatingActionButton(
-                heroTag: "impostazioni",
-                onPressed: () {
+              const SizedBox(height: 13),
+              InkWell(
+                onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => Impostazioni()));
                 },
-                child: const Icon(Icons.settings),
+                child:Container(
+                        constraints: const BoxConstraints.expand(width:280,height:140.0),
+                        decoration: const BoxDecoration(
+                          boxShadow: [
+                              BoxShadow(
+                                  color: Colors.blueGrey,
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 0)
+                              )
+                            ],
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/impostazioni.jpg"),
+                              fit: BoxFit.cover,
+                              opacity: 1
+                          ),
+                            borderRadius: BorderRadius.all(Radius.circular(20))
+                        ),
+                  child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Implement the stroke
+                        Text(
+                          'IMPOSTAZIONI',
+                          style: TextStyle(
+                            fontSize: 30,
+                            letterSpacing: 5,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 5
+                              ..color = Colors.blue,
+                          ),
+                        ),
+                        // The text inside
+                        const Text(
+                          'IMPOSTAZIONI',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 30,
+                            letterSpacing: 5,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ]
+                  ),
+                )
               )
             ],
           ),
-        )
+        ),
     );
   }
 }

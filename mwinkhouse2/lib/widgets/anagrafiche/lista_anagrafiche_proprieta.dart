@@ -15,7 +15,7 @@ class AnagraficheProprietaList extends StatefulWidget {
   Immobile immobile = Immobile();
   AnagraficheProprietaList({Key? key,required this.immobile}) : super(key: key){
     //this.immobile = immobile;
-    title = title + (immobile.indirizzo ?? "");
+    //title = title + (immobile.indirizzo ?? "");
   }
 
   @override
@@ -120,7 +120,23 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Row(
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                      builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.0',)
+                  ),  (r){
+                    return false;
+                  });
+                },
+                child: const Image(image: AssetImage("assets/images/wink75.png")),
+              ),
+              Text(widget.title)]
+        ),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it

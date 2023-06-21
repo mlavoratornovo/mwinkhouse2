@@ -460,7 +460,9 @@ class _BaseDataState extends State<BaseData> {
                 e.codTipologiaImmobile = null;
               }
               objectbox.tipologiaImmobileBox.putMany(winkTipologieImmobili);
-              setState(() {});
+              setState(() {
+                widget.tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
+              });
               break;
             case 1:
               List<TipologiaImmobile> obTipologieImmobili = objectbox.tipologiaImmobileBox.getAll();
@@ -476,7 +478,9 @@ class _BaseDataState extends State<BaseData> {
                 }
               }
               objectbox.tipologiaImmobileBox.putMany(obTipologieImmobili);
-              setState(() {});
+              setState(() {
+                widget.tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
+              });
               break;
             case 2:
               List<TipologiaImmobile> obTipologieImmobili = objectbox.tipologiaImmobileBox.getAll();
@@ -485,14 +489,15 @@ class _BaseDataState extends State<BaseData> {
                   TipologiaImmobile ti = obTipologieImmobili.firstWhere((
                       element) =>
                   element.descrizione == e.descrizione);
-                  ti.codTipologiaImmobile = e.codTipologiaImmobile;
                 }on StateError {
                   e.codTipologiaImmobile = null;
                   obTipologieImmobili.add(e);
                 }
               }
               objectbox.tipologiaImmobileBox.putMany(obTipologieImmobili);
-              setState(() {});
+              setState(() {
+                widget.tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
+              });
               break;
             case 3:
               for (final e in winkTipologieImmobili){
@@ -500,6 +505,9 @@ class _BaseDataState extends State<BaseData> {
               }
               objectbox.tipologiaImmobileBox.removeAll();
               objectbox.tipologiaImmobileBox.putMany(winkTipologieImmobili);
+              setState(() {
+                widget.tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
+              });
               break;
           }
           break;
@@ -511,7 +519,9 @@ class _BaseDataState extends State<BaseData> {
                 e.codStatoConservativo = null;
               }
               objectbox.statoConservativoBox.putMany(winkStatoConservativo);
-              setState(() {});
+              setState(() {
+                widget.statoConservativo = objectbox.statoConservativoBox.getAll();
+              });
               break;
             case 1:
               List<StatoConservativo> obStatoConservativo = objectbox.statoConservativoBox.getAll();
@@ -527,7 +537,9 @@ class _BaseDataState extends State<BaseData> {
                 }
               }
               objectbox.statoConservativoBox.putMany(obStatoConservativo);
-              setState(() {});
+              setState(() {
+                widget.statoConservativo = objectbox.statoConservativoBox.getAll();
+              });
               break;
             case 2:
               List<StatoConservativo> obStatoConservativo = objectbox.statoConservativoBox.getAll();
@@ -536,14 +548,15 @@ class _BaseDataState extends State<BaseData> {
                   StatoConservativo ti = obStatoConservativo.firstWhere((
                       element) =>
                   element.descrizione == e.descrizione);
-                  ti.codStatoConservativo = e.codStatoConservativo;
                 }on StateError {
                   e.codStatoConservativo = null;
                   obStatoConservativo.add(e);
                 }
               }
               objectbox.statoConservativoBox.putMany(obStatoConservativo);
-              setState(() {});
+              setState(() {
+                widget.statoConservativo = objectbox.statoConservativoBox.getAll();
+              });
               break;
             case 3:
               for (final e in winkStatoConservativo){
@@ -551,6 +564,9 @@ class _BaseDataState extends State<BaseData> {
               }
               objectbox.statoConservativoBox.removeAll();
               objectbox.statoConservativoBox.putMany(winkStatoConservativo);
+              setState(() {
+                widget.statoConservativo = objectbox.statoConservativoBox.getAll();
+              });
               break;
           }
           break;
@@ -562,7 +578,9 @@ class _BaseDataState extends State<BaseData> {
                 e.codClasseEnergetica = null;
               }
               objectbox.classeEnergeticaBox.putMany(winkClasseEnergetica);
-              setState(() {});
+              setState(() {
+                widget.classeEnergetica = objectbox.classeEnergeticaBox.getAll();
+              });
               break;
             case 1:
               List<ClasseEnergetica> obClasseEnergetica = objectbox.classeEnergeticaBox.getAll();
@@ -579,7 +597,9 @@ class _BaseDataState extends State<BaseData> {
                 }
               }
               objectbox.classeEnergeticaBox.putMany(obClasseEnergetica);
-              setState(() {});
+              setState(() {
+                widget.classeEnergetica = objectbox.classeEnergeticaBox.getAll();
+              });
               break;
             case 2:
               List<ClasseEnergetica> obClasseEnergetica = objectbox.classeEnergeticaBox.getAll();
@@ -588,15 +608,15 @@ class _BaseDataState extends State<BaseData> {
                   ClasseEnergetica ti = obClasseEnergetica.firstWhere((
                       element) =>
                   element.nome == e.nome);
-                  ti.codClasseEnergetica = e.codClasseEnergetica;
-                  ti.descrizione = e.descrizione;
                 }on StateError {
                   e.codClasseEnergetica = null;
                   obClasseEnergetica.add(e);
                 }
               }
               objectbox.classeEnergeticaBox.putMany(obClasseEnergetica);
-              setState(() {});
+              setState(() {
+                widget.classeEnergetica = objectbox.classeEnergeticaBox.getAll();
+              });
               break;
             case 3:
               for (final e in winkClasseEnergetica){
@@ -604,6 +624,9 @@ class _BaseDataState extends State<BaseData> {
               }
               objectbox.classeEnergeticaBox.removeAll();
               objectbox.classeEnergeticaBox.putMany(winkClasseEnergetica);
+              setState(() {
+                widget.classeEnergetica = objectbox.classeEnergeticaBox.getAll();
+              });
               break;
           }
           break;
@@ -615,7 +638,11 @@ class _BaseDataState extends State<BaseData> {
                 e.codRiscaldamento = null;
               }
               objectbox.riscaldamentoBox.putMany(winkRiscaldamento);
-              setState(() {});
+              setState(() {
+                setState(() {
+                  widget.riscaldamento = objectbox.riscaldamentoBox.getAll();
+                });
+              });
               break;
             case 1:
               List<Riscaldamento> obRiscaldamento = objectbox.riscaldamentoBox.getAll();
@@ -631,7 +658,9 @@ class _BaseDataState extends State<BaseData> {
                 }
               }
               objectbox.riscaldamentoBox.putMany(obRiscaldamento);
-              setState(() {});
+              setState(() {
+                widget.riscaldamento = objectbox.riscaldamentoBox.getAll();
+              });
               break;
             case 2:
               List<Riscaldamento> obRiscaldamento = objectbox.riscaldamentoBox.getAll();
@@ -640,14 +669,15 @@ class _BaseDataState extends State<BaseData> {
                   Riscaldamento ti = obRiscaldamento.firstWhere((
                       element) =>
                   element.descrizione == e.descrizione);
-                  ti.codRiscaldamento = e.codRiscaldamento;
                 }on StateError {
                   e.codRiscaldamento = null;
                   obRiscaldamento.add(e);
                 }
               }
               objectbox.riscaldamentoBox.putMany(obRiscaldamento);
-              setState(() {});
+              setState(() {
+                widget.riscaldamento = objectbox.riscaldamentoBox.getAll();
+              });
               break;
             case 3:
               for (final e in winkRiscaldamento){
@@ -655,6 +685,9 @@ class _BaseDataState extends State<BaseData> {
               }
               objectbox.riscaldamentoBox.removeAll();
               objectbox.riscaldamentoBox.putMany(winkRiscaldamento);
+              setState(() {
+                widget.riscaldamento = objectbox.riscaldamentoBox.getAll();
+              });
               break;
           }
           break;
@@ -666,7 +699,9 @@ class _BaseDataState extends State<BaseData> {
                 e.codTipologiaStanza = null;
               }
               objectbox.tipologiaStanzaBox.putMany(winkTipologiaStanza);
-              setState(() {});
+              setState(() {
+                widget.tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
+              });
               break;
             case 1:
               List<TipologiaStanza> obTipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
@@ -682,7 +717,9 @@ class _BaseDataState extends State<BaseData> {
                 }
               }
               objectbox.tipologiaStanzaBox.putMany(obTipologiaStanza);
-              setState(() {});
+              setState(() {
+                widget.tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
+              });
               break;
             case 2:
               List<TipologiaStanza> obTipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
@@ -691,14 +728,15 @@ class _BaseDataState extends State<BaseData> {
                   TipologiaStanza ti = obTipologiaStanza.firstWhere((
                       element) =>
                   element.descrizione == e.descrizione);
-                  ti.codTipologiaStanza = e.codTipologiaStanza;
                 }on StateError {
                   e.codTipologiaStanza = null;
                   obTipologiaStanza.add(e);
                 }
               }
               objectbox.tipologiaStanzaBox.putMany(obTipologiaStanza);
-              setState(() {});
+              setState(() {
+                widget.tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
+              });
               break;
             case 3:
               for (final e in winkTipologiaStanza){
@@ -706,6 +744,9 @@ class _BaseDataState extends State<BaseData> {
               }
               objectbox.tipologiaStanzaBox.removeAll();
               objectbox.tipologiaStanzaBox.putMany(winkTipologiaStanza);
+              setState(() {
+                widget.tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
+              });
               break;
           }
           break;
@@ -717,7 +758,9 @@ class _BaseDataState extends State<BaseData> {
                 e.codClasseCliente = null;
               }
               objectbox.classeClienteBox.putMany(winkClasseCliente);
-              setState(() {});
+              setState(() {
+                widget.classeCliente = objectbox.classeClienteBox.getAll();
+              });
               break;
             case 1:
               List<ClasseCliente> obClasseCliente = objectbox.classeClienteBox.getAll();
@@ -733,7 +776,9 @@ class _BaseDataState extends State<BaseData> {
                 }
               }
               objectbox.classeClienteBox.putMany(obClasseCliente);
-              setState(() {});
+              setState(() {
+                widget.classeCliente = objectbox.classeClienteBox.getAll();
+              });
               break;
             case 2:
               List<ClasseCliente> obClasseCliente = objectbox.classeClienteBox.getAll();
@@ -742,14 +787,15 @@ class _BaseDataState extends State<BaseData> {
                   ClasseCliente ti = obClasseCliente.firstWhere((
                       element) =>
                   element.descrizione == e.descrizione);
-                  ti.codClasseCliente = e.codClasseCliente;
                 }on StateError {
                   e.codClasseCliente = null;
                   obClasseCliente.add(e);
                 }
               }
               objectbox.classeClienteBox.putMany(obClasseCliente);
-              setState(() {});
+              setState(() {
+                widget.classeCliente = objectbox.classeClienteBox.getAll();
+              });
               break;
             case 3:
               for (final e in winkClasseCliente){
@@ -757,6 +803,9 @@ class _BaseDataState extends State<BaseData> {
               }
               objectbox.classeClienteBox.removeAll();
               objectbox.classeClienteBox.putMany(winkClasseCliente);
+              setState(() {
+                widget.classeCliente = objectbox.classeClienteBox.getAll();
+              });
               break;
           }
           break;
@@ -768,7 +817,9 @@ class _BaseDataState extends State<BaseData> {
                 e.codTipologiaContatto = null;
               }
               objectbox.tipologiaContattoBox.putMany(winkTipologiaContatto);
-              setState(() {});
+              setState(() {
+                widget.tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+              });
               break;
             case 1:
               List<TipologiaContatto> obTipologiaContatto = objectbox.tipologiaContattoBox.getAll();
@@ -784,7 +835,9 @@ class _BaseDataState extends State<BaseData> {
                 }
               }
               objectbox.tipologiaContattoBox.putMany(obTipologiaContatto);
-              setState(() {});
+              setState(() {
+                widget.tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+              });
               break;
             case 2:
               List<TipologiaContatto> obTipologiaContatto = objectbox.tipologiaContattoBox.getAll();
@@ -793,14 +846,15 @@ class _BaseDataState extends State<BaseData> {
                   TipologiaContatto ti = obTipologiaContatto.firstWhere((
                       element) =>
                   element.descrizione == e.descrizione);
-                  ti.codTipologiaContatto = e.codTipologiaContatto;
                 }on StateError {
                   e.codTipologiaContatto = null;
                   obTipologiaContatto.add(e);
                 }
               }
               objectbox.tipologiaContattoBox.putMany(obTipologiaContatto);
-              setState(() {});
+              setState(() {
+                widget.tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+              });
               break;
             case 3:
               for (final e in winkTipologiaContatto){
@@ -808,6 +862,9 @@ class _BaseDataState extends State<BaseData> {
               }
               objectbox.tipologiaContattoBox.removeAll();
               objectbox.tipologiaContattoBox.putMany(winkTipologiaContatto);
+              setState(() {
+                widget.tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+              });
               break;
           }
           break;
@@ -830,7 +887,24 @@ class _BaseDataState extends State<BaseData> {
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
+          title: Row(
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.0',)
+                    ),  (r){
+                      return false;
+                    });
+                  },
+                  child: const Image(image: AssetImage("assets/images/wink75.png")),
+                ),
+                Text(widget.title)]
+          ),
+
           // actions: [
           //   PopupMenuButton(itemBuilder: (context)=>const [
           //     PopupMenuItem(child: Text('Contatti')),
@@ -849,7 +923,7 @@ class _BaseDataState extends State<BaseData> {
                           child:Column(
                             children: [
                               DropdownButton<TipologiaImmobile>(
-                                  hint: Text('Tipologie immobili'),
+                                  hint: const Text('Tipologie immobili'),
                                   isExpanded: true,
                                   value: widget.tipologieImmobileSelected,
                                   onChanged: (TipologiaImmobile? newValue) {
@@ -944,7 +1018,7 @@ class _BaseDataState extends State<BaseData> {
                         child:Column(
                           children: [
                             DropdownButton<StatoConservativo>(
-                              hint: Text('Stato Conservativo'),
+                              hint: const Text('Stato Conservativo'),
                               isExpanded: true,
                               value: widget.statoConservativoSelected,
                               onChanged: (StatoConservativo? newValue) {
@@ -1040,7 +1114,7 @@ class _BaseDataState extends State<BaseData> {
                         child: Column(
                           children: [
                             DropdownButton<ClasseEnergetica>(
-                              hint: Text('Classe Energetica'),
+                              hint: const Text('Classe Energetica'),
                               isExpanded: true,
                               value: widget.classeEnergeticaSelected,
                               onChanged: (ClasseEnergetica? newValue) {
@@ -1052,8 +1126,7 @@ class _BaseDataState extends State<BaseData> {
                                   ClasseEnergetica classeEnergetica) {
                                 return DropdownMenuItem<ClasseEnergetica>(
                                   value: classeEnergetica,
-                                  child: Text(
-                                    classeEnergetica.descrizione ?? "",
+                                  child: Text('${classeEnergetica.nome ?? ''} - ${classeEnergetica.descrizione ?? ''}',
                                     style: const TextStyle(color: Colors.black),
 
                                   ),
@@ -1136,7 +1209,7 @@ class _BaseDataState extends State<BaseData> {
                         child: Column(
                           children: [
                             DropdownButton<Riscaldamento>(
-                              hint: Text('Riscaldamento'),
+                              hint: const Text('Riscaldamento'),
                               isExpanded: true,
                               value: widget.riscaldamentoSelected,
                               onChanged: (Riscaldamento? newValue) {
@@ -1231,7 +1304,7 @@ class _BaseDataState extends State<BaseData> {
                         child: Column(
                           children: [
                             DropdownButton<TipologiaStanza>(
-                              hint: Text('Tipologie stanze'),
+                              hint: const Text('Tipologie stanze'),
                               isExpanded: true,
                               value: widget.tipologiaStanzaSelected,
                               onChanged: (TipologiaStanza? newValue) {
@@ -1326,7 +1399,7 @@ class _BaseDataState extends State<BaseData> {
                         child: Column(
                           children: [
                             DropdownButton<ClasseCliente>(
-                              hint: Text('Categoria Cliente'),
+                              hint: const Text('Categoria Cliente'),
                               isExpanded: true,
                               value:  widget.classeClienteSelected,
                               onChanged: (ClasseCliente? newValue) {
@@ -1421,7 +1494,7 @@ class _BaseDataState extends State<BaseData> {
                         child: Column(
                           children: [
                             DropdownButton<TipologiaContatto>(
-                              hint: Text('Tipologia Contatto'),
+                              hint: const Text('Tipologia Contatto'),
                               isExpanded: true,
                               value: widget.tipologiaContattoSelected,
                               onChanged: (TipologiaContatto? newValue) {
