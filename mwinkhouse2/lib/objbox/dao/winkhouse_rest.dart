@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
+import 'package:mwinkhouse2/objbox/models/Comune.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
 import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
 import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
@@ -232,4 +233,27 @@ class WinkhouseRest{
       throw Exception('Errore caricamento classi clienti');
     }
   }
+
+  Stream<List<Comune>> findComuni(String comune) async*{
+    List<Comune> comuni = List<Comune>.empty(growable: true);
+    Uri findUrl = Uri.parse("http://www.winkhouse.org/find_codcomune.php?name=$comune");
+    final response = await http.get(findUrl, headers:getHeaders());
+      if (response.statusCode == 200) {
+        List<String> comunistrs = response.body.split('|');
+        for (final comunestr in  comunistrs){
+          comuni.add(Comune(initString: comunestr));
+        }
+        yield comuni;
+        // for(final e in list){
+        //   mcomuni[e.codIstat??''] = e;
+        //   var currentElement = e;
+        // }
+        // yield mcomuni.values.toList();
+      } else {
+        throw Exception('Errore caricamento comuni');
+      }
+
+    yield comuni;
+  }
+
 }

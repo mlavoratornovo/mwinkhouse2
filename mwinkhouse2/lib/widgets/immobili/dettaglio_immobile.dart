@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
 import 'package:mwinkhouse2/objbox/models/Colloquio.dart';
+import 'package:mwinkhouse2/objbox/models/Comune.dart';
 import 'package:mwinkhouse2/objbox/models/Contatto.dart';
 import 'package:mwinkhouse2/objbox/models/Immobile.dart';
 import 'package:mwinkhouse2/main.dart';
@@ -15,11 +16,13 @@ import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_immagini_immobile.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_stanze_immobile.dart';
 
+import '../../objbox/dao/winkhouse_rest.dart';
 import '../../objbox/models/Anagrafica.dart';
 import '../../objbox/models/TipologiaColloquio.dart';
 import '../../objbox/models/TipologiaStanza.dart';
 import '../anagrafiche/lista_anagrafiche_proprieta.dart';
 import 'lista_colloqui_immobile.dart';
+import 'lista_comuni_ricerca.dart';
 
 class DettaglioImmobile extends StatefulWidget {
   final String title = 'Dettaglio immobile';
@@ -278,22 +281,52 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   ),
                 ],
               ),
-              TextFormField(
-                decoration:const InputDecoration(
-                    labelText: "Città"
+              InkWell(
+                onLongPress: () async {
+                  final value = await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ListaComuniRicerca(immobile:widget.immobile)
+                  )
+                  );
+                  setState(() {});
+                },
+                child: IgnorePointer(
+                  ignoring: true,  // You can make this a variable in other toggle True or False
+                  child: TextFormField(
+                    decoration:const InputDecoration(
+                        labelText: "Città"
+                    ),
+                    validator:  (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Città dato obbligatorio';
+                      }
+                      return null;
+                    },
+                    onChanged: (text) {
+                      widget.immobile.citta = text;
+                    },
+                    key: Key("${(widget.immobile.citta != null && widget.immobile.citta != '')? widget.immobile.citta:Random().nextInt(1000).toString()}"),
+                    initialValue: "${widget.immobile.citta ?? ""}",
+                  ),
+
                 ),
-                validator:  (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Città dato obbligatorio';
-                  }
-                  return null;
-                },
-                onChanged: (text) {
-                  widget.immobile.citta = text;
-                },
-                key: Key("${(widget.immobile.citta != null && widget.immobile.citta != '')? widget.immobile.citta:Random().nextInt(1000).toString()}"),
-                initialValue: "${widget.immobile.citta ?? ""}",
               ),
+
+              // TextFormField(
+              //   decoration:const InputDecoration(
+              //       labelText: "Città"
+              //   ),
+              //   validator:  (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Città dato obbligatorio';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (text) {
+              //     widget.immobile.citta = text;
+              //   },
+              //   key: Key("${(widget.immobile.citta != null && widget.immobile.citta != '')? widget.immobile.citta:Random().nextInt(1000).toString()}"),
+              //   initialValue: "${widget.immobile.citta ?? ""}",
+              // ),
               TextFormField(
                 decoration:const InputDecoration(
                     labelText: "Zona"
@@ -389,7 +422,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               DropdownButtonFormField<TipologiaImmobile>(
                 isExpanded: true,
                 hint: Text('Tipologia immobile'),
-                validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
+                // validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
                 value: widget.immobile?.tipologiaImmobile?.target,
                 onChanged: (TipologiaImmobile? newValue) {
                   setState(() {

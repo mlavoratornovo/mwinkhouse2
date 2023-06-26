@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/widgets/immobili/dettaglio_immobile.dart';
+import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
+
+import '../../objbox/dao/winkhouse_rest.dart';
+import '../../objbox/models/Comune.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import '../../objbox/models/Immobile.dart';
 import '../../main.dart';
+import 'criteri_ricerca_immobili_editor.dart';
 
 
 /// Displays the current list of tasks by listening to a stream.
 ///
 /// Each task has a check button to mark it completed and an edit button to
 /// update it. A task can also be swiped away to remove it.
-class ImmobiliRicercaList extends StatefulWidget {
+class ListaComuniRicerca extends StatefulWidget {
 
-  final String title = 'Lista immobili ricerca';
-  CriteriRicercaImmobile? criteri;
-
-  ImmobiliRicercaList({Key? key,this.criteri}) : super(key: key);
+  final String title = 'Ricerca comuni';
+  Immobile? immobile;
+  String comuneSearch='';
+  late WinkhouseRest winkhouseRest;
+  ListaComuniRicerca({Key? key,this.immobile}) : super(key: key){
+    winkhouseRest = WinkhouseRest();
+  }
 
   @override
-  State<ImmobiliRicercaList> createState() => _ImmobiliRicercaListState();
+  State<ListaComuniRicerca> createState() => _ListaComuniRicercaState();
 }
 
 extension SafeLookup<E> on List<E> {
@@ -30,56 +39,57 @@ extension SafeLookup<E> on List<E> {
   }
 }
 
-class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
+class _ListaComuniRicercaState extends State<ListaComuniRicerca> {
 
-  _ImmobiliRicercaListState();
+  _ListaComuniRicercaState();
 
-  Widget Function(BuildContext, int) _itemBuilder(List<Immobile> immobili) =>
+  Widget Function(BuildContext, int) _itemBuilder(List<Comune> comuni) =>
           (BuildContext context, int index) => Container(
         child: Row(
           children: <Widget>[
             Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                    border:
-                    Border(bottom: BorderSide(color: Colors.black12))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        '${immobili[index].indirizzo} (Tipo: ${immobili[index].tipologiaImmobile.target?.descrizione.toString() ?? ""})',
-                        style: const TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.none),
-                        // Provide a Key for the integration test
-                        key: Key('list_item_$index'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Text(
-                          immobili[index].classeEnergetica.target?.nome.toString() ?? "",
+              child: InkWell(
+                onTap: (){
+                  widget.immobile?.citta = comuni[index].comune;
+                  widget.immobile?.provincia = comuni[index].provincia;
+                  widget.immobile?.cap = comuni[index].cap;
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                      border:
+                      Border(bottom: BorderSide(color: Colors.black12))),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 18.0, horizontal: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Cod. Istat:${comuni[index].codIstat} Nome: ${comuni[index].comune})',
                           style: const TextStyle(
-                            fontSize: 12.0,
+                              color: Colors.grey,
+                              decoration: TextDecoration.none),
+                          // Provide a Key for the integration test
+                          key: Key('list_item_$index'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            'Regione:${comuni[index].regione} \n'
+                                'Provincia: ${comuni[index].provincia} \n'
+                                'Cap: ${comuni[index].cap}' ,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+              )
             ),
-            TextButton(
-                child: const Text('Edit'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioImmobile(
-                        immobile: immobili[index],
-                      )
-                  ));
-                }),
           ],
         ),
       );
@@ -115,9 +125,19 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  TextField(
+                    decoration:const InputDecoration(
+                        labelText: "Comune da ricercare"
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        widget.comuneSearch = text;
+                      });
+                    },
+                  ),
                   Expanded(
-                      child: StreamBuilder<List<Immobile>>(
-                          stream: objectbox.searchImmobili(criteri: widget.criteri??CriteriRicercaImmobile()),
+                      child: StreamBuilder<List<Comune>>(
+                          stream: widget.comuneSearch.length >= 3?widget.winkhouseRest.findComuni(widget.comuneSearch??''):null,
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               // Print the stack trace and show the error message.
