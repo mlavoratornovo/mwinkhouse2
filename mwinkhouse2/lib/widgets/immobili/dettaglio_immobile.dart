@@ -175,11 +175,11 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
             ),
           actions: [
             PopupMenuButton(itemBuilder: (context)=>const [
-              PopupMenuItem(child: Text('Stanze'), value: 0),
-              PopupMenuItem(child: Text('Propietari'), value: 1),
-              PopupMenuItem(child: Text('Immagini'), value: 2),
-              PopupMenuItem(child: Text('Colloqui'), value: 3),
-              PopupMenuItem(child: Text('Mappa'), value: 4),
+              PopupMenuItem(value: 0, child: Text('Stanze')),
+              PopupMenuItem(value: 1, child: Text('Propietari')),
+              PopupMenuItem(value: 2, child: Text('Immagini')),
+              PopupMenuItem(value: 3, child: Text('Colloqui')),
+              PopupMenuItem(value: 4, child: Text('Mappa')),
             ],
               onSelected: (result) {
                 if (result == 0) {
@@ -246,7 +246,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   widget.immobile?.rif = text;
                 },
                 key: Key("${(widget.immobile.rif != null && widget.immobile.rif != '')? widget.immobile.rif:Random().nextInt(1000).toString()}"),
-                initialValue: "${widget.immobile.rif ?? ""}",
+                initialValue: widget.immobile.rif ?? "",
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -265,7 +265,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       initialValue: "${widget.immobile.provincia ?? ""}",
                     ),
                   ),
-                  SizedBox(width: 10.0),
+                  const SizedBox(width: 10.0),
                   Expanded(
                     flex: 1,
                     child: TextFormField(
@@ -421,7 +421,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               ),
               DropdownButtonFormField<TipologiaImmobile>(
                 isExpanded: true,
-                hint: Text('Tipologia immobile'),
+                hint: const Text('Tipologia immobile'),
                 // validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
                 value: widget.immobile?.tipologiaImmobile?.target,
                 onChanged: (TipologiaImmobile? newValue) {
@@ -441,7 +441,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               ),
               DropdownButton<StatoConservativo>(
                 isExpanded: true,
-                hint: Text('Stato conservativo'),
+                hint: const Text('Stato conservativo'),
                 value: widget.immobile?.statoConservativo?.target,
                 onChanged: (StatoConservativo? newValue) {
                   setState(() {
@@ -460,7 +460,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               ),
               DropdownButton<ClasseEnergetica>(
                 isExpanded: true,
-                hint: Text('Class energetica'),
+                hint: const Text('Class energetica'),
                 value: widget.immobile?.classeEnergetica?.target,
                 onChanged: (ClasseEnergetica? newValue) {
                   setState(() {
@@ -479,7 +479,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               ),
               DropdownButton<Riscaldamento>(
                 isExpanded: true,
-                hint: Text('Riscaldamento'),
+                hint: const Text('Riscaldamento'),
                 value: widget.immobile?.riscaldamento?.target,
                 onChanged: (Riscaldamento? newValue) {
                   setState(() {
