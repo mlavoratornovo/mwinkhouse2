@@ -7,6 +7,7 @@ import '../../objbox/dao/winkhouse_rest.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import '../../objbox/models/Immobile.dart';
 import '../../main.dart';
+import '../../objbox/models/TipologiaImmobile.dart';
 import 'criteri_ricerca_immobili_editor.dart';
 
 
@@ -16,9 +17,11 @@ import 'criteri_ricerca_immobili_editor.dart';
 /// update it. A task can also be swiped away to remove it.
 class ImmobiliRicercaRestList extends StatefulWidget {
 
-  final String title = 'Lista immobili ricerca';
+  final String title = 'Ricerca remota';
   CriteriRicercaImmobile? criteri;
   late WinkhouseRest winkhouseRest;
+  Map<int,TipologiaImmobile> tipologieImmobile = <int,TipologiaImmobile>{};
+
   ImmobiliRicercaRestList({Key? key,this.criteri}) : super(key: key){
     winkhouseRest = WinkhouseRest();
   }
@@ -41,26 +44,24 @@ class _ImmobiliRicercaRestListState extends State<ImmobiliRicercaRestList> {
 
   _ImmobiliRicercaRestListState();
 
+  Future<void> checkcon() async {
+
+    widget.winkhouseRest.getTipologieImmobili()
+        .then((value) =>  setState(() {
+          widget.tipologieImmobile = { for (var v in value) v.codTipologiaImmobile??0 : v };
+        }))
+        .catchError((error, stack){
+    });
+
+  }
+
+  @override
+  void initState() {
+    checkcon();
+  }
+
   Widget Function(BuildContext, int) _itemBuilder(List<Immobile> immobili) =>
-          (BuildContext context, int index) => Container(
-        // background: Container(
-        //   color: Colors.red,
-        // ),
-        // key: UniqueKey(), //Key('dismissed_$index'),
-        // onDismissed: (direction) {
-        //   // Remove the task from the store.
-        //   objectbox.removeImmobile(immobili[index].codImmobile?.toInt() ?? 0);
-        //   // List updated via watched query stream.
-        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        //       behavior: SnackBarBehavior.floating,
-        //       margin: const EdgeInsets.only(bottom: 0, right: 70, left: 70),
-        //       padding: const EdgeInsets.all(5),
-        //       duration: const Duration(milliseconds: 800),
-        //       content: Container(
-        //           alignment: Alignment.center,
-        //           height: 35,
-        //           child: Text('Immobile ${immobili[index].codImmobile} deleted'))));
-        // },
+          (BuildContext context, int index) =>  Container(
         child: Row(
           children: <Widget>[
             Expanded(
@@ -75,7 +76,7 @@ class _ImmobiliRicercaRestListState extends State<ImmobiliRicercaRestList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '${immobili[index].indirizzo} (Tipo: ${immobili[index].tipologiaImmobile.target?.descrizione.toString() ?? ""})',
+                        '${immobili[index].citta} ${immobili[index].indirizzo} (Tipo: ${immobili[index].tipologiaImmobile.target?.descrizione.toString() ?? ""})',
                         style: const TextStyle(
                             color: Colors.grey,
                             decoration: TextDecoration.none),
@@ -145,7 +146,7 @@ class _ImmobiliRicercaRestListState extends State<ImmobiliRicercaRestList> {
                 children: [
                   Expanded(
                       child: StreamBuilder<List<Immobile>>(
-                          stream: widget.winkhouseRest.findImmobili(criteri: widget.criteri??CriteriRicercaImmobile()),
+                          stream: widget.winkhouseRest.findImmobili(criteri: widget.criteri??CriteriRicercaImmobile(),tipologieImmobili: widget.tipologieImmobile),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               // Print the stack trace and show the error message.

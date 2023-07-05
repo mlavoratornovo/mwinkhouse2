@@ -112,7 +112,7 @@ class WinkhouseRest{
     return criteriRicerca;
   }
 
-  Stream<List<Immobile>> findImmobili({criteri:CriteriRicercaImmobile}) async*{
+  Stream<List<Immobile>> findImmobili({criteri:CriteriRicercaImmobile,tipologieImmobili:Map<int,TipologiaImmobile>}) async*{
     //List<Immobile> immobili = List<Immobile>.empty(growable: true);
     Map<int,Immobile> mimmobili = <int,Immobile>{};
     Uri findUrl = Uri.parse("${this.getWinkhouseIp()}:${this.getWinkhousePort()}/search");
@@ -122,20 +122,21 @@ class WinkhouseRest{
         final response = await http.post(
             findUrl,
             headers:getHeaders(),
-            body: jsonEncode(criteriRicerca[i])
+            body: jsonEncode([criteriRicerca[i]])
         );
         if (response.statusCode == 200) {
           Iterable l = json.decode(response.body);
           List<Immobile> list = List<Immobile>.from(l.map((model)=> Immobile.fromJson(model)));
           for(final e in list){
             mimmobili[e.codImmobile??0] = e;
+            e.tipologiaImmobile.target = tipologieImmobili[e.codImmobile??0];
             var currentElement = e;
           }
           yield mimmobili.values.toList();
         } else {
           // If the server did not return a 200 OK response,
           // then throw an exception.
-          throw Exception('Errore caricamento immobili');
+          throw Exception('code:${response.statusCode} message:${response.body}');
         }
 
       }
@@ -241,7 +242,9 @@ class WinkhouseRest{
       if (response.statusCode == 200) {
         List<String> comunistrs = response.body.split('|');
         for (final comunestr in  comunistrs){
-          comuni.add(Comune(initString: comunestr));
+          if (comunestr.trim() != ''){
+            comuni.add(Comune(initString: comunestr));
+          }
         }
         yield comuni;
         // for(final e in list){

@@ -119,8 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text(
                         'IMMOBILI',
                         style: TextStyle(
-                          fontSize: 30,
-                          letterSpacing: 5,
+                          fontSize: 24,
+                          letterSpacing: 3,
                           fontWeight: FontWeight.bold,
                           foreground: Paint()
                             ..style = PaintingStyle.stroke
@@ -133,8 +133,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         'IMMOBILI',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 30,
-                          letterSpacing: 5,
+                          fontSize: 24,
+                          letterSpacing: 3,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -173,8 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Text(
                           'ANAGRAFICHE',
                           style: TextStyle(
-                            fontSize: 30,
-                            letterSpacing: 5,
+                            fontSize: 24,
+                            letterSpacing: 3,
                             fontWeight: FontWeight.bold,
                             foreground: Paint()
                               ..style = PaintingStyle.stroke
@@ -187,8 +187,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           'ANAGRAFICHE',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 30,
-                            letterSpacing: 5,
+                            fontSize: 24,
+                            letterSpacing: 3,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -228,8 +228,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Text(
                           'CATEGORIE',
                           style: TextStyle(
-                            fontSize: 30,
-                            letterSpacing: 5,
+                            fontSize: 24,
+                            letterSpacing: 3,
                             fontWeight: FontWeight.bold,
                             foreground: Paint()
                               ..style = PaintingStyle.stroke
@@ -242,8 +242,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           'CATEGORIE',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 30,
-                            letterSpacing: 5,
+                            fontSize: 24,
+                            letterSpacing: 3,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -283,8 +283,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Text(
                           'IMPOSTAZIONI',
                           style: TextStyle(
-                            fontSize: 30,
-                            letterSpacing: 5,
+                            fontSize: 24,
+                            letterSpacing: 3,
                             fontWeight: FontWeight.bold,
                             foreground: Paint()
                               ..style = PaintingStyle.stroke
@@ -297,8 +297,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           'IMPOSTAZIONI',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 30,
-                            letterSpacing: 5,
+                            fontSize: 24,
+                            letterSpacing: 3,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),

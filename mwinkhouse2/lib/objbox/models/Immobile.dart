@@ -80,7 +80,7 @@ class Immobile{
     instance.annoCostruzione = json['annoCostruzione'];
     instance.riscaldamento.target = Riscaldamento.fromJson(json['riscaldamento']);
     instance.statoConservativo.target = StatoConservativo.fromJson(json['statoConservativo']);
-    instance.tipologiaImmobile.target = TipologiaImmobile.fromJson(json['tipologiaImmobile']);
+    instance.tipologiaImmobile.target = TipologiaImmobile.fromJson((json['tipologiaImmobile']!= null)?json['tipologiaImmobile']:json);
     instance.classeEnergetica.target = ClasseEnergetica.fromJson(json['classeEnergetica']);
     if (json['stanze'] != null){
       instance.stanze.addAll(List<StanzaImmobile>.from(json['stanze'].map((model)=> StanzaImmobile.fromJson(model))));

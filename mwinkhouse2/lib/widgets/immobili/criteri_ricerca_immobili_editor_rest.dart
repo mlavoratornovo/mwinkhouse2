@@ -14,14 +14,14 @@ import '../../objbox/models/CriteriRicercaImmobile.dart';
 import 'lista_immobili_ricerca.dart';
 
 class CriteriRicercaImmobileEditorRest extends StatefulWidget {
-  final String title = 'Ricerca immobile Remota';
+  final String title = 'Ricerca remota';
   final CriteriRicercaImmobile criteri = CriteriRicercaImmobile();
   List<TipologiaImmobile> tipologieImmobile = [];
   List<StatoConservativo> statoConservativo = [];
   List<ClasseEnergetica> classeEnergetica = [];
   List<Riscaldamento> riscaldamento = [];
   late WinkhouseRest winkhouseRest;
-
+  bool validConnection = false;
   CriteriRicercaImmobileEditorRest({Key? key}) : super(key: key){
     createState();
     winkhouseRest = WinkhouseRest();
@@ -39,7 +39,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
   final _formKey = GlobalKey<FormState>();
 
   _CriteriRicercaImmobileEditorState(){
-    fillcombo();
+    // fillcombo();
   }
 
   Future<void> fillcombo() async {
@@ -51,10 +51,19 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
 
   }
 
+  Future<void> checkcon() async {
+
+    widget.winkhouseRest.getTipologieImmobili()
+        .then((value) =>  setState(() {widget.validConnection = true;}))
+        .catchError((error, stack){
+      widget.validConnection = false;
+    });
+
+  }
 
   @override
   void initState() {
-    fillcombo();
+    checkcon();
   }
 
   @override
@@ -127,14 +136,14 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                           widget.criteri.citta = text;
                         },
                       ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Zona"
-                        ),
-                        onChanged: (text) {
-                          widget.criteri.zona = text;
-                        },
-                      ),
+                      // TextFormField(
+                      //   decoration:const InputDecoration(
+                      //       labelText: "Zona"
+                      //   ),
+                      //   onChanged: (text) {
+                      //     widget.criteri.zona = text;
+                      //   },
+                      // ),
                       TextFormField(
                         decoration:const InputDecoration(
                             labelText: "Indirizzo"
@@ -143,82 +152,82 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                           widget.criteri.indirizzo = text;
                         },
                       ),
-                      DropdownButton<TipologiaImmobile>(
-                        isExpanded: true,
-                        hint: Text('Tipologia immobile'),
-                        onChanged: (TipologiaImmobile? newValue) {
-                          setState(() {
-                            widget.criteri.tipologiaImmobile = newValue;
-                          });
-                        },
-                        value: widget.criteri.tipologiaImmobile,
-                        items: widget.tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
-                          return DropdownMenuItem<TipologiaImmobile>(
-                            value: tipologiaImmobile,
-                            child: Text(
-                              tipologiaImmobile.descrizione??"",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                      DropdownButton<StatoConservativo>(
-                        isExpanded: true,
-                        hint: Text('Stato conservativo'),
-                        onChanged: (StatoConservativo? newValue) {
-                          setState(() {
-                            widget.criteri.statoConservativo = newValue;
-                          });
-                        },
-                        value: widget.criteri.statoConservativo,
-                        items: widget.statoConservativo.map((StatoConservativo statoConservativo) {
-                          return DropdownMenuItem<StatoConservativo>(
-                            value: statoConservativo,
-                            child: Text(
-                              statoConservativo.descrizione??"",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                      DropdownButton<ClasseEnergetica>(
-                        isExpanded: true,
-                        hint: Text('Class energetica'),
-                        onChanged: (ClasseEnergetica? newValue) {
-                          setState(() {
-                            widget.criteri.classeEnergetica = newValue;
-                          });
-                        },
-                        value: widget.criteri.classeEnergetica,
-                        items: widget.classeEnergetica.map((ClasseEnergetica classeEnergetica) {
-                          return DropdownMenuItem<ClasseEnergetica>(
-                            value: classeEnergetica,
-                            child: Text(
-                              classeEnergetica.nome??"",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                      DropdownButton<Riscaldamento>(
-                        isExpanded: true,
-                        hint: Text('Riscaldamento'),
-                        onChanged: (Riscaldamento? newValue) {
-                          setState(() {
-                            widget.criteri.riscaldamento = newValue;
-                          });
-                        },
-                        value: widget.criteri.riscaldamento,
-                        items: widget.riscaldamento.map((Riscaldamento riscaldamento) {
-                          return DropdownMenuItem<Riscaldamento>(
-                            value: riscaldamento,
-                            child: Text(
-                              riscaldamento.descrizione??"",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          );
-                        }).toList(),
-                      ),
+                      // DropdownButton<TipologiaImmobile>(
+                      //   isExpanded: true,
+                      //   hint: Text('Tipologia immobile'),
+                      //   onChanged: (TipologiaImmobile? newValue) {
+                      //     setState(() {
+                      //       widget.criteri.tipologiaImmobile = newValue;
+                      //     });
+                      //   },
+                      //   value: widget.criteri.tipologiaImmobile,
+                      //   items: widget.tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
+                      //     return DropdownMenuItem<TipologiaImmobile>(
+                      //       value: tipologiaImmobile,
+                      //       child: Text(
+                      //         tipologiaImmobile.descrizione??"",
+                      //         style: const TextStyle(color: Colors.black),
+                      //       ),
+                      //     );
+                      //   }).toList(),
+                      // ),
+                      // DropdownButton<StatoConservativo>(
+                      //   isExpanded: true,
+                      //   hint: Text('Stato conservativo'),
+                      //   onChanged: (StatoConservativo? newValue) {
+                      //     setState(() {
+                      //       widget.criteri.statoConservativo = newValue;
+                      //     });
+                      //   },
+                      //   value: widget.criteri.statoConservativo,
+                      //   items: widget.statoConservativo.map((StatoConservativo statoConservativo) {
+                      //     return DropdownMenuItem<StatoConservativo>(
+                      //       value: statoConservativo,
+                      //       child: Text(
+                      //         statoConservativo.descrizione??"",
+                      //         style: const TextStyle(color: Colors.black),
+                      //       ),
+                      //     );
+                      //   }).toList(),
+                      // ),
+                      // DropdownButton<ClasseEnergetica>(
+                      //   isExpanded: true,
+                      //   hint: Text('Class energetica'),
+                      //   onChanged: (ClasseEnergetica? newValue) {
+                      //     setState(() {
+                      //       widget.criteri.classeEnergetica = newValue;
+                      //     });
+                      //   },
+                      //   value: widget.criteri.classeEnergetica,
+                      //   items: widget.classeEnergetica.map((ClasseEnergetica classeEnergetica) {
+                      //     return DropdownMenuItem<ClasseEnergetica>(
+                      //       value: classeEnergetica,
+                      //       child: Text(
+                      //         classeEnergetica.nome??"",
+                      //         style: const TextStyle(color: Colors.black),
+                      //       ),
+                      //     );
+                      //   }).toList(),
+                      // ),
+                      // DropdownButton<Riscaldamento>(
+                      //   isExpanded: true,
+                      //   hint: Text('Riscaldamento'),
+                      //   onChanged: (Riscaldamento? newValue) {
+                      //     setState(() {
+                      //       widget.criteri.riscaldamento = newValue;
+                      //     });
+                      //   },
+                      //   value: widget.criteri.riscaldamento,
+                      //   items: widget.riscaldamento.map((Riscaldamento riscaldamento) {
+                      //     return DropdownMenuItem<Riscaldamento>(
+                      //       value: riscaldamento,
+                      //       child: Text(
+                      //         riscaldamento.descrizione??"",
+                      //         style: const TextStyle(color: Colors.black),
+                      //       ),
+                      //     );
+                      //   }).toList(),
+                      // ),
                     ])
             ),
           ),
@@ -231,20 +240,26 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
             FloatingActionButton(
               heroTag: "CercaRest",
               onPressed: () {
-                if ((widget.criteri.provincia.trim() != '') ||
-                    (widget.criteri.cap.trim() != '') ||
-                    (widget.criteri.citta.trim() != '') ||
-                    (widget.criteri.zona.trim() != '') ||
-                    (widget.criteri.indirizzo?.trim() != '') ||
-                    (widget.criteri.classeEnergetica != null) || (widget.criteri.riscaldamento != null) ||
-                    (widget.criteri.tipologiaImmobile != null) || (widget.criteri.statoConservativo != null)
-                ) {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ImmobiliRicercaRestList(criteri:widget.criteri)));
-                }
-                else{
+                if (widget.validConnection == true){
+                  if ((widget.criteri.provincia.trim() != '') ||
+                      (widget.criteri.cap.trim() != '') ||
+                      (widget.criteri.citta.trim() != '') ||
+                      // (widget.criteri.zona.trim() != '') ||
+                      (widget.criteri.indirizzo?.trim() != '')
+                  // (widget.criteri.classeEnergetica != null) || (widget.criteri.riscaldamento != null) ||
+                  // (widget.criteri.tipologiaImmobile != null) || (widget.criteri.statoConservativo != null)
+                  ) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ImmobiliRicercaRestList(criteri:widget.criteri)));
+                  }
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Dati non validi impossibile procedere')),
+                    );
+                  }
+                }else{
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Dati non validi impossibile procedere')),
+                    const SnackBar(content: Text('Impossibile connettersi a winkhouse controllare le impostazioni')),
                   );
                 }
               },

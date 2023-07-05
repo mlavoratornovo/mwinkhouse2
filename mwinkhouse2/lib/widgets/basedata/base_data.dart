@@ -1005,7 +1005,15 @@ class _BaseDataState extends State<BaseData> {
                                           ),
                                           child: widget.syncIcon,
                                           onPressed: () {
-                                            _syncData(context, 'TipologiaImmobile');
+                                            _syncData(context, 'TipologiaImmobile')
+                                               .whenComplete(() => {
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    const SnackBar(content: Text('Operazione eseguita'))
+                                               )})
+                                               .onError((error, stackTrace) => {
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    const SnackBar(content: Text('Operazione non eseguita'))
+                                               )});
                                           },
                                         ),
                                     ),
@@ -1100,7 +1108,15 @@ class _BaseDataState extends State<BaseData> {
                                     ),
                                     child: widget.syncIcon,
                                     onPressed: () {
-                                      _syncData(context, 'StatoConservativo');
+                                      _syncData(context, 'StatoConservativo')
+                                          .whenComplete(() => {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('Operazione eseguita'))
+                                        )})
+                                          .onError((error, stackTrace) => {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('Operazione non eseguita'))
+                                        )});
                                     },
                                   ),
                                 ),
@@ -1196,7 +1212,15 @@ class _BaseDataState extends State<BaseData> {
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
-                                        _syncData(context, 'ClasseEnergetica');
+                                        _syncData(context, 'ClasseEnergetica')
+                                            .whenComplete(() => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione eseguita'))
+                                          )})
+                                            .onError((error, stackTrace) => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione non eseguita'))
+                                          )});
                                       },
                                     ),
                                 ),
@@ -1291,7 +1315,15 @@ class _BaseDataState extends State<BaseData> {
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
-                                        _syncData(context, 'Riscaldamento');
+                                        _syncData(context, 'Riscaldamento')
+                                            .whenComplete(() => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione eseguita'))
+                                          )})
+                                            .onError((error, stackTrace) => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione non eseguita'))
+                                          )});
                                       },
                                     ),
                                 ),
@@ -1386,7 +1418,15 @@ class _BaseDataState extends State<BaseData> {
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
-                                        _syncData(context, 'TipologiaStanza');
+                                        _syncData(context, 'TipologiaStanza')
+                                            .whenComplete(() => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione eseguita'))
+                                          )})
+                                            .onError((error, stackTrace) => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione non eseguita'))
+                                          )});
                                       },
                                     ),
                                 ),
@@ -1481,7 +1521,15 @@ class _BaseDataState extends State<BaseData> {
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
-                                        _syncData(context, 'ClasseCliente');
+                                        _syncData(context, 'ClasseCliente')
+                                            .whenComplete(() => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione eseguita'))
+                                          )})
+                                            .onError((error, stackTrace) => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione non eseguita'))
+                                          )});
                                       },
                                     ),
                                 ),
@@ -1576,7 +1624,15 @@ class _BaseDataState extends State<BaseData> {
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
-                                        _syncData(context, 'TipologiaContatto');
+                                        _syncData(context, 'TipologiaContatto')
+                                            .whenComplete(() => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione eseguita'))
+                                          )})
+                                            .onError((error, stackTrace) => {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Operazione non eseguita'))
+                                          )});
                                       },
                                     ),
                                 ),

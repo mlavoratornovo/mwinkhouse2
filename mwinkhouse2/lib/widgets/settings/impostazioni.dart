@@ -44,7 +44,7 @@ class _ImpostazioniState extends State<Impostazioni> {
             TextInputSettingsTile(
               title: 'Indirizzo IP installazione',
               settingKey: 'ipWinkhouse',
-              initialValue: '127.0.0.0',
+              initialValue: 'http://127.0.0.1',
               validator: (String ip) {
                   if (ip != null && ip.length > 6) {
                     return null;

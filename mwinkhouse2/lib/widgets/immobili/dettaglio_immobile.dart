@@ -27,7 +27,7 @@ import 'lista_comuni_ricerca.dart';
 class DettaglioImmobile extends StatefulWidget {
   final String title = 'Dettaglio immobile';
   Immobile immobile;
-  Immobile dbimm = new Immobile();
+  Immobile? dbimm = new Immobile();
   bool bindRest;
   bool readonly;
   bool immobileIsFromDB = true;
@@ -54,7 +54,7 @@ class DettaglioImmobile extends StatefulWidget {
 
   void _bindRest(){
     if (immobile.codImmobile != null){
-      dbimm = objectbox.getImmobileByRif(immobile.rif??"")!;
+      dbimm = objectbox.getImmobileByRif(immobile.rif??"");
 
       //immobile.codImmobile = null;
       bool findti = false;
@@ -542,13 +542,13 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
         ),
         FloatingActionButton(
           heroTag: "Switch",
-          backgroundColor: (widget.dbimm.codImmobile != null)?null:Colors.grey,
-          onPressed: (widget.dbimm.codImmobile != null) ? () {
+          backgroundColor: (widget.dbimm?.codImmobile != null)?null:Colors.grey,
+          onPressed: (widget.dbimm?.codImmobile != null) ? () {
 
             widget.immobileIsFromDB=!widget.immobileIsFromDB;
 
             Immobile tmp=widget.immobile;
-            widget.immobile = widget.dbimm;
+            widget.immobile = ((widget.dbimm!=null)?widget.dbimm:widget.immobile)!;
             widget.dbimm = tmp;
 
             setState(() {});

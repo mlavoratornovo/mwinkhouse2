@@ -18,8 +18,10 @@ class TipologiaImmobile{
 
   factory TipologiaImmobile.fromJson(Map<String, dynamic> json){
     TipologiaImmobile instance = TipologiaImmobile();
-    instance.codTipologiaImmobile = json['codTipologiaImmobile'];
-    instance.descrizione = json['descrizione'];
+    if (json != null){
+      instance.codTipologiaImmobile = json['codTipologiaImmobile'];
+      instance.descrizione = json['descrizione'];
+    }
     return instance;
   }
 }

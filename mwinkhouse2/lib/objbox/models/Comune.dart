@@ -7,7 +7,7 @@ class Comune {
   String? cap;
 
   Comune({String? initString}){
-    if (initString != null){
+    if (initString != null && initString.trim() != ''){
       List<String> l = initString.split('/');
       codIstat = l[0];
       comune = l[1];
