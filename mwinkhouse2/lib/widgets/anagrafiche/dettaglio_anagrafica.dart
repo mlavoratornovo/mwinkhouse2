@@ -8,10 +8,10 @@ import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
 import 'lista_contatti_anagrafica.dart';
 
 class DettaglioAnagrafica extends StatefulWidget {
-  final String title = 'Dettaglio anagrafica';
+  final String title = 'Anagrafica';
   Anagrafica? _anagrafica = Anagrafica();
   DettaglioAnagrafica({Key? key,required Anagrafica anagrafica}) : super(key: key){
-    this._anagrafica = anagrafica;
+    _anagrafica = anagrafica;
   }
 
   @override

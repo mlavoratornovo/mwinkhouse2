@@ -7,11 +7,13 @@ import 'package:mwinkhouse2/objbox/models/TipologiaColloquio.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class DettaglioColloquio extends StatefulWidget {
-  String title = '';
+  final String title = 'Colloquio';
   Anagrafica? anagrafica;
-  Colloquio colloquio = Colloquio();
-  DettaglioColloquio({Key? key,this.anagrafica,required Colloquio colloquio}) : super(key: key){
-    title = "Dettaglio colloquio : ${(anagrafica?.ragioneSociale ?? "")} ${(anagrafica?.nome ?? "")} ${(anagrafica?.cognome ?? "")}";
+  Colloquio? colloquio;
+  List<TipologiaColloquio> tipoColloquio = [];
+  DettaglioColloquio({Key? key,this.anagrafica,this.colloquio}) : super(key: key){
+    tipoColloquio = objectbox.tipologiaColloquioBox.getAll().where((element) =>
+    element.descrizione != 'Visita').toList();
   }
 
   @override
@@ -20,16 +22,11 @@ class DettaglioColloquio extends StatefulWidget {
 
 class _DettaglioColloquioState extends State<DettaglioColloquio> {
 
-  List<TipologiaColloquio> tipoColloquio = [];
-
   final TextEditingController _tECDataInserimento = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
-  _DettaglioColloquioState(){
-    tipoColloquio = objectbox.tipologiaColloquioBox.getAll().where((element) =>
-    element.descrizione != 'Visita').toList();
-  }
+  _DettaglioColloquioState();
 
   _selectDate(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
@@ -47,7 +44,7 @@ class _DettaglioColloquioState extends State<DettaglioColloquio> {
 
   @override
   Widget build(BuildContext context) {
-    _tECDataInserimento.text = widget.colloquio.dataColloquio.toString();
+    _tECDataInserimento.text = ((widget.colloquio!= null)?widget.colloquio?.dataColloquio.toString():"")!;
     return Scaffold(
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
@@ -88,7 +85,7 @@ class _DettaglioColloquioState extends State<DettaglioColloquio> {
                             widget.colloquio?.tipologiaColloquio.target = newValue;
                           });
                         },
-                        items: tipoColloquio.map((TipologiaColloquio tipologiaColloquio) {
+                        items: widget.tipoColloquio.map((TipologiaColloquio tipologiaColloquio) {
                           return DropdownMenuItem<TipologiaColloquio>(
                             value: tipologiaColloquio,
                             child: Text(
@@ -175,6 +172,9 @@ class _DettaglioColloquioState extends State<DettaglioColloquio> {
             if (_formKey.currentState!.validate()) {
               if (widget.colloquio != null) {
                 widget.anagrafica?.colloqui.add(widget.colloquio??Colloquio());
+                if (widget.anagrafica!= null) {
+                  objectbox.addAnagrafica(widget.anagrafica??Anagrafica());
+                }
               }
               Navigator.pop(context);
               // final value = await Navigator.of(context).push(MaterialPageRoute(

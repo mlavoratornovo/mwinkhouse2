@@ -31,4 +31,23 @@ class CriteriRicercaImmobile{
   TipologiaImmobile? tipologiaImmobile;
   ClasseEnergetica? classeEnergetica;
 
+  void resetData(){
+    indirizzo = '';
+    provincia = '';
+    cap = '';
+    citta = '';
+    zona = '';
+
+    prezzoDa = 0.0;
+    prezzoA = 0.0;
+    mqDa = 0;
+    mqA = 0;
+    annoCostruzioneDa = 0;
+    annoCostruzioneA = 0;
+    riscaldamento = null;
+    statoConservativo = null;
+    tipologiaImmobile = null;
+    classeEnergetica = null;
+
+  }
 }

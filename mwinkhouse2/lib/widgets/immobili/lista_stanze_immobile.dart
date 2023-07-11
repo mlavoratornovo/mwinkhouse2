@@ -66,7 +66,7 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '${stanza[index].tipologiaStanza.target?.descrizione ?? ""} ${stanza[index].mq}',
+                        '${stanza[index].tipologiaStanza.target?.descrizione ?? ""} ${stanza[index].mq} mq',
                         style: const TextStyle(
                             color: Colors.grey,
                             decoration: TextDecoration.none),

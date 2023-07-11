@@ -7,10 +7,14 @@ import '../../main.dart';
 import '../../objbox/models/Contatto.dart';
 
 class DettaglioContatto extends StatefulWidget {
-  final String title = 'Dettaglio contatto';
+  final String title = 'Contatto';
   Contatto? contatto;
   Anagrafica? anagrafica;
-  DettaglioContatto({Key? key, this.anagrafica, this.contatto}) : super(key: key);
+  List<TipologiaContatto> tipologiaContatto = [];
+
+  DettaglioContatto({Key? key, this.anagrafica, this.contatto}) : super(key: key){
+    tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+  }
 
   @override
   State<DettaglioContatto> createState() => _DettaglioContattoState();
@@ -18,12 +22,10 @@ class DettaglioContatto extends StatefulWidget {
 
 class _DettaglioContattoState extends State<DettaglioContatto> {
 
-  List<TipologiaContatto> tipologiaContatto = [];
-
   final _formKey = GlobalKey<FormState>();
 
   _DettaglioContattoState(){
-    tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
+
   }
 
   @override
@@ -75,7 +77,7 @@ class _DettaglioContattoState extends State<DettaglioContatto> {
                             widget.contatto?.tipologiaContatto.target = newValue;
                           });
                         },
-                        items: tipologiaContatto.map((TipologiaContatto tipologiaContatto) {
+                        items: widget.tipologiaContatto.map((TipologiaContatto tipologiaContatto) {
                           return DropdownMenuItem<TipologiaContatto>(
                             value: tipologiaContatto,
                             child: Text(

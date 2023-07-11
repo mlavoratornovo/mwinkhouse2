@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../objbox/models/Immobile.dart';
+import 'lista_immagini_immobile.dart';
 
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
@@ -62,6 +63,9 @@ class DisplayPictureScreen extends StatelessWidget {
               }
               await fimg.copy(img.pathImmagine??"");
               objectbox.immobileBox.put(immobile);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ImmaginiImmobiliList(immobile: immobile)
+              ));
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(e.toString())),

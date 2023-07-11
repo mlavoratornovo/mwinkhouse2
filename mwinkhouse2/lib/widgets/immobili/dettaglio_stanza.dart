@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mwinkhouse2/objbox/models/StanzaImmobile.dart';
 import 'package:mwinkhouse2/objbox/models/TipologiaStanza.dart';
+import 'package:mwinkhouse2/widgets/immobili/lista_stanze_immobile.dart';
 
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 
 class DettaglioStanza extends StatefulWidget {
-  final String title = 'Dettaglio stanza';
+  final String title = 'Stanza';
   StanzaImmobile? stanzaImmobile;
   Immobile immobile;
   DettaglioStanza({Key? key, required this.immobile, StanzaImmobile? stanzaImmobile}) : super(key: key){
@@ -121,7 +122,10 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               immobile.stanze.add(stanzaImmobile!);
-              Navigator.pop(context);
+              objectbox.addImmobile(immobile);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => StanzeImmobileList(immobile: widget.immobile)
+              ));
             }else{
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Dati non validi impossibile procedere')),

@@ -8,11 +8,11 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import '../../objbox/models/Immobile.dart';
 
 class DettaglioColloquioImmobile extends StatefulWidget {
-  String title = '';
+  final String title = 'Colloquio';
   Immobile? immobile;
   Colloquio? colloquio;
   DettaglioColloquioImmobile({Key? key,this.immobile,this.colloquio}) : super(key: key){
-    title = "Dettaglio colloquio : ${(immobile?.indirizzo ?? "")}";
+
   }
 
   @override
@@ -173,6 +173,10 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
             if (_formKey.currentState!.validate()) {
               if (widget.colloquio != null) {
                 widget.immobile?.colloqui.add(widget.colloquio??Colloquio());
+                if (widget.immobile!= null) {
+                  objectbox.addImmobile(widget.immobile??Immobile());
+                }
+
               }
               Navigator.pop(context);
               // final value = await Navigator.of(context).push(MaterialPageRoute(

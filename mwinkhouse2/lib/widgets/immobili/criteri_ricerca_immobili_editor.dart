@@ -347,6 +347,19 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
           },
           child: const Icon(Icons.find_in_page),
         ),
+        FloatingActionButton(
+          heroTag: "Reset",
+          onPressed: () {
+            widget.criteri.resetData();
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionDuration: Duration.zero,
+                pageBuilder: (_, __, ___) => CriteriRicercaImmobileEditor(),
+              ),
+            );          },
+          child: const Icon(Icons.cleaning_services_outlined),
+        )
         ])
     );
   }

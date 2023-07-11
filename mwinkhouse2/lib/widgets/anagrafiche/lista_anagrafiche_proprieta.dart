@@ -11,7 +11,7 @@ import 'lista_anagrafiche.dart';
 /// Each task has a check button to mark it completed and an edit button to
 /// update it. A task can also be swiped away to remove it.
 class AnagraficheProprietaList extends StatefulWidget {
-  String title = 'Lista proprietari : ';
+  String title = 'Lista proprietari';
   Immobile immobile = Immobile();
   AnagraficheProprietaList({Key? key,required this.immobile}) : super(key: key){
     //this.immobile = immobile;

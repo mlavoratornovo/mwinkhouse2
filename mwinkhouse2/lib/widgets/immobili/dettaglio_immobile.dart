@@ -25,7 +25,7 @@ import 'lista_colloqui_immobile.dart';
 import 'lista_comuni_ricerca.dart';
 
 class DettaglioImmobile extends StatefulWidget {
-  final String title = 'Dettaglio immobile';
+  final String title = 'Immobile';
   Immobile immobile;
   Immobile? dbimm = new Immobile();
   bool bindRest;
