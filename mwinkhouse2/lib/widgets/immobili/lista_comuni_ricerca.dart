@@ -19,9 +19,10 @@ class ListaComuniRicerca extends StatefulWidget {
 
   final String title = 'Ricerca comuni';
   Immobile? immobile;
+  Anagrafica? anagrafica;
   String comuneSearch='';
   late WinkhouseRest winkhouseRest;
-  ListaComuniRicerca({Key? key,this.immobile}) : super(key: key){
+  ListaComuniRicerca({Key? key,this.immobile,this.anagrafica}) : super(key: key){
     winkhouseRest = WinkhouseRest();
   }
 
@@ -50,9 +51,16 @@ class _ListaComuniRicercaState extends State<ListaComuniRicerca> {
             Expanded(
               child: InkWell(
                 onTap: (){
-                  widget.immobile?.citta = comuni[index].comune;
-                  widget.immobile?.provincia = comuni[index].provincia;
-                  widget.immobile?.cap = comuni[index].cap;
+                  if (widget.immobile != null) {
+                    widget.immobile?.citta = comuni[index].comune;
+                    widget.immobile?.provincia = comuni[index].provincia;
+                    widget.immobile?.cap = comuni[index].cap;
+                  }
+                  if (widget.anagrafica != null){
+                    widget.anagrafica?.citta = comuni[index].comune;
+                    widget.anagrafica?.provincia = comuni[index].provincia;
+                    widget.anagrafica?.cap = comuni[index].cap;
+                  }
                   Navigator.pop(context);
                 },
                 child: Container(

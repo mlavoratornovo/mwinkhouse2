@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:async_task/async_task_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
@@ -5,30 +8,29 @@ import 'package:mwinkhouse2/main.dart';
 import 'package:mwinkhouse2/widgets/anagrafiche/lista_colloqui_anagrafica.dart';
 import 'package:mwinkhouse2/widgets/immobili/lista_immobili_proprieta.dart';
 
+import '../immobili/lista_comuni_ricerca.dart';
 import 'lista_contatti_anagrafica.dart';
 
 class DettaglioAnagrafica extends StatefulWidget {
   final String title = 'Anagrafica';
-  Anagrafica? _anagrafica = Anagrafica();
-  DettaglioAnagrafica({Key? key,required Anagrafica anagrafica}) : super(key: key){
-    _anagrafica = anagrafica;
+  Anagrafica anagrafica;
+  List<ClasseCliente> classeCliente = [];
+
+  DettaglioAnagrafica({Key? key,required this.anagrafica}) : super(key: key){
+    classeCliente = objectbox.classeClienteBox.getAll();
   }
 
   @override
-  State<DettaglioAnagrafica> createState() => _DettaglioAnagraficaState(this._anagrafica);
+  State<DettaglioAnagrafica> createState() => _DettaglioAnagraficaState();
 }
 
 class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
 
-  Anagrafica? _anagrafica;
-  List<ClasseCliente> classeCliente = [];
+
 
   final _formKey = GlobalKey<FormState>();
 
-  _DettaglioAnagraficaState(anagrafica){
-    _anagrafica = anagrafica;
-    classeCliente = objectbox.classeClienteBox.getAll();
-  }
+  _DettaglioAnagraficaState();
 
   @override
   Widget build(BuildContext context) {
@@ -64,21 +66,21 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      ContattiAnagraficaList(anagrafica: _anagrafica??Anagrafica())),
+                      ContattiAnagraficaList(anagrafica: widget.anagrafica)),
                   );
               }
               if (result == 1) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      ImmobiliProprietaList(anagrafica: _anagrafica??Anagrafica())),
+                      ImmobiliProprietaList(anagrafica: widget.anagrafica)),
                 );
               }
               if (result == 2) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      ColloquiAnagraficaList(anagrafica: _anagrafica??Anagrafica())),
+                      ColloquiAnagraficaList(anagrafica: widget.anagrafica)),
                 );
               }
             }
@@ -106,9 +108,10 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         //   return null;
                         // },
                         onChanged: (text) {
-                          _anagrafica?.cognome = (text.trim() == '')?null:text;
+                          widget.anagrafica.cognome = (text.trim() == '')?null:text;
                         },
-                        initialValue: _anagrafica?.cognome ?? "",
+                        initialValue: widget.anagrafica.cognome ?? "",
+                        key: Key(Random().nextInt(1000).toString()),
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
@@ -123,9 +126,10 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         //   return null;
                         // },
                         onChanged: (text) {
-                          _anagrafica?.nome = (text.trim() == '')?null:text;
+                          widget.anagrafica.nome = (text.trim() == '')?null:text;
                         },
-                        initialValue: _anagrafica?.nome ?? "",
+                        initialValue: widget.anagrafica.nome ?? "",
+                        key: Key(Random().nextInt(1000).toString()),
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
@@ -140,9 +144,10 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         //   return null;
                         // },
                         onChanged: (text) {
-                          _anagrafica?.ragioneSociale = (text.trim() == '')?null:text;;
+                          widget.anagrafica.ragioneSociale = (text.trim() == '')?null:text;;
                         },
-                        initialValue: _anagrafica?.ragioneSociale ?? "",
+                        initialValue: widget.anagrafica.ragioneSociale ?? "",
+                        key: Key(Random().nextInt(1000).toString()),
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
@@ -155,9 +160,10 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         //   return null;
                         // },
                         onChanged: (text) {
-                          _anagrafica?.partitaIva = text;
+                          widget.anagrafica.partitaIva = text;
                         },
-                        initialValue: _anagrafica?.partitaIva ?? "",
+                        initialValue: widget.anagrafica.partitaIva ?? "",
+                        key: Key(Random().nextInt(1000).toString()),
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
@@ -170,9 +176,10 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         //   return null;
                         // },
                         onChanged: (text) {
-                          _anagrafica?.codiceFiscale = text;
+                          widget.anagrafica.codiceFiscale = text;
                         },
-                        initialValue: _anagrafica?.codiceFiscale ?? "",
+                        initialValue: widget.anagrafica.codiceFiscale,
+                        key: Key(Random().nextInt(1000).toString()),
                       ),
 
                       Row(
@@ -192,9 +199,10 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                               //   return null;
                               // },
                               onChanged: (text) {
-                                _anagrafica?.provincia = text;
+                                widget.anagrafica.provincia = text;
                               },
-                              initialValue: _anagrafica?.provincia ?? "",
+                              initialValue: widget.anagrafica.provincia,
+                              key: Key(Random().nextInt(1000).toString()),
                             ),
                           ),
                           SizedBox(width: 10.0),
@@ -211,27 +219,41 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                               //   return null;
                               // },
                               onChanged: (text) {
-                                _anagrafica?.cap = text;
+                                widget.anagrafica.cap = text;
                               },
-                              initialValue: _anagrafica?.cap ?? "",
+                              initialValue: widget.anagrafica.cap,
+                              key: Key(Random().nextInt(1000).toString()),
                             ),
                           ),
                         ],
                       ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Città"
-                        ),
-                        // validator:  (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return 'Please enter some text';
-                        //   }
-                        //   return null;
-                        // },
-                        onChanged: (text) {
-                          _anagrafica?.citta = text;
-                        },
-                        initialValue: _anagrafica?.citta ?? "",
+                      InkWell(
+                          onLongPress: () async {
+                            final value = await Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ListaComuniRicerca(anagrafica:widget.anagrafica)
+                            )
+                            );
+                            setState(() {});
+                          },
+                          child: IgnorePointer(
+                              ignoring: true,  // You can make this a variable in other toggle True or False
+                              child:TextFormField(
+                                  decoration:const InputDecoration(
+                                      labelText: "Città"
+                                  ),
+                                  // validator:  (value) {
+                                  //   if (value == null || value.isEmpty) {
+                                  //     return 'Please enter some text';
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  onChanged: (text) {
+                                    widget.anagrafica.citta = text;
+                                  },
+                                  initialValue: widget.anagrafica.citta ?? "",
+                                  key: Key(Random().nextInt(1000).toString()),
+                                )
+                          )
                       ),
                       TextFormField(
                         decoration:const InputDecoration(
@@ -244,9 +266,10 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         //   return null;
                         // },
                         onChanged: (text) {
-                          _anagrafica?.indirizzo = text;
+                          widget.anagrafica.indirizzo = text;
                         },
-                        initialValue: _anagrafica?.indirizzo ?? "",
+                        initialValue: widget.anagrafica.indirizzo ?? "",
+                        key:Key(Random().nextInt(1000).toString()),
                       ),
                       TextFormField(
                         maxLines: null,
@@ -260,21 +283,22 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         //   return null;
                         // },
                         onChanged: (text) {
-                          _anagrafica?.commento = text;
+                          widget.anagrafica.commento = text;
                         },
-                        initialValue: _anagrafica?.commento ?? "",
+                        initialValue: widget.anagrafica.commento ?? "",
+                        key: Key(Random().nextInt(1000).toString()),
                       ),
                       DropdownButtonFormField<ClasseCliente>(
                         hint: Text('Tipologia cliente'),
                         validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
                         isExpanded: true,
-                        value: _anagrafica?.classeCliente?.target,
+                        value: widget.anagrafica.classeCliente.target,
                         onChanged: (ClasseCliente? newValue) {
                           setState(() {
-                            _anagrafica?.classeCliente.target = newValue;
+                            widget.anagrafica.classeCliente.target = newValue;
                           });
                         },
-                        items: classeCliente.map((ClasseCliente classeCliente) {
+                        items: widget.classeCliente.map((ClasseCliente classeCliente) {
                           return DropdownMenuItem<ClasseCliente>(
                             value: classeCliente,
                             child: Text(
@@ -292,12 +316,12 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
           heroTag: "Salva",
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              if (_anagrafica?.cognome == null && _anagrafica?.nome == null && _anagrafica?.ragioneSociale == null){
+              if (widget.anagrafica.cognome == null && widget.anagrafica.nome == null && widget.anagrafica.ragioneSociale == null){
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Dati non validi impossibile procedere')),
                 );
               }else{
-                objectbox.addAnagrafica(_anagrafica ?? Anagrafica());
+                objectbox.addAnagrafica(widget.anagrafica);
                 Navigator.pop(context);
               }
             }else{
