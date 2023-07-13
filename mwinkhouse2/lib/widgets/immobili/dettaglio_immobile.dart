@@ -145,10 +145,15 @@ class DettaglioImmobile extends StatefulWidget {
 
 class _DettaglioImmobileState extends State<DettaglioImmobile> {
 
-
+  late FocusNode focusNode;
   final _formKey = GlobalKey<FormState>();
 
   _DettaglioImmobileState(){}
+
+  @override
+  void initState() {
+    focusNode = FocusNode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +250,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 onChanged: (text) {
                   widget.immobile?.rif = text;
                 },
-                key: Key("${(widget.immobile.rif != null && widget.immobile.rif != '')? widget.immobile.rif:Random().nextInt(1000).toString()}"),
+                key: Key(Random().nextInt(10000).toString()),
                 initialValue: widget.immobile.rif ?? "",
               ),
               Row(
@@ -261,7 +266,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       onChanged: (text) {
                         widget.immobile?.provincia = text;
                       },
-                      key: Key("${(widget.immobile.provincia != null && widget.immobile.provincia != '')? widget.immobile.provincia:Random().nextInt(1000).toString()}"),
+                      key: Key(Random().nextInt(10000).toString()),
                       initialValue: "${widget.immobile.provincia ?? ""}",
                     ),
                   ),
@@ -281,52 +286,30 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   ),
                 ],
               ),
-              InkWell(
-                onLongPress: () async {
+              TextFormField(
+                onTap: () async {
                   final value = await Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ListaComuniRicerca(immobile:widget.immobile)
                   )
                   );
                   setState(() {});
                 },
-                child: IgnorePointer(
-                  ignoring: true,  // You can make this a variable in other toggle True or False
-                  child: TextFormField(
-                    decoration:const InputDecoration(
-                        labelText: "Città"
-                    ),
-                    validator:  (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Città dato obbligatorio';
-                      }
-                      return null;
-                    },
-                    onChanged: (text) {
-                      widget.immobile.citta = text;
-                    },
-                    key: Key("${(widget.immobile.citta != null && widget.immobile.citta != '')? widget.immobile.citta:Random().nextInt(1000).toString()}"),
-                    initialValue: "${widget.immobile.citta ?? ""}",
-                  ),
-
+                focusNode: focusNode,
+                decoration:const InputDecoration(
+                    labelText: "Città"
                 ),
+                validator:  (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Città dato obbligatorio';
+                  }
+                  return null;
+                },
+                onChanged: (text) {
+                  widget.immobile.citta = text;
+                },
+                key: Key(Random().nextInt(10000).toString()),
+                initialValue: "${widget.immobile.citta ?? ""}",
               ),
-
-              // TextFormField(
-              //   decoration:const InputDecoration(
-              //       labelText: "Città"
-              //   ),
-              //   validator:  (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Città dato obbligatorio';
-              //     }
-              //     return null;
-              //   },
-              //   onChanged: (text) {
-              //     widget.immobile.citta = text;
-              //   },
-              //   key: Key("${(widget.immobile.citta != null && widget.immobile.citta != '')? widget.immobile.citta:Random().nextInt(1000).toString()}"),
-              //   initialValue: "${widget.immobile.citta ?? ""}",
-              // ),
               TextFormField(
                 decoration:const InputDecoration(
                     labelText: "Zona"
@@ -334,7 +317,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 onChanged: (text) {
                   widget.immobile.zona = text;
                 },
-                key: Key("${(widget.immobile.zona != null && widget.immobile.zona != '')? widget.immobile.zona:Random().nextInt(1000).toString()}"),
+                key: Key(Random().nextInt(10000).toString()),
                 initialValue: widget.immobile.zona ?? "",
               ),
               TextFormField(
@@ -350,7 +333,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 onChanged: (text) {
                   widget.immobile?.indirizzo = text;
                 },
-                key: Key("${(widget.immobile.indirizzo != null && widget.immobile.indirizzo != '')? widget.immobile.indirizzo:Random().nextInt(1000).toString()}"),
+                key: Key(Random().nextInt(10000).toString()),
                 initialValue: widget.immobile?.indirizzo ?? "",
               ),
               TextFormField(
@@ -360,7 +343,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 onChanged: (text) {
                   widget.immobile?.prezzo = double.parse(text);
                 },
-                key: Key("${(widget.immobile.prezzo != null && widget.immobile.prezzo != 0)? widget.immobile.prezzo:Random().nextInt(1000).toString()}"),
+                key: Key(Random().nextInt(10000).toString()),
                 initialValue: "${widget.immobile?.prezzo ?? ""}",
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
@@ -380,7 +363,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       onChanged: (text) {
                         widget.immobile?.mq = int.parse(text);
                       },
-                      key: Key("${(widget.immobile.mq != null && widget.immobile.mq != 0)? widget.immobile.mq:Random().nextInt(1000).toString()}"),
+                      key: Key(Random().nextInt(1000).toString()),
                       initialValue: "${widget.immobile?.mq ?? ""}",
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
@@ -398,7 +381,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                       onChanged: (text) {
                         widget.immobile?.annoCostruzione = int.parse(text);
                       },
-                      key: Key("${(widget.immobile.annoCostruzione != null && widget.immobile.annoCostruzione != 0)? widget.immobile.annoCostruzione:Random().nextInt(1000).toString()}"),
+                      key: Key(Random().nextInt(10000).toString()),
                       initialValue: "${widget.immobile?.annoCostruzione ?? ""}",
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
@@ -416,7 +399,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 onChanged: (text) {
                   widget.immobile?.descrizione = text;
                 },
-                key: Key("${(widget.immobile.descrizione != null && widget.immobile.descrizione != '')? widget.immobile.descrizione:Random().nextInt(1000).toString()}"),
+                key: Key(Random().nextInt(10000).toString()),
                 initialValue: widget.immobile?.descrizione ?? "",
               ),
               DropdownButtonFormField<TipologiaImmobile>(

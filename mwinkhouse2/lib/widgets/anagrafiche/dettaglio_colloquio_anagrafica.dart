@@ -12,6 +12,7 @@ class DettaglioColloquio extends StatefulWidget {
   Colloquio? colloquio;
   List<TipologiaColloquio> tipoColloquio = [];
   DettaglioColloquio({Key? key,this.anagrafica,this.colloquio}) : super(key: key){
+    colloquio?.dataColloquio ??= DateTime.now();
     tipoColloquio = objectbox.tipologiaColloquioBox.getAll().where((element) =>
     element.descrizione != 'Visita').toList();
   }

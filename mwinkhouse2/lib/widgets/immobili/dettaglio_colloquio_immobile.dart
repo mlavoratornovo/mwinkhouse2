@@ -11,8 +11,11 @@ class DettaglioColloquioImmobile extends StatefulWidget {
   final String title = 'Colloquio';
   Immobile? immobile;
   Colloquio? colloquio;
+  List<TipologiaColloquio> tipoColloquio = [];
   DettaglioColloquioImmobile({Key? key,this.immobile,this.colloquio}) : super(key: key){
-
+    colloquio?.dataColloquio ??= DateTime.now();
+    tipoColloquio = objectbox.tipologiaColloquioBox.getAll().where((element) =>
+    element.descrizione == 'Visita').toList();
   }
 
   @override
@@ -27,10 +30,7 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
 
   final _formKey = GlobalKey<FormState>();
 
-  _DettaglioColloquioImmobileState(){
-    tipoColloquio = objectbox.tipologiaColloquioBox.getAll().where((element) =>
-    element.descrizione == 'Visita').toList();
-  }
+  _DettaglioColloquioImmobileState();
 
   _selectDate(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
@@ -90,7 +90,7 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
                             widget.colloquio?.tipologiaColloquio.target = newValue;
                           });
                         },
-                        items: tipoColloquio.map((TipologiaColloquio tipologiaColloquio) {
+                        items: widget.tipoColloquio.map((TipologiaColloquio tipologiaColloquio) {
                           return DropdownMenuItem<TipologiaColloquio>(
                             value: tipologiaColloquio,
                             child: Text(
