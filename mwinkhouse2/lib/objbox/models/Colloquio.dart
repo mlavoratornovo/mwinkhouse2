@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:mwinkhouse2/objbox/models/Agente.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaColloquio.dart';
+import 'package:mwinkhouse/objbox/models/Agente.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:intl/intl.dart';
 import 'Anagrafica.dart';

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse2/main.dart';
-import 'package:mwinkhouse2/objbox/models/Immagine.dart';
+import 'package:mwinkhouse/main.dart';
+import 'package:mwinkhouse/objbox/models/Immagine.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 

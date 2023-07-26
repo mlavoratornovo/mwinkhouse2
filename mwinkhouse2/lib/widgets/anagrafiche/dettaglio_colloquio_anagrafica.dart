@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse2/main.dart';
-import 'package:mwinkhouse2/objbox/models/Colloquio.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaColloquio.dart';
+import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
+import 'package:mwinkhouse/main.dart';
+import 'package:mwinkhouse/objbox/models/Colloquio.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class DettaglioColloquio extends StatefulWidget {

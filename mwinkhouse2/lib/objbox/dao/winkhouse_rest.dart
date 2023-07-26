@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
-import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
-import 'package:mwinkhouse2/objbox/models/Comune.dart';
-import 'package:mwinkhouse2/objbox/models/Immobile.dart';
-import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
-import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaContatto.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaStanza.dart';
+import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
+import 'package:mwinkhouse/objbox/models/ClasseEnergetica.dart';
+import 'package:mwinkhouse/objbox/models/Comune.dart';
+import 'package:mwinkhouse/objbox/models/Immobile.dart';
+import 'package:mwinkhouse/objbox/models/Riscaldamento.dart';
+import 'package:mwinkhouse/objbox/models/StatoConservativo.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaContatto.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaStanza.dart';
 
 import '../models/CriteriRicercaImmobile.dart';
 import 'package:http/http.dart' as http;

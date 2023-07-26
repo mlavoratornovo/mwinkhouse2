@@ -1,4 +1,4 @@
-import 'package:mwinkhouse2/objbox/models/TipologiaContatto.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaContatto.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

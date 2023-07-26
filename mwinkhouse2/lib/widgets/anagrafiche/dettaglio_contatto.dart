@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaContatto.dart';
+import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaContatto.dart';
 
 import '../../main.dart';
 import '../../objbox/models/Contatto.dart';

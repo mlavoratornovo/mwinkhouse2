@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mwinkhouse2/objbox/models/ClasseEnergetica.dart';
-import 'package:mwinkhouse2/main.dart';
-import 'package:mwinkhouse2/objbox/models/Riscaldamento.dart';
-import 'package:mwinkhouse2/objbox/models/StatoConservativo.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaImmobile.dart';
-import 'package:mwinkhouse2/widgets/immobili/lista_immobili_ricerca_rest.dart';
+import 'package:mwinkhouse/objbox/models/ClasseEnergetica.dart';
+import 'package:mwinkhouse/main.dart';
+import 'package:mwinkhouse/objbox/models/Riscaldamento.dart';
+import 'package:mwinkhouse/objbox/models/StatoConservativo.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
 
-import '../../objbox/models/Anagrafica.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import 'lista_immobili_ricerca.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse2/objbox/models/Colloquio.dart';
+import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
+import 'package:mwinkhouse/objbox/models/Colloquio.dart';
 
 import '../../main.dart';
 import 'dettaglio_colloquio_anagrafica.dart';

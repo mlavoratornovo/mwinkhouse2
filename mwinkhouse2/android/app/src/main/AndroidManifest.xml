@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.winkhouse.mwinkhouse2">
+    package="org.winkhouse.mwinkhouse">
    <application
         android:label="winkhouse"
         android:name="${applicationName}"

@@ -1,4 +1,4 @@
-import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
+import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
 
 class CriteriRicercaAnagrafica{
 

@@ -1,5 +1,5 @@
-import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse2/objbox/models/TipologiaAppuntamento.dart';
+import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaAppuntamento.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'Agente.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse2/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse2/widgets/anagrafiche/dettaglio_anagrafica.dart';
+import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
+import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_anagrafica.dart';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 import 'lista_anagrafiche.dart';

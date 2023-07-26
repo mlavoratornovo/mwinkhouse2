@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse2/widgets/immobili/dettaglio_immobile.dart';
+import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import '../../objbox/models/Immobile.dart';
 import '../../main.dart';

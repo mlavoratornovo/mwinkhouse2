@@ -1,4 +1,4 @@
-package org.winkhouse.mwinkhouse2
+package org.winkhouse.mwinkhouse
 
 import io.flutter.embedding.android.FlutterActivity
 

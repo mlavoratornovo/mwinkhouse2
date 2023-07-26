@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse2/objbox/models/StanzaImmobile.dart';
+import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
 
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';

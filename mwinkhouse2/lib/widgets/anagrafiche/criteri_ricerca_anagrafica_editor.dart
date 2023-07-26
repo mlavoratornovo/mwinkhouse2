@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse2/objbox/models/ClasseCliente.dart';
-import 'package:mwinkhouse2/main.dart';
-import 'package:mwinkhouse2/objbox/models/CriteriRicercaAnagrafica.dart';
+import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
+import 'package:mwinkhouse/main.dart';
+import 'package:mwinkhouse/objbox/models/CriteriRicercaAnagrafica.dart';
 
 import 'lista_anagrafiche_ricerca.dart';
 
