@@ -10,18 +10,15 @@ class TipologiaImmobile{
 
   String? descrizione;
 
-  bool operator ==(dynamic other) =>
-      other != null && other is TipologiaImmobile && this.codTipologiaImmobile == other.codTipologiaImmobile;
-
   @override
-  int get hashCode => super.hashCode;
+  bool operator ==(dynamic other) =>
+      other != null && other is TipologiaImmobile && codTipologiaImmobile == other.codTipologiaImmobile;
+
 
   factory TipologiaImmobile.fromJson(Map<String, dynamic> json){
     TipologiaImmobile instance = TipologiaImmobile();
-    if (json != null){
-      instance.codTipologiaImmobile = json['codTipologiaImmobile'];
-      instance.descrizione = json['descrizione'];
-    }
-    return instance;
+    instance.codTipologiaImmobile = json['codTipologiaImmobile'];
+    instance.descrizione = json['descrizione'];
+      return instance;
   }
 }

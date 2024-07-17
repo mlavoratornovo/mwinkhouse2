@@ -17,7 +17,7 @@ class ListaComuniRicerca extends StatefulWidget {
   Anagrafica? anagrafica;
   String comuneSearch='';
   late WinkhouseRest winkhouseRest;
-  ListaComuniRicerca({Key? key,this.immobile,this.anagrafica}) : super(key: key){
+  ListaComuniRicerca({super.key,this.immobile,this.anagrafica}){
     winkhouseRest = WinkhouseRest();
   }
 
@@ -180,7 +180,7 @@ class _ListaComuniRicercaState extends State<ListaComuniRicerca> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

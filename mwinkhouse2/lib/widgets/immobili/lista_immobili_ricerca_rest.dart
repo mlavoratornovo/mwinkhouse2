@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
-import 'package:mwinkhouse/widgets/immobili/lista_immobili_proprieta.dart';
 
 import '../../objbox/dao/winkhouse_rest.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import '../../objbox/models/Immobile.dart';
 import '../../main.dart';
 import '../../objbox/models/TipologiaImmobile.dart';
-import 'criteri_ricerca_immobili_editor.dart';
 
 
 /// Displays the current list of tasks by listening to a stream.
@@ -21,7 +19,7 @@ class ImmobiliRicercaRestList extends StatefulWidget {
   late WinkhouseRest winkhouseRest;
   Map<int,TipologiaImmobile> tipologieImmobile = <int,TipologiaImmobile>{};
 
-  ImmobiliRicercaRestList({Key? key,this.criteri}) : super(key: key){
+  ImmobiliRicercaRestList({super.key,this.criteri}){
     winkhouseRest = WinkhouseRest();
   }
 
@@ -185,7 +183,7 @@ class _ImmobiliRicercaRestListState extends State<ImmobiliRicercaRestList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

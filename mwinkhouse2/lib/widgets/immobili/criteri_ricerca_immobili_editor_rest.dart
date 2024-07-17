@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/ClasseEnergetica.dart';
 import 'package:mwinkhouse/main.dart';
@@ -19,7 +18,7 @@ class CriteriRicercaImmobileEditorRest extends StatefulWidget {
   List<Riscaldamento> riscaldamento = [];
   late WinkhouseRest winkhouseRest;
   bool validConnection = false;
-  CriteriRicercaImmobileEditorRest({Key? key}) : super(key: key){
+  CriteriRicercaImmobileEditorRest({super.key}){
     createState();
     winkhouseRest = WinkhouseRest();
   }
@@ -111,7 +110,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                               },
                             ),
                           ),
-                          SizedBox(width: 10.0),
+                          const SizedBox(width: 10.0),
                           Expanded(
                             flex: 1,
                             child: TextFormField(
@@ -242,7 +241,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                       (widget.criteri.cap.trim() != '') ||
                       (widget.criteri.citta.trim() != '') ||
                       // (widget.criteri.zona.trim() != '') ||
-                      (widget.criteri.indirizzo?.trim() != '')
+                      (widget.criteri.indirizzo.trim() != '')
                   // (widget.criteri.classeEnergetica != null) || (widget.criteri.riscaldamento != null) ||
                   // (widget.criteri.tipologiaImmobile != null) || (widget.criteri.statoConservativo != null)
                   ) {

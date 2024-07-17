@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Colloquio.dart';
 
@@ -10,7 +9,7 @@ import 'dettaglio_colloquio_immobile.dart';
 class ColloquiImmobileList extends StatefulWidget {
   String title = '';
   Immobile immobile;
-  ColloquiImmobileList({Key? key,required this.immobile}) : super(key: key){
+  ColloquiImmobileList({super.key,required this.immobile}){
 
     title = 'Lista colloqui : ';
   }
@@ -33,7 +32,7 @@ class _ColloquiImmobileListState extends State<ColloquiImmobileList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          widget.immobile?.colloqui.removeWhere((element) => element.codColloquio == colloquio[index].codColloquio);
+          widget.immobile.colloqui.removeWhere((element) => element.codColloquio == colloquio[index].codColloquio);
           objectbox.addImmobile(widget.immobile);
           objectbox.removeColloquio(colloquio[index].codColloquio ?? 0);
           // List updated via watched query stream.
@@ -97,8 +96,8 @@ class _ColloquiImmobileListState extends State<ColloquiImmobileList> {
   @override
   Widget build(BuildContext context) {
     colloqui = (() async* {
-      await Future<void>.delayed(Duration(milliseconds: 1));
-      yield widget.immobile?.colloqui.toList();
+      await Future<void>.delayed(const Duration(milliseconds: 1));
+      yield widget.immobile.colloqui.toList();
     })();
 
     return Scaffold(
@@ -182,7 +181,7 @@ class _ColloquiImmobileListState extends State<ColloquiImmobileList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

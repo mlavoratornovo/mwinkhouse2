@@ -8,9 +8,9 @@ class CriterioRicercaRest{
   CriterioRicercaRest({required this.searchType, required this.columnName, required this.valueDa});
 
   Map<String, dynamic> toJson() => {
-    'searchType': this.searchType,
-    'column_name': this.columnName,
-    'value_da': this.valueDa,
+    'searchType': searchType,
+    'column_name': columnName,
+    'value_da': valueDa,
     // 'value_a': this.valueA,
     // 'logic_operatore': this.logicalOperator,
   };

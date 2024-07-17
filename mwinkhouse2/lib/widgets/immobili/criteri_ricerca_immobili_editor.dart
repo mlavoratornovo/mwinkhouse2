@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mwinkhouse/objbox/models/ClasseEnergetica.dart';
@@ -18,7 +17,7 @@ class CriteriRicercaImmobileEditor extends StatefulWidget {
   List<ClasseEnergetica> classeEnergetica = [];
   List<Riscaldamento> riscaldamento = [];
 
-  CriteriRicercaImmobileEditor({Key? key}) : super(key: key){
+  CriteriRicercaImmobileEditor({super.key}){
     tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
     statoConservativo = objectbox.statoConservativoBox.getAll();
     classeEnergetica = objectbox.classeEnergeticaBox.getAll();
@@ -34,8 +33,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
 
   final _formKey = GlobalKey<FormState>();
 
-  _CriteriRicercaImmobileEditorState(){
-  }
+  _CriteriRicercaImmobileEditorState();
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +84,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                               },
                             ),
                           ),
-                          SizedBox(width: 10.0),
+                          const SizedBox(width: 10.0),
                           Expanded(
                             flex: 1,
                             child: TextFormField(
@@ -144,7 +142,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                               ],
                             ),
                           ),
-                          SizedBox(width: 10.0),
+                          const SizedBox(width: 10.0),
                           Expanded(
                             flex: 1,
                             child: TextFormField(
@@ -181,7 +179,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                               ],
                             ),
                           ),
-                          SizedBox(width: 10.0),
+                          const SizedBox(width: 10.0),
                           Expanded(
                             flex: 1,
                             child: TextFormField(
@@ -218,7 +216,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                               ],
                             ),
                           ),
-                          SizedBox(width: 10.0),
+                          const SizedBox(width: 10.0),
                           Expanded(
                             flex: 1,
                             child: TextFormField(
@@ -238,7 +236,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                       ),
                       DropdownButton<TipologiaImmobile>(
                         isExpanded: true,
-                        hint: Text('Tipologia immobile'),
+                        hint: const Text('Tipologia immobile'),
                         onChanged: (TipologiaImmobile? newValue) {
                           setState(() {
                             widget.criteri.tipologiaImmobile = newValue;
@@ -257,7 +255,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                       ),
                       DropdownButton<StatoConservativo>(
                         isExpanded: true,
-                        hint: Text('Stato conservativo'),
+                        hint: const Text('Stato conservativo'),
                         onChanged: (StatoConservativo? newValue) {
                           setState(() {
                             widget.criteri.statoConservativo = newValue;
@@ -276,7 +274,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                       ),
                       DropdownButton<ClasseEnergetica>(
                         isExpanded: true,
-                        hint: Text('Class energetica'),
+                        hint: const Text('Class energetica'),
                         onChanged: (ClasseEnergetica? newValue) {
                           setState(() {
                             widget.criteri.classeEnergetica = newValue;
@@ -295,7 +293,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                       ),
                       DropdownButton<Riscaldamento>(
                         isExpanded: true,
-                        hint: Text('Riscaldamento'),
+                        hint: const Text('Riscaldamento'),
                         onChanged: (Riscaldamento? newValue) {
                           setState(() {
                             widget.criteri.riscaldamento = newValue;
@@ -327,7 +325,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                 (widget.criteri.cap.trim() != '') ||
                 (widget.criteri.citta.trim() != '') ||
                 (widget.criteri.zona.trim() != '') ||
-                (widget.criteri.indirizzo?.trim() != '') ||
+                (widget.criteri.indirizzo.trim() != '') ||
                 (widget.criteri.prezzoDa != 0.0) || (widget.criteri.prezzoA != 0.0) ||
                 (widget.criteri.mqDa != 0) || (widget.criteri.mqA != 0) ||
                 (widget.criteri.annoCostruzioneDa != 0) || (widget.criteri.annoCostruzioneA != 0) ||

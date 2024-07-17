@@ -21,7 +21,7 @@ class StanzaImmobile{
     instance.codImmobile = json['codImmobile'];
     instance.codStanzaImmobile = json['codStanzaImmobile'];
     instance.mq = json['mq'];
-    instance.tipologiaStanza.target = new TipologiaStanza();
+    instance.tipologiaStanza.target = TipologiaStanza();
     instance.tipologiaStanza.target?.codTipologiaStanza = json['codTipologiaStanza'];
     return instance;
   }

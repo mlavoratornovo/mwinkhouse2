@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:mwinkhouse/objbox/models/Agente.dart';
 import 'package:mwinkhouse/objbox/models/ClasseEnergetica.dart';
@@ -52,6 +51,7 @@ class Immobile{
   @Backlink()
   final colloqui = ToMany<Colloquio>();
   final immagini = ToMany<Immagine>();
+
   final proprietari = ToMany<Anagrafica>();
 
   factory Immobile.fromJson(Map<String, dynamic> json){
@@ -65,8 +65,8 @@ class Immobile{
     instance.cap = json['cap'];
     instance.citta = json['citta'];
     instance.zona = json['zona'];
-    instance.dataInserimento = new DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataInserimento']);
-    instance.dataLibero = new DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataLibero']);
+    instance.dataInserimento = DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataInserimento']);
+    instance.dataLibero = DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataLibero']);
     instance.descrizione = json['descrizione'];
     instance.mutuoDescrizione = json['mutuoDescrizione'];
     instance.prezzo = json['prezzo'].toDouble();

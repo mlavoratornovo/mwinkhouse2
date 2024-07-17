@@ -14,11 +14,10 @@ class ClasseEnergetica{
 
   int? ordine;
 
-  bool operator ==(dynamic other) =>
-      other != null && other is ClasseEnergetica && this.codClasseEnergetica == other.codClasseEnergetica;
-
   @override
-  int get hashCode => super.hashCode;
+  bool operator ==(dynamic other) =>
+      other != null && other is ClasseEnergetica && codClasseEnergetica == other.codClasseEnergetica;
+
 
   factory ClasseEnergetica.fromJson(Map<String, dynamic> json){
     ClasseEnergetica instance = ClasseEnergetica();

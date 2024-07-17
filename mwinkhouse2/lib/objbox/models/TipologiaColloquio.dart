@@ -10,11 +10,10 @@ class TipologiaColloquio{
 
   String? descrizione;
 
-  bool operator ==(dynamic other) =>
-      other != null && other is TipologiaColloquio && this.codTipologiaColloquio == other.codTipologiaColloquio;
-
   @override
-  int get hashCode => super.hashCode;
+  bool operator ==(dynamic other) =>
+      other != null && other is TipologiaColloquio && codTipologiaColloquio == other.codTipologiaColloquio;
+
 
   factory TipologiaColloquio.fromJson(Map<String, dynamic> json){
     TipologiaColloquio instance = TipologiaColloquio();

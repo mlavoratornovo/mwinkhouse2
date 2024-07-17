@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaContatto.dart';
@@ -12,7 +11,7 @@ class DettaglioContatto extends StatefulWidget {
   Anagrafica? anagrafica;
   List<TipologiaContatto> tipologiaContatto = [];
 
-  DettaglioContatto({Key? key, this.anagrafica, this.contatto}) : super(key: key){
+  DettaglioContatto({super.key, this.anagrafica, this.contatto}){
     tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
   }
 
@@ -24,9 +23,7 @@ class _DettaglioContattoState extends State<DettaglioContatto> {
 
   final _formKey = GlobalKey<FormState>();
 
-  _DettaglioContattoState(){
-
-  }
+  _DettaglioContattoState();
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +65,10 @@ class _DettaglioContattoState extends State<DettaglioContatto> {
                 child:Column(
                     children: <Widget>[
                       DropdownButtonFormField<TipologiaContatto>(
-                        hint: Text('Seleziona tipo contatto'),
+                        hint: const Text('Seleziona tipo contatto'),
                         validator: (value) => value == null ? 'Seleziona tipo' : null,
                         isExpanded: true,
-                        value: widget.contatto?.tipologiaContatto?.target,
+                        value: widget.contatto?.tipologiaContatto.target,
                         onChanged: (TipologiaContatto? newValue) {
                           setState(() {
                             widget.contatto?.tipologiaContatto.target = newValue;

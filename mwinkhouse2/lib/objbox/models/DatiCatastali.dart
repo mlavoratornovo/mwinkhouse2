@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

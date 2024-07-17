@@ -256,7 +256,7 @@ class _MyHomePageState extends State<MyHomePage> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Impostazioni()));
+                      builder: (context) => const Impostazioni()));
                 },
                 child:Container(
                         constraints: const BoxConstraints.expand(width:280,height:140.0),

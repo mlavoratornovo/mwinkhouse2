@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/objbox/models/Colloquio.dart';
@@ -9,7 +8,7 @@ import 'dettaglio_colloquio_anagrafica.dart';
 class ColloquiAnagraficaList extends StatefulWidget {
   String title = 'Lista colloqui : ';
   Anagrafica anagrafica;
-  ColloquiAnagraficaList({Key? key,required this.anagrafica}) : super(key: key){
+  ColloquiAnagraficaList({super.key,required this.anagrafica}){
 
     //title = title + (anagrafica?.ragioneSociale ?? "") + " " + (anagrafica?.nome ?? "") + " " + (anagrafica?.cognome ?? "");
   }
@@ -98,8 +97,8 @@ class _ColloquiAnagraficaListState extends State<ColloquiAnagraficaList> {
   @override
   Widget build(BuildContext context) {
     colloqui = (() async* {
-      await Future<void>.delayed(Duration(milliseconds: 1));
-      yield widget.anagrafica?.colloqui.toList();
+      await Future<void>.delayed(const Duration(milliseconds: 1));
+      yield widget.anagrafica.colloqui.toList();
     })();
 
     return Scaffold(
@@ -183,7 +182,7 @@ class _ColloquiAnagraficaListState extends State<ColloquiAnagraficaList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

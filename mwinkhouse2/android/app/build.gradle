@@ -83,7 +83,7 @@ configurations {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    // debugImplementation("io.objectbox:objectbox-android-objectbrowser:3.2.0")
+    debugImplementation("io.objectbox:objectbox-android-objectbrowser:4.0.0")
 }
 // Tell Gradle to exclude the objectbox-android dependency
 // that is added by objectbox_flutter_libs for debug builds.

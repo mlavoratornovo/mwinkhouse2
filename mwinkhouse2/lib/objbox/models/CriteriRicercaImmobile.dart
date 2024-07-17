@@ -1,16 +1,9 @@
-import 'dart:ffi';
 
-import 'package:mwinkhouse/objbox/models/Agente.dart';
 import 'package:mwinkhouse/objbox/models/ClasseEnergetica.dart';
-import 'package:mwinkhouse/objbox/models/Immagine.dart';
 import 'package:mwinkhouse/objbox/models/Riscaldamento.dart';
-import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
 import 'package:mwinkhouse/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
-import 'package:objectbox/objectbox.dart';
 
-import 'Anagrafica.dart';
-import 'Colloquio.dart';
 
 class CriteriRicercaImmobile{
 

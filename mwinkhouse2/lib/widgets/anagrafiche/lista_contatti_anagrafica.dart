@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/objbox/models/Contatto.dart';
@@ -9,7 +8,7 @@ import '../../main.dart';
 class ContattiAnagraficaList extends StatefulWidget {
   String title = "";
   Anagrafica anagrafica;
-  ContattiAnagraficaList({Key? key,required this.anagrafica}) : super(key: key){
+  ContattiAnagraficaList({super.key,required this.anagrafica}){
     title = "Lista contatti : ";
   }
 
@@ -94,8 +93,8 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
   @override
   Widget build(BuildContext context) {
     contatti = (() async* {
-      await Future<void>.delayed(Duration(milliseconds: 1));
-      yield widget.anagrafica?.contatti.toList();
+      await Future<void>.delayed(const Duration(milliseconds: 1));
+      yield widget.anagrafica.contatti.toList();
     })();
 
     return Scaffold(
@@ -179,7 +178,7 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

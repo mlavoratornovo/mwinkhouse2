@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:async_task/async_task_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
@@ -16,7 +15,7 @@ class DettaglioAnagrafica extends StatefulWidget {
   Anagrafica anagrafica;
   List<ClasseCliente> classeCliente = [];
 
-  DettaglioAnagrafica({Key? key,required this.anagrafica}) : super(key: key){
+  DettaglioAnagrafica({super.key,required this.anagrafica}){
     classeCliente = objectbox.classeClienteBox.getAll();
   }
 
@@ -62,9 +61,9 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
           ),
           actions: [
             PopupMenuButton(itemBuilder: (context)=>const [
-              PopupMenuItem(child: Text('Contatti'), value:0),
-              PopupMenuItem(child: Text('Immobili'), value:1),
-              PopupMenuItem(child: Text('Colloqui'), value:2),
+              PopupMenuItem(value:0, child: Text('Contatti')),
+              PopupMenuItem(value:1, child: Text('Immobili')),
+              PopupMenuItem(value:2, child: Text('Colloqui')),
             ],
             onSelected: (result) {
               if (result == 0) {
@@ -125,7 +124,7 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                             labelText: "Ragione sociale"
                         ),
                         onChanged: (text) {
-                          widget.anagrafica.ragioneSociale = (text.trim() == '')?null:text;;
+                          widget.anagrafica.ragioneSociale = (text.trim() == '')?null:text;
                         },
                         initialValue: widget.anagrafica.ragioneSociale ?? "",
                         key: Key(Random().nextInt(10000).toString()),
@@ -168,7 +167,7 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                               key: Key(Random().nextInt(10000).toString()),
                             ),
                           ),
-                          SizedBox(width: 10.0),
+                          const SizedBox(width: 10.0),
                           Expanded(
                             flex: 1,
                             child: TextFormField(
@@ -224,7 +223,7 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                         key: Key(Random().nextInt(10000).toString()),
                       ),
                       DropdownButtonFormField<ClasseCliente>(
-                        hint: Text('Tipologia cliente'),
+                        hint: const Text('Tipologia cliente'),
                         validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
                         isExpanded: true,
                         value: widget.anagrafica.classeCliente.target,

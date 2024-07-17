@@ -21,7 +21,7 @@ class ImmobiliList extends StatefulWidget {
   bool validConnection = false;
   List<int> idImmobili = [];
 
-  ImmobiliList({Key? key,this.anagrafica}) : super(key: key){
+  ImmobiliList({super.key,this.anagrafica}){
     for (var i = 0; i < (anagrafica?.proprieta.length ?? 0); i++ ){
       idImmobili.add(anagrafica?.proprieta[i].codImmobile ?? 0);
     }
@@ -278,7 +278,7 @@ class _ImmobiliListState extends State<ImmobiliList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

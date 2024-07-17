@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/objbox/models/Immagine.dart';
@@ -40,7 +39,7 @@ class DisplayPictureScreen extends StatelessWidget {
               child: const Image(image: AssetImage("assets/images/wink75.png")),
             ),
             const SizedBox(width: 4),
-            Text('Salva la foto')]
+            const Text('Salva la foto')]
         )
       ),
       body: Image.file(fimg),

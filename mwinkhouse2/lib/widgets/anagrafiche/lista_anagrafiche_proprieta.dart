@@ -13,7 +13,7 @@ import 'lista_anagrafiche.dart';
 class AnagraficheProprietaList extends StatefulWidget {
   String title = 'Lista proprietari';
   Immobile immobile = Immobile();
-  AnagraficheProprietaList({Key? key,required this.immobile}) : super(key: key){
+  AnagraficheProprietaList({super.key,required this.immobile}){
     //this.immobile = immobile;
     //title = title + (immobile.indirizzo ?? "");
   }
@@ -113,7 +113,7 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
       idproprietari.add(element.codAnagrafica!)
     });
     proprietari = (() async* {
-      await Future<void>.delayed(Duration(milliseconds: 1));
+      await Future<void>.delayed(const Duration(milliseconds: 1));
       yield widget.immobile.proprietari.toList();
     })();
     return Scaffold(
@@ -197,7 +197,7 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

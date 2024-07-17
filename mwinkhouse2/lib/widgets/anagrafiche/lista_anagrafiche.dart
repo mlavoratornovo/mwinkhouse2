@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_anagrafica.dart';
 
-import '../../objbox/models/Anagrafica.dart';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 import 'lista_anagrafiche_proprieta.dart';
@@ -17,7 +16,7 @@ class AnagraficheList extends StatefulWidget {
   Immobile? immobile;
   List<int> idAnagrafiche = [];
 
-  AnagraficheList({Key? key, Immobile? immobile}) : super(key: key){
+  AnagraficheList({super.key, Immobile? immobile}){
     this.immobile = immobile;
     for (var i = 0; i < (immobile?.proprietari.length ?? 0); i++ ){
       idAnagrafiche.add(immobile?.proprietari[i].codAnagrafica ?? 0);
@@ -219,7 +218,7 @@ class _AnagraficheListState extends State<AnagraficheList> {
           },
           child: const Icon(Icons.add),
         ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
         FloatingActionButton(
           heroTag: "immobili",
           backgroundColor: (immobile==null)?Colors.grey:null,
@@ -235,7 +234,7 @@ class _AnagraficheListState extends State<AnagraficheList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

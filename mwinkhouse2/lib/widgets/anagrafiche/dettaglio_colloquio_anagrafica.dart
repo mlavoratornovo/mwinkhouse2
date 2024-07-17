@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/objbox/models/Colloquio.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class DettaglioColloquio extends StatefulWidget {
   final String title = 'Colloquio';
   Anagrafica? anagrafica;
   Colloquio? colloquio;
   List<TipologiaColloquio> tipoColloquio = [];
-  DettaglioColloquio({Key? key,this.anagrafica,this.colloquio}) : super(key: key){
+  DettaglioColloquio({super.key,this.anagrafica,this.colloquio}){
     colloquio?.dataColloquio ??= DateTime.now();
     tipoColloquio = objectbox.tipologiaColloquioBox.getAll().where((element) =>
     element.descrizione != 'Visita').toList();
@@ -67,7 +66,7 @@ class _DettaglioColloquioState extends State<DettaglioColloquio> {
                 ),
                 Text(widget.title)]
           ),
-          actions: [],
+          actions: const [],
         ),
         body: Container(
           // Center is a layout widget. It takes a single child and positions it

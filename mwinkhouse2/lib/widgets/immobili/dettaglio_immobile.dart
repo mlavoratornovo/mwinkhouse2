@@ -25,7 +25,7 @@ import 'lista_comuni_ricerca.dart';
 class DettaglioImmobile extends StatefulWidget {
   final String title = 'Immobile';
   Immobile immobile;
-  Immobile? dbimm = new Immobile();
+  Immobile? dbimm = Immobile();
   bool bindRest;
   bool readonly;
   bool immobileIsFromDB = true;
@@ -37,7 +37,7 @@ class DettaglioImmobile extends StatefulWidget {
   List<TipologiaStanza> tipologiaStanza = [];
   List<TipologiaColloquio> tipoColloquio = [];
 
-  DettaglioImmobile({Key? key, required this.immobile, this.readonly=false, this.bindRest=false}) : super(key: key){
+  DettaglioImmobile({super.key, required this.immobile, this.readonly=false, this.bindRest=false}){
     tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
     statoConservativo = objectbox.statoConservativoBox.getAll();
     classeEnergetica = objectbox.classeEnergeticaBox.getAll();
@@ -146,7 +146,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
   late FocusNode focusNode;
   final _formKey = GlobalKey<FormState>();
 
-  _DettaglioImmobileState(){}
+  _DettaglioImmobileState();
 
   @override
   void initState() {
@@ -210,7 +210,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   );
                 }
                 if (result == 4){
-                  MapsLauncher.launchQuery("${(widget.immobile?.indirizzo??'')}, ${(widget.immobile?.citta??'')}, ${(widget.immobile?.provincia??'')} ${(widget.immobile?.cap??'')}");
+                  MapsLauncher.launchQuery("${(widget.immobile.indirizzo??'')}, ${(widget.immobile.citta??'')}, ${(widget.immobile.provincia??'')} ${(widget.immobile.cap??'')}");
                 }
               },
             )]),
@@ -246,7 +246,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   return null;
                 },
                 onChanged: (text) {
-                  widget.immobile?.rif = text;
+                  widget.immobile.rif = text;
                 },
                 key: Key(Random().nextInt(10000).toString()),
                 initialValue: widget.immobile.rif ?? "",
@@ -262,10 +262,10 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                           labelText: "Provincia"
                       ),
                       onChanged: (text) {
-                        widget.immobile?.provincia = text;
+                        widget.immobile.provincia = text;
                       },
                       key: Key(Random().nextInt(10000).toString()),
-                      initialValue: "${widget.immobile.provincia ?? ""}",
+                      initialValue: widget.immobile.provincia ?? "",
                     ),
                   ),
                   const SizedBox(width: 10.0),
@@ -306,7 +306,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   widget.immobile.citta = text;
                 },
                 key: Key(Random().nextInt(10000).toString()),
-                initialValue: "${widget.immobile.citta ?? ""}",
+                initialValue: widget.immobile.citta ?? "",
               ),
               TextFormField(
                 decoration:const InputDecoration(
@@ -329,20 +329,20 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                   return null;
                 },
                 onChanged: (text) {
-                  widget.immobile?.indirizzo = text;
+                  widget.immobile.indirizzo = text;
                 },
                 key: Key(Random().nextInt(10000).toString()),
-                initialValue: widget.immobile?.indirizzo ?? "",
+                initialValue: widget.immobile.indirizzo ?? "",
               ),
               TextFormField(
                 decoration:const InputDecoration(
                     labelText: "Prezzo"
                 ),
                 onChanged: (text) {
-                  widget.immobile?.prezzo = double.parse(text);
+                  widget.immobile.prezzo = double.parse(text);
                 },
                 key: Key(Random().nextInt(10000).toString()),
-                initialValue: "${widget.immobile?.prezzo ?? ""}",
+                initialValue: "${widget.immobile.prezzo ?? ""}",
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
@@ -359,17 +359,17 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                           labelText: "Mq"
                       ),
                       onChanged: (text) {
-                        widget.immobile?.mq = int.parse(text);
+                        widget.immobile.mq = int.parse(text);
                       },
                       key: Key(Random().nextInt(1000).toString()),
-                      initialValue: "${widget.immobile?.mq ?? ""}",
+                      initialValue: "${widget.immobile.mq ?? ""}",
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ],
                     ),
                   ),
-                  SizedBox(width: 10.0),
+                  const SizedBox(width: 10.0),
                   Expanded(
                     flex: 1,
                     child: TextFormField(
@@ -377,10 +377,10 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                           labelText: "Anno Costruzione"
                       ),
                       onChanged: (text) {
-                        widget.immobile?.annoCostruzione = int.parse(text);
+                        widget.immobile.annoCostruzione = int.parse(text);
                       },
                       key: Key(Random().nextInt(10000).toString()),
-                      initialValue: "${widget.immobile?.annoCostruzione ?? ""}",
+                      initialValue: "${widget.immobile.annoCostruzione ?? ""}",
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
@@ -395,19 +395,19 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                     labelText: "descrizione"
                 ),
                 onChanged: (text) {
-                  widget.immobile?.descrizione = text;
+                  widget.immobile.descrizione = text;
                 },
                 key: Key(Random().nextInt(10000).toString()),
-                initialValue: widget.immobile?.descrizione ?? "",
+                initialValue: widget.immobile.descrizione ?? "",
               ),
               DropdownButtonFormField<TipologiaImmobile>(
                 isExpanded: true,
                 hint: const Text('Tipologia immobile'),
                 // validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
-                value: widget.immobile?.tipologiaImmobile?.target,
+                value: widget.immobile.tipologiaImmobile.target,
                 onChanged: (TipologiaImmobile? newValue) {
                   setState(() {
-                    widget.immobile?.tipologiaImmobile.target = newValue;
+                    widget.immobile.tipologiaImmobile.target = newValue;
                   });
                 },
                 items: widget.tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
@@ -423,10 +423,10 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               DropdownButton<StatoConservativo>(
                 isExpanded: true,
                 hint: const Text('Stato conservativo'),
-                value: widget.immobile?.statoConservativo?.target,
+                value: widget.immobile.statoConservativo.target,
                 onChanged: (StatoConservativo? newValue) {
                   setState(() {
-                    widget.immobile?.statoConservativo.target = newValue;
+                    widget.immobile.statoConservativo.target = newValue;
                   });
                 },
                 items: widget.statoConservativo.map((StatoConservativo statoConservativo) {
@@ -442,10 +442,10 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               DropdownButton<ClasseEnergetica>(
                 isExpanded: true,
                 hint: const Text('Class energetica'),
-                value: widget.immobile?.classeEnergetica?.target,
+                value: widget.immobile.classeEnergetica.target,
                 onChanged: (ClasseEnergetica? newValue) {
                   setState(() {
-                    widget.immobile?.classeEnergetica.target = newValue;
+                    widget.immobile.classeEnergetica.target = newValue;
                   });
                 },
                 items: widget.classeEnergetica.map((ClasseEnergetica classeEnergetica) {
@@ -461,10 +461,10 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
               DropdownButton<Riscaldamento>(
                 isExpanded: true,
                 hint: const Text('Riscaldamento'),
-                value: widget.immobile?.riscaldamento?.target,
+                value: widget.immobile.riscaldamento.target,
                 onChanged: (Riscaldamento? newValue) {
                   setState(() {
-                    widget.immobile?.riscaldamento.target = newValue;
+                    widget.immobile.riscaldamento.target = newValue;
                   });
                 },
                 items: widget.riscaldamento.map((Riscaldamento riscaldamento) {

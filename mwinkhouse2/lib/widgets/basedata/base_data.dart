@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
@@ -42,7 +39,7 @@ class BaseData extends StatefulWidget {
   ClasseCliente? classeClienteSelected;
   TipologiaContatto? tipologiaContattoSelected;
 
-  BaseData({Key? key}) : super(key: key){
+  BaseData({super.key}){
     tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
     statoConservativo = objectbox.statoConservativoBox.getAll();
     classeEnergetica = objectbox.classeEnergeticaBox.getAll();
@@ -78,7 +75,7 @@ class _BaseDataState extends State<BaseData> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Container(
+            content: SizedBox(
               height: ((type=='ClasseEnergetica')?200:110),
               child: Form(
                   key: _formKey,
@@ -115,7 +112,7 @@ class _BaseDataState extends State<BaseData> {
           TextButton(
             style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             ),
             child: widget.saveIcon,
             onPressed: () {
@@ -162,7 +159,7 @@ class _BaseDataState extends State<BaseData> {
           TextButton(
             style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             ),
             child: widget.saveIcon,
             onPressed: () {
@@ -226,7 +223,7 @@ class _BaseDataState extends State<BaseData> {
           TextButton(
             style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             ),
             child: widget.saveIcon,
             onPressed: () {
@@ -274,7 +271,7 @@ class _BaseDataState extends State<BaseData> {
           TextButton(
             style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             ),
             child: widget.saveIcon,
             onPressed: () {
@@ -324,7 +321,7 @@ class _BaseDataState extends State<BaseData> {
           TextButton(
             style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             ),
             child: widget.saveIcon,
             onPressed: () {
@@ -372,7 +369,7 @@ class _BaseDataState extends State<BaseData> {
           TextButton(
             style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             ),
             child: widget.saveIcon,
             onPressed: () {
@@ -419,7 +416,7 @@ class _BaseDataState extends State<BaseData> {
           TextButton(
             style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
             ),
             child: widget.saveIcon,
             onPressed: () {
@@ -450,7 +447,7 @@ class _BaseDataState extends State<BaseData> {
 
   Future<void> _syncData(BuildContext context, String type) async {
     if (widget.validConnection == true){
-      int dataMode = Settings.getValue<int>("baseDataMergeMode", 0);
+      int? dataMode = Settings.getValue<int>("baseDataMergeMode", defaultValue: 0);
       switch(type){
         case 'TipologiaImmobile':
           List<TipologiaImmobile> winkTipologieImmobili = await widget.winkhouseRest.getTipologieImmobili();
@@ -948,7 +945,7 @@ class _BaseDataState extends State<BaseData> {
                                         child:TextButton(
                                           style: TextButton.styleFrom(
                                             backgroundColor: Colors.blue,
-                                            shape: CircleBorder(),
+                                            shape: const CircleBorder(),
                                           ),
                                           child: widget.addIcon,
                                           onPressed: () {
@@ -961,7 +958,7 @@ class _BaseDataState extends State<BaseData> {
                                         child:TextButton(
                                           style: TextButton.styleFrom(
                                             backgroundColor: Colors.blue,
-                                            shape: CircleBorder(),
+                                            shape: const CircleBorder(),
                                           ),
                                           child: widget.editIcon,
                                           onPressed: () {
@@ -979,7 +976,7 @@ class _BaseDataState extends State<BaseData> {
                                       child:TextButton(
                                         style: TextButton.styleFrom(
                                           backgroundColor: Colors.blue,
-                                          shape: CircleBorder(),
+                                          shape: const CircleBorder(),
                                         ),
                                         child: widget.deleteIcon,
                                         onPressed: () {
@@ -1001,19 +998,19 @@ class _BaseDataState extends State<BaseData> {
                                         child:TextButton(
                                           style: TextButton.styleFrom(
                                             backgroundColor: Colors.blue,
-                                            shape: CircleBorder(),
+                                            shape: const CircleBorder(),
                                           ),
                                           child: widget.syncIcon,
                                           onPressed: () {
                                             _syncData(context, 'TipologiaImmobile')
-                                               .whenComplete(() => {
+                                               .whenComplete(() {
                                                   ScaffoldMessenger.of(context).showSnackBar(
                                                     const SnackBar(content: Text('Operazione eseguita'))
-                                               )})
-                                               .onError((error, stackTrace) => {
+                                               );})
+                                               .onError((error, stackTrace) {
                                                   ScaffoldMessenger.of(context).showSnackBar(
                                                     const SnackBar(content: Text('Operazione non eseguita'))
-                                               )});
+                                               );});
                                           },
                                         ),
                                     ),
@@ -1051,7 +1048,7 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.addIcon,
                                       onPressed: () {
@@ -1064,7 +1061,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.editIcon,
                                     onPressed: () {
@@ -1082,7 +1079,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.deleteIcon,
                                     onPressed: () {
@@ -1104,19 +1101,19 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.syncIcon,
                                     onPressed: () {
                                       _syncData(context, 'StatoConservativo')
-                                          .whenComplete(() => {
+                                          .whenComplete(() {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                             const SnackBar(content: Text('Operazione eseguita'))
-                                        )})
-                                          .onError((error, stackTrace) => {
+                                        );})
+                                          .onError((error, stackTrace) {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                             const SnackBar(content: Text('Operazione non eseguita'))
-                                        )});
+                                        );});
                                     },
                                   ),
                                 ),
@@ -1155,7 +1152,7 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.addIcon,
                                       onPressed: () {
@@ -1168,7 +1165,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.editIcon,
                                     onPressed: () {
@@ -1186,7 +1183,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.deleteIcon,
                                     onPressed: () {
@@ -1208,19 +1205,19 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
                                         _syncData(context, 'ClasseEnergetica')
-                                            .whenComplete(() => {
+                                            .whenComplete(() {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione eseguita'))
-                                          )})
-                                            .onError((error, stackTrace) => {
+                                          );})
+                                            .onError((error, stackTrace) {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione non eseguita'))
-                                          )});
+                                          );});
                                       },
                                     ),
                                 ),
@@ -1258,7 +1255,7 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.addIcon,
                                       onPressed: () {
@@ -1271,7 +1268,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.editIcon,
                                     onPressed: () {
@@ -1289,7 +1286,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.deleteIcon,
                                     onPressed: () {
@@ -1311,19 +1308,19 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
                                         _syncData(context, 'Riscaldamento')
-                                            .whenComplete(() => {
+                                            .whenComplete(() {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione eseguita'))
-                                          )})
-                                            .onError((error, stackTrace) => {
+                                          );})
+                                            .onError((error, stackTrace) {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione non eseguita'))
-                                          )});
+                                          );});
                                       },
                                     ),
                                 ),
@@ -1361,7 +1358,7 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.addIcon,
                                       onPressed: () {
@@ -1374,7 +1371,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.editIcon,
                                     onPressed: () {
@@ -1392,7 +1389,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.deleteIcon,
                                     onPressed: () {
@@ -1414,19 +1411,19 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
                                         _syncData(context, 'TipologiaStanza')
-                                            .whenComplete(() => {
+                                            .whenComplete(() {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione eseguita'))
-                                          )})
-                                            .onError((error, stackTrace) => {
+                                          );})
+                                            .onError((error, stackTrace) {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione non eseguita'))
-                                          )});
+                                          );});
                                       },
                                     ),
                                 ),
@@ -1464,7 +1461,7 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.addIcon,
                                       onPressed: () {
@@ -1477,7 +1474,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.editIcon,
                                     onPressed: () {
@@ -1495,7 +1492,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.deleteIcon,
                                     onPressed: () {
@@ -1517,19 +1514,19 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
                                         _syncData(context, 'ClasseCliente')
-                                            .whenComplete(() => {
+                                            .whenComplete(() {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione eseguita'))
-                                          )})
-                                            .onError((error, stackTrace) => {
+                                          );})
+                                            .onError((error, stackTrace) {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione non eseguita'))
-                                          )});
+                                          );});
                                       },
                                     ),
                                 ),
@@ -1567,7 +1564,7 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.addIcon,
                                       onPressed: () {
@@ -1580,7 +1577,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.editIcon,
                                     onPressed: () {
@@ -1598,7 +1595,7 @@ class _BaseDataState extends State<BaseData> {
                                   child:TextButton(
                                     style: TextButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: CircleBorder(),
+                                      shape: const CircleBorder(),
                                     ),
                                     child: widget.deleteIcon,
                                     onPressed: () {
@@ -1620,19 +1617,19 @@ class _BaseDataState extends State<BaseData> {
                                     child:TextButton(
                                       style: TextButton.styleFrom(
                                         backgroundColor: Colors.blue,
-                                        shape: CircleBorder(),
+                                        shape: const CircleBorder(),
                                       ),
                                       child: widget.syncIcon,
                                       onPressed: () {
                                         _syncData(context, 'TipologiaContatto')
-                                            .whenComplete(() => {
+                                            .whenComplete(() {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione eseguita'))
-                                          )})
-                                            .onError((error, stackTrace) => {
+                                          );})
+                                            .onError((error, stackTrace) {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(content: Text('Operazione non eseguita'))
-                                          )});
+                                          );});
                                       },
                                     ),
                                 ),

@@ -5,7 +5,7 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 class Impostazioni extends StatefulWidget{
 
   final String title = 'Impostazioni';
-  const Impostazioni({Key? key}): super(key: key);
+  const Impostazioni({super.key});
 
   @override
   State<Impostazioni> createState() => _ImpostazioniState();
@@ -45,8 +45,8 @@ class _ImpostazioniState extends State<Impostazioni> {
               title: 'Indirizzo IP installazione',
               settingKey: 'ipWinkhouse',
               initialValue: 'http://127.0.0.1',
-              validator: (String ip) {
-                  if (ip != null && ip.length > 6) {
+              validator: (String? ip) {
+                  if (ip!.length > 6) {
                     return null;
                   }
                   return "Inserire indirizzo ip";
@@ -59,8 +59,8 @@ class _ImpostazioniState extends State<Impostazioni> {
               settingKey: 'portWinkhouse',
               initialValue: '81',
               keyboardType: TextInputType.number,
-              validator: (String port) {
-              if (port != null && port.length < 5) {
+              validator: (String? port) {
+              if (port!.length < 5) {
               return null;
               }
               return "Inserire un numero da 81 a 65535";

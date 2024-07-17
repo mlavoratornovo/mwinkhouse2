@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/objbox/models/Colloquio.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+//import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import '../../objbox/models/Immobile.dart';
 
@@ -12,7 +12,7 @@ class DettaglioColloquioImmobile extends StatefulWidget {
   Immobile? immobile;
   Colloquio? colloquio;
   List<TipologiaColloquio> tipoColloquio = [];
-  DettaglioColloquioImmobile({Key? key,this.immobile,this.colloquio}) : super(key: key){
+  DettaglioColloquioImmobile({super.key,this.immobile,this.colloquio}){
     colloquio?.dataColloquio ??= DateTime.now();
     tipoColloquio = objectbox.tipologiaColloquioBox.getAll().where((element) =>
     element.descrizione == 'Visita').toList();
@@ -71,7 +71,7 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
                 const SizedBox(width: 4),
                 Text(widget.title)]
           ),
-          actions: [],
+          actions: const [],
         ),
         body: Container(
           // Center is a layout widget. It takes a single child and positions it

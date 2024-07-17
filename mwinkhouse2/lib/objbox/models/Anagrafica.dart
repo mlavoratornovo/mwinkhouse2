@@ -34,9 +34,9 @@ class Anagrafica{
   final contatti = ToMany<Contatto>();
   final immobiliAbbinati = ToMany<Immobile>();
   final appuntamenti = ToMany<Appuntamento>();
-  @Backlink()
+  @Backlink('proprietari')
   final proprieta = ToMany<Immobile>();
-  @Backlink()
+  @Backlink('anagrafiche')
   final colloqui = ToMany<Colloquio>();
 
   factory Anagrafica.fromJson(Map<String, dynamic> json){
@@ -45,11 +45,11 @@ class Anagrafica{
     instance.nome = json['nome'];
     instance.cognome = json['cognome'];
     instance.ragioneSociale= json['ragioneSociale'];
-    instance.indirizzo = json['indirizzo']??'' + ' ' + json['ncivico']??'';
+    instance.indirizzo = json['indirizzo']??'' ' ' + json['ncivico']??'';
     instance.provincia = json['provincia'];
     instance.cap = json['cap'];
     instance.citta = json['citta'];
-    instance.dataInserimento = new DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataInserimento']);
+    instance.dataInserimento = DateFormat("MMM d, yyyy hh:mm:ss").parse(json['dataInserimento']);
     instance.commento = json['commento'];
     instance.storico = json['storico'];
     instance.codiceFiscale = json['codiceFiscale'];

@@ -10,11 +10,10 @@ class ClasseCliente{
 
   int? ordine;
 
-  bool operator ==(dynamic other) =>
-      other != null && other is ClasseCliente && this.codClasseCliente == other.codClasseCliente;
-
   @override
-  int get hashCode => super.hashCode;
+  bool operator ==(dynamic other) =>
+      other != null && other is ClasseCliente && codClasseCliente == other.codClasseCliente;
+
 
   factory ClasseCliente.fromJson(Map<String, dynamic> json){
     ClasseCliente instance = ClasseCliente();

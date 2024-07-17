@@ -12,7 +12,7 @@ import '../../objbox/models/Immobile.dart';
 class ImmobiliProprietaList extends StatefulWidget {
   String title = '';
   Anagrafica anagrafica = Anagrafica();
-  ImmobiliProprietaList({Key? key, required this.anagrafica}) : super(key: key){
+  ImmobiliProprietaList({super.key, required this.anagrafica}){
     title = "Lista proprietà : ";
   }
 
@@ -112,7 +112,7 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
       idimmobili.add(element.codImmobile!)
     });
     immobili = (() async* {
-      await Future<void>.delayed(Duration(milliseconds: 1));
+      await Future<void>.delayed(const Duration(milliseconds: 1));
       yield widget.anagrafica.proprieta.toList();
     })();
     return Scaffold(
@@ -197,7 +197,7 @@ class _ImmobiliProprietaListState extends State<ImmobiliProprietaList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

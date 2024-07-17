@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse/main.dart';
@@ -10,7 +9,7 @@ import 'lista_anagrafiche_ricerca.dart';
 class CriteriRicercaAnagraficaEditor extends StatefulWidget {
   final String title = 'Criteri ricerca immobile';
   final CriteriRicercaAnagrafica criteri = CriteriRicercaAnagrafica();
-  CriteriRicercaAnagraficaEditor({Key? key}) : super(key: key){}
+  CriteriRicercaAnagraficaEditor({super.key});
 
   @override
   State<CriteriRicercaAnagraficaEditor> createState() => _CriteriRicercaAnagraficaEditorState();
@@ -74,7 +73,7 @@ class _CriteriRicercaAnagraficaEditorState extends State<CriteriRicercaAnagrafic
                               },
                             ),
                           ),
-                          SizedBox(width: 10.0),
+                          const SizedBox(width: 10.0),
                           Expanded(
                             flex: 1,
                             child: TextFormField(
@@ -138,7 +137,7 @@ class _CriteriRicercaAnagraficaEditorState extends State<CriteriRicercaAnagrafic
                       ),
                       DropdownButton<ClasseCliente>(
                         isExpanded: true,
-                        hint: Text('Classe cliente'),
+                        hint: const Text('Classe cliente'),
                         onChanged: (ClasseCliente? newValue) {
                           setState(() {
                             widget.criteri.classeCliente = newValue;

@@ -10,11 +10,10 @@ class StatoConservativo{
 
   String? descrizione;
 
-  bool operator ==(dynamic other) =>
-      other != null && other is StatoConservativo && this.codStatoConservativo == other.codStatoConservativo;
-
   @override
-  int get hashCode => super.hashCode;
+  bool operator ==(dynamic other) =>
+      other != null && other is StatoConservativo && codStatoConservativo == other.codStatoConservativo;
+
 
   factory StatoConservativo.fromJson(Map<String, dynamic> json){
     StatoConservativo instance = StatoConservativo();

@@ -12,7 +12,7 @@ class ImmaginiImmobiliList extends StatefulWidget {
   String title = 'Lista immagini : ';
   Immobile immobile;
 
-  ImmaginiImmobiliList ({Key? key, required this.immobile}) : super(key: key){
+  ImmaginiImmobiliList ({super.key, required this.immobile}){
     title = "Lista immagini : ";
   }
 
@@ -77,8 +77,8 @@ class _ImmaginiImmobiliListState extends State<ImmaginiImmobiliList> {
   @override
   Widget build(BuildContext context) {
     immagini = (() async* {
-      await Future<void>.delayed(Duration(milliseconds: 1));
-      yield widget.immobile?.immagini.toList();
+      await Future<void>.delayed(const Duration(milliseconds: 1));
+      yield widget.immobile.immagini.toList();
     })();
 
     return Scaffold(

@@ -14,7 +14,7 @@ class ImmobiliRicercaList extends StatefulWidget {
   final String title = 'Lista immobili ricerca';
   CriteriRicercaImmobile? criteri;
 
-  ImmobiliRicercaList({Key? key,this.criteri}) : super(key: key);
+  ImmobiliRicercaList({super.key,this.criteri});
 
   @override
   State<ImmobiliRicercaList> createState() => _ImmobiliRicercaListState();
@@ -157,7 +157,7 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

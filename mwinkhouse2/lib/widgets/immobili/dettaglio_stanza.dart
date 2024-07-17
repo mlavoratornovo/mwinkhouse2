@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
@@ -12,12 +11,12 @@ class DettaglioStanza extends StatefulWidget {
   final String title = 'Stanza';
   StanzaImmobile? stanzaImmobile;
   Immobile immobile;
-  DettaglioStanza({Key? key, required this.immobile, StanzaImmobile? stanzaImmobile}) : super(key: key){
+  DettaglioStanza({super.key, required this.immobile, StanzaImmobile? stanzaImmobile}){
     this.stanzaImmobile = stanzaImmobile ?? StanzaImmobile();
   }
 
   @override
-  State<DettaglioStanza> createState() => _DettaglioStanzaState(this.immobile, this.stanzaImmobile);
+  State<DettaglioStanza> createState() => _DettaglioStanzaState(immobile, stanzaImmobile);
 }
 
 class _DettaglioStanzaState extends State<DettaglioStanza> {
@@ -29,7 +28,7 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
   final _formKey = GlobalKey<FormState>();
 
   _DettaglioStanzaState(this.immobile,this.stanzaImmobile){
-    this.stanzaImmobile = stanzaImmobile;
+    stanzaImmobile = stanzaImmobile;
     tipologiaStanza = objectbox.tipologiaStanzaBox.getAll();
   }
 
@@ -73,10 +72,10 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
                 child:Column(
                     children: <Widget>[
                       DropdownButtonFormField<TipologiaStanza>(
-                        hint: Text('Seleziona tipo stanza'),
+                        hint: const Text('Seleziona tipo stanza'),
                         validator: (value) => value == null ? 'Seleziona tipo' : null,
                         isExpanded: true,
-                        value: stanzaImmobile?.tipologiaStanza?.target,
+                        value: stanzaImmobile?.tipologiaStanza.target,
                         onChanged: (TipologiaStanza? newValue) {
                           setState(() {
                             stanzaImmobile?.tipologiaStanza.target = newValue;
@@ -98,20 +97,20 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
                         ),
                         validator:  (value) {
                           if (value == null || value.isEmpty) {
-                            if (this.stanzaImmobile?.mq == null){
+                            if (stanzaImmobile?.mq == null){
                               return 'Inserire la dimensione';
                             }
                           }
                           return null;
                         },
                         onChanged: (text) {
-                          this.stanzaImmobile?.mq = int.parse(text);
+                          stanzaImmobile?.mq = int.parse(text);
                         },
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
                         ],
-                        initialValue: "${this.stanzaImmobile?.mq ?? ""}",
+                        initialValue: "${stanzaImmobile?.mq ?? ""}",
                       ),
                     ])
             ),

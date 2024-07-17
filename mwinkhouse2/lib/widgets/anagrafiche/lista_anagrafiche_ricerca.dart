@@ -3,10 +3,7 @@ import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/objbox/models/CriteriRicercaAnagrafica.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_anagrafica.dart';
 
-import '../../objbox/models/Anagrafica.dart';
 import '../../main.dart';
-import '../../objbox/models/Immobile.dart';
-import 'lista_anagrafiche_proprieta.dart';
 
 
 /// Displays the current list of tasks by listening to a stream.
@@ -18,7 +15,7 @@ class AnagraficheRicercaList extends StatefulWidget {
 
   CriteriRicercaAnagrafica? criteri;
 
-  AnagraficheRicercaList({Key? key, this.criteri}) : super(key: key);
+  AnagraficheRicercaList({super.key, this.criteri});
 
   @override
   State<AnagraficheRicercaList> createState() => _AnagraficheRicercaListState();
@@ -193,7 +190,7 @@ class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

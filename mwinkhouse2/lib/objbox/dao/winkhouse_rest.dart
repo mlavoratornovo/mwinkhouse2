@@ -29,21 +29,21 @@ class WinkhouseRest{
   static String COLUMN_CODTIPOLOGIA = 'CODTIPOLOGIA';
   static String COLUMN_CODCLASSEENERGETICA = 'CODCLASSEENERGETICA';
 
-  String getWinkhouseIp(){
-    return Settings.getValue<String>("ipWinkhouse", "127.0.0.1");
+  String? getWinkhouseIp(){
+    return Settings.getValue<String>("ipWinkhouse", defaultValue: "127.0.0.1");
   }
 
-  String getWinkhousePort(){
-    return Settings.getValue<String>("portWinkhouse", "81");
+  String? getWinkhousePort(){
+    return Settings.getValue<String>("portWinkhouse", defaultValue: "81");
   }
 
   Map<String,String> getHeaders(){
-    Map<String,String> retval = Map<String,String>();
+    Map<String,String> retval = <String,String>{};
     retval['Content-Type'] = 'application/json';
     return retval;
   }
 
-  List<CriterioRicercaRest> buildBodyObj({criteri:CriteriRicercaImmobile}){
+  List<CriterioRicercaRest> buildBodyObj({criteri =CriteriRicercaImmobile}){
     List<CriterioRicercaRest> criteriRicerca = List<CriterioRicercaRest>.empty(growable: true);
     if (criteri.citta != ''){
       CriterioRicercaRest crr = CriterioRicercaRest(
@@ -112,10 +112,10 @@ class WinkhouseRest{
     return criteriRicerca;
   }
 
-  Stream<List<Immobile>> findImmobili({criteri:CriteriRicercaImmobile,tipologieImmobili:Map<int,TipologiaImmobile>}) async*{
+  Stream<List<Immobile>> findImmobili({criteri =CriteriRicercaImmobile,tipologieImmobili =Map<int,TipologiaImmobile>}) async*{
     //List<Immobile> immobili = List<Immobile>.empty(growable: true);
     Map<int,Immobile> mimmobili = <int,Immobile>{};
-    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}:${this.getWinkhousePort()}/search");
+    Uri findUrl = Uri.parse("${getWinkhouseIp()}:${getWinkhousePort()}/search");
 
       List<CriterioRicercaRest> criteriRicerca = buildBodyObj(criteri: criteri);
       for(var i=0;i<criteriRicerca.length;i++){
@@ -146,7 +146,7 @@ class WinkhouseRest{
 
   Future<List<TipologiaImmobile>> getTipologieImmobili() async{
     List<TipologiaImmobile> tipologieImmobili = List<TipologiaImmobile>.empty(growable: true);
-    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}:${this.getWinkhousePort()}/core/search?tipo=ti");
+    Uri findUrl = Uri.parse("${getWinkhouseIp()}:${getWinkhousePort()}/core/search?tipo=ti");
     final response = await http.get(findUrl, headers:getHeaders());
     if (response.statusCode == 200) {
       Iterable l = json.decode(response.body);
@@ -159,7 +159,7 @@ class WinkhouseRest{
 
   Future<List<StatoConservativo>> getStatoConservativo() async {
     List<StatoConservativo> statoConservativo = List<StatoConservativo>.empty(growable: true);
-    Uri findUrl = Uri.parse("${this.getWinkhouseIp()}:${this.getWinkhousePort()}/core/search?tipo=sc");
+    Uri findUrl = Uri.parse("${getWinkhouseIp()}:${getWinkhousePort()}/core/search?tipo=sc");
     final response = await http.get(findUrl, headers:getHeaders());
     if (response.statusCode == 200) {
       Iterable l = json.decode(response.body);

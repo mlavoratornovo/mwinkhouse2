@@ -1,6 +1,5 @@
 
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:io';
 
 
@@ -584,12 +583,12 @@ class ObjectBox {
 
   Future<void> addImmobile(Immobile c1) async {
     // store.runInTransactionAsync(TxMode.write, _addImmobileInTx, c1);
-    List<AsyncTask> _taskTypeRegister() => [SaveImmobile(c1,store)];
+    List<AsyncTask> taskTypeRegister() => [SaveImmobile(c1,store)];
 
     var asyncExecutor = AsyncExecutor(
       sequential: true, // Non-sequential tasks.
       parallelism: 0, // Concurrency with 2 threads.
-      taskTypeRegister: _taskTypeRegister, // The top-level function to register the tasks types.
+      taskTypeRegister: taskTypeRegister, // The top-level function to register the tasks types.
     );
     asyncExecutor.execute(SaveImmobile(c1, store));
   }
@@ -640,14 +639,9 @@ class ObjectBox {
     // Query for all tasks, sorted by their date.
     // https://docs.objectbox.io/queries
     QueryBuilder<Immobile> qBuilderTasks;
-    if (notin==null) {
-      qBuilderTasks = immobileBox.query()
-        ..order(Immobile_.codImmobile, flags: Order.descending);
-    }else{
-      qBuilderTasks = immobileBox.query(Immobile_.codImmobile.notOneOf(notin!))
-        ..order(Immobile_.codImmobile, flags: Order.descending);
-    }
-    // Build and watch the query,
+    qBuilderTasks = immobileBox.query(Immobile_.codImmobile.notOneOf(notin))
+      ..order(Immobile_.codImmobile, flags: Order.descending);
+      // Build and watch the query,
     // set triggerImmediately to emit the query immediately on listen.
     return qBuilderTasks
         .watch(triggerImmediately: true)
@@ -764,12 +758,12 @@ class ObjectBox {
 
   Future<void> addAnagrafica(Anagrafica c1) async {
 
-    List<AsyncTask> _taskTypeRegister() => [SaveAnagrafica(c1,store)];
+    List<AsyncTask> taskTypeRegister() => [SaveAnagrafica(c1,store)];
 
     var asyncExecutor = AsyncExecutor(
       sequential: true, // Non-sequential tasks.
       parallelism: 0, // Concurrency with 2 threads.
-      taskTypeRegister: _taskTypeRegister, // The top-level function to register the tasks types.
+      taskTypeRegister: taskTypeRegister, // The top-level function to register the tasks types.
     );
     asyncExecutor.execute(SaveAnagrafica(c1, store));
   }
@@ -785,6 +779,7 @@ class ObjectBox {
 
   Anagrafica? getAnagrafica(int codAnagrafica) {
     anagraficaBox.get(codAnagrafica);
+    return null;
   }
   void removeAnagraficaEntity(Anagrafica anagrafica){
     store.runInTransaction(TxMode.write, () => {
@@ -809,14 +804,9 @@ class ObjectBox {
     // Query for all tasks, sorted by their date.
     // https://docs.objectbox.io/queries
     QueryBuilder<Anagrafica> qBuilderTasks;
-    if (notin==null) {
-      qBuilderTasks = anagraficaBox.query()
-        ..order(Anagrafica_.codAnagrafica, flags: Order.descending);
-    }else{
-      qBuilderTasks = anagraficaBox.query(Anagrafica_.codAnagrafica.notOneOf(notin!))
-        ..order(Anagrafica_.codAnagrafica, flags: Order.descending);
-    }
-    // Build and watch the query,
+    qBuilderTasks = anagraficaBox.query(Anagrafica_.codAnagrafica.notOneOf(notin))
+      ..order(Anagrafica_.codAnagrafica, flags: Order.descending);
+      // Build and watch the query,
     // set triggerImmediately to emit the query immediately on listen.
     return qBuilderTasks
         .watch(triggerImmediately: true)

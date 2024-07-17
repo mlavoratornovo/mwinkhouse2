@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
 
@@ -9,7 +8,7 @@ import 'dettaglio_stanza.dart';
 class StanzeImmobileList extends StatefulWidget {
   String title = 'Lista stanze : ';
   Immobile immobile;
-  StanzeImmobileList({Key? key, required this.immobile}) : super(key: key){
+  StanzeImmobileList({super.key, required this.immobile}){
     //title = title + (immobile.indirizzo ?? "");
   }
 
@@ -94,8 +93,8 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
   @override
   Widget build(BuildContext context) {
     stanze = (() async* {
-      await Future<void>.delayed(Duration(milliseconds: 1));
-      yield widget.immobile?.stanze.toList();
+      await Future<void>.delayed(const Duration(milliseconds: 1));
+      yield widget.immobile.stanze.toList();
     })();
 
     return Scaffold(
@@ -180,7 +179,7 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
 }
 
 class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({Key? key}) : super(key: key);
+  const SwipeLeftNotification({super.key});
 
   @override
   Widget build(BuildContext context) {
