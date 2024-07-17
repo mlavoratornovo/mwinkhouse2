@@ -50,7 +50,7 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                   ),
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.0',)
+                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
                     ),  (r){
                       return false;
                     });
