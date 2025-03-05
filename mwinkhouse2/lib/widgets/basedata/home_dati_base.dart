@@ -3,56 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/lista_anagrafiche.dart';
 import 'package:mwinkhouse/widgets/basedata/base_data.dart';
-import 'package:mwinkhouse/widgets/basedata/home_dati_base.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_immobili.dart';
 import 'package:mwinkhouse/widgets/settings/impostazioni.dart';
-import 'objbox/dao/objectbox.dart';
+import 'package:mwinkhouse/objbox/dao/objectbox.dart';
 
 late ObjectBox objectbox;
 
-Future<void> main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-
-  objectbox = await ObjectBox.create();
-
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeRight,
-    DeviceOrientation.landscapeLeft,
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(const MyApp()));
-  Settings.init();
-  runApp(const MyApp());
-  //runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Winkhouse 2',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Winkhouse 2.0.1'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class BaseDataHome extends StatefulWidget {
+  const BaseDataHome({super.key});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -63,13 +21,13 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  final String title = "Lista categorie";
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<BaseDataHome> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<BaseDataHome> {
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         )
                     ],
                       image: DecorationImage(
-                          image: AssetImage("assets/images/immobili.jpg"),
+                          image: AssetImage("assets/images/tipiimmobili.jpg"),
                           fit: BoxFit.cover,
                           opacity: 1
                       ),
@@ -118,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       // Implement the stroke
                       Text(
-                        'IMMOBILI',
+                        'TIPI IMMOBILI',
                         style: TextStyle(
                           fontSize: 24,
                           letterSpacing: 3,
@@ -131,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       // The text inside
                       const Text(
-                        'IMMOBILI',
+                        'TIPI IMMOBILI',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 24,
@@ -161,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         )
                       ],
                     image: DecorationImage(
-                        image: AssetImage("assets/images/anagrafiche.jpg"),
+                        image: AssetImage("assets/images/statoconservativo.jpg"),
                         fit: BoxFit.cover,
                         opacity: 1
                     ),
@@ -172,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         // Implement the stroke
                         Text(
-                          'ANAGRAFICHE',
+                          'STATO IMMOBILE',
                           style: TextStyle(
                             fontSize: 24,
                             letterSpacing: 3,
@@ -185,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         // The text inside
                         const Text(
-                          'ANAGRAFICHE',
+                          'STATO IMMOBILE',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 24,
@@ -202,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => BaseDataHome()));
+                      builder: (context) => BaseData()));
                 },
                 child:Container(
                         constraints: const BoxConstraints.expand(width:280,height:140.0),
@@ -216,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               )
                             ],
                             image: DecorationImage(
-                              image: AssetImage("assets/images/categorie.jpg"),
+                              image: AssetImage("assets/images/classeenergetica.jpg"),
                               fit: BoxFit.fill,
                               opacity: 1
                           ),
@@ -227,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         // Implement the stroke
                         Text(
-                          'CATEGORIE',
+                          'CLASSE IMMOBILE',
                           style: TextStyle(
                             fontSize: 24,
                             letterSpacing: 3,
@@ -240,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         // The text inside
                         const Text(
-                          'CATEGORIE',
+                          'CLASSE IMMOBILE',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 24,
@@ -271,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               )
                             ],
                           image: DecorationImage(
-                              image: AssetImage("assets/images/impostazioni.jpg"),
+                              image: AssetImage("assets/images/riscaldamenti.jpg"),
                               fit: BoxFit.cover,
                               opacity: 1
                           ),
@@ -282,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         // Implement the stroke
                         Text(
-                          'IMPOSTAZIONI',
+                          'RISCALDAMENTI',
                           style: TextStyle(
                             fontSize: 24,
                             letterSpacing: 3,
@@ -295,7 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         // The text inside
                         const Text(
-                          'IMPOSTAZIONI',
+                          'RISCALDAMENTI',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 24,

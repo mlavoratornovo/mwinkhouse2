@@ -46,7 +46,7 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
                   ),
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.0',)
+                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
                     ),  (r){
                       return false;
                     });
