@@ -1,0 +1,863 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:3334807128168569771",
+      "lastPropertyId": "7:4046485694599123046",
+      "name": "Agente",
+      "properties": [
+        {
+          "id": "1:8125323382256579544",
+          "name": "codAgente",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:536150313242298541",
+          "name": "nome",
+          "type": 9
+        },
+        {
+          "id": "3:6771243325538458712",
+          "name": "cognome",
+          "type": 9
+        },
+        {
+          "id": "4:8868800649808005006",
+          "name": "indirizzo",
+          "type": 9
+        },
+        {
+          "id": "5:5131541373315090455",
+          "name": "provincia",
+          "type": 9
+        },
+        {
+          "id": "6:478959435137158662",
+          "name": "cap",
+          "type": 9
+        },
+        {
+          "id": "7:4046485694599123046",
+          "name": "citta",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:7023555128310139918",
+          "name": "contatti",
+          "targetId": "7:2615396367283971534"
+        }
+      ]
+    },
+    {
+      "id": "2:293834241018180873",
+      "lastPropertyId": "15:1976105393612947449",
+      "name": "Anagrafica",
+      "properties": [
+        {
+          "id": "1:3991662483840366966",
+          "name": "codAnagrafica",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4212971853225248393",
+          "name": "nome",
+          "type": 9
+        },
+        {
+          "id": "3:7482258137369289476",
+          "name": "cognome",
+          "type": 9
+        },
+        {
+          "id": "4:7082599049341396300",
+          "name": "ragioneSociale",
+          "type": 9
+        },
+        {
+          "id": "5:4161067742836442343",
+          "name": "indirizzo",
+          "type": 9
+        },
+        {
+          "id": "6:7872667482917690496",
+          "name": "provincia",
+          "type": 9
+        },
+        {
+          "id": "7:2624008835161441722",
+          "name": "cap",
+          "type": 9
+        },
+        {
+          "id": "8:513979589412167939",
+          "name": "citta",
+          "type": 9
+        },
+        {
+          "id": "9:5904741797045832547",
+          "name": "dataInserimento",
+          "type": 10
+        },
+        {
+          "id": "10:3768934046823486098",
+          "name": "commento",
+          "type": 9
+        },
+        {
+          "id": "11:5170091809440288899",
+          "name": "storico",
+          "type": 1
+        },
+        {
+          "id": "12:5122428428113654687",
+          "name": "classeClienteId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:3651494731106722530",
+          "relationTarget": "ClasseCliente"
+        },
+        {
+          "id": "13:1555300741180730181",
+          "name": "agenteInseritoreId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:2384026597163870618",
+          "relationTarget": "Agente"
+        },
+        {
+          "id": "14:5248164797857153765",
+          "name": "codiceFiscale",
+          "type": 9
+        },
+        {
+          "id": "15:1976105393612947449",
+          "name": "partitaIva",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:4039948748120618032",
+          "name": "contatti",
+          "targetId": "7:2615396367283971534"
+        },
+        {
+          "id": "3:3384212362482549163",
+          "name": "immobiliAbbinati",
+          "targetId": "10:7568040681083448512"
+        },
+        {
+          "id": "4:2488102019203560600",
+          "name": "appuntamenti",
+          "targetId": "3:3386994393142097222"
+        }
+      ]
+    },
+    {
+      "id": "3:3386994393142097222",
+      "lastPropertyId": "8:6791278265499198252",
+      "name": "Appuntamento",
+      "properties": [
+        {
+          "id": "1:1031493790292428925",
+          "name": "codAppuntamento",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3510752533243807587",
+          "name": "dataInserimento",
+          "type": 10
+        },
+        {
+          "id": "3:2572815042272295374",
+          "name": "dataAppuntamento",
+          "type": 10
+        },
+        {
+          "id": "4:6408686707732839106",
+          "name": "dataFineAppuntamento",
+          "type": 10
+        },
+        {
+          "id": "5:6445893869525913670",
+          "name": "tipologiaAppuntamentoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:3749888365003755907",
+          "relationTarget": "TipologiaAppuntamento"
+        },
+        {
+          "id": "6:2617473071310645589",
+          "name": "iCalUID",
+          "type": 9
+        },
+        {
+          "id": "7:5854253723692417849",
+          "name": "descrizione",
+          "type": 9
+        },
+        {
+          "id": "8:6791278265499198252",
+          "name": "luogo",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "5:7217293475738464147",
+          "name": "agentiAppuntamento",
+          "targetId": "1:3334807128168569771"
+        },
+        {
+          "id": "6:4096066746976289664",
+          "name": "anagraficheAppuntamento",
+          "targetId": "2:293834241018180873"
+        }
+      ]
+    },
+    {
+      "id": "4:8305021363737730809",
+      "lastPropertyId": "3:6175576960365965449",
+      "name": "ClasseCliente",
+      "properties": [
+        {
+          "id": "1:56306002536798439",
+          "name": "codClasseCliente",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3423395125627228412",
+          "name": "descrizione",
+          "type": 9
+        },
+        {
+          "id": "3:6175576960365965449",
+          "name": "ordine",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:3486250422912623810",
+      "lastPropertyId": "4:181059551236235139",
+      "name": "ClasseEnergetica",
+      "properties": [
+        {
+          "id": "1:5801172842275819042",
+          "name": "codClasseEnergetica",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1240996009696297523",
+          "name": "nome",
+          "type": 9
+        },
+        {
+          "id": "3:3716118558727398528",
+          "name": "descrizione",
+          "type": 9
+        },
+        {
+          "id": "4:181059551236235139",
+          "name": "ordine",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:7264299303928495224",
+      "lastPropertyId": "13:7855911986131007569",
+      "name": "Colloquio",
+      "properties": [
+        {
+          "id": "1:1488921870283474212",
+          "name": "codColloquio",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4037900982877171560",
+          "name": "descrizione",
+          "type": 9
+        },
+        {
+          "id": "3:7972796733965140876",
+          "name": "agenteInseritoreId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:274129033762138685",
+          "relationTarget": "Agente"
+        },
+        {
+          "id": "4:2041143938119400373",
+          "name": "immobileAbbinatoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:6205787909942637107",
+          "relationTarget": "Immobile"
+        },
+        {
+          "id": "5:5332943791178424888",
+          "name": "tipologiaColloquioId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "6:2215281331890157229",
+          "relationTarget": "TipologiaColloquio"
+        },
+        {
+          "id": "6:8055596392458351050",
+          "name": "dataInserimento",
+          "type": 10
+        },
+        {
+          "id": "7:2173107458707526075",
+          "name": "dataColloquio",
+          "type": 10
+        },
+        {
+          "id": "8:8635350375227793994",
+          "name": "luogoIncontro",
+          "type": 9
+        },
+        {
+          "id": "9:5578520564390687318",
+          "name": "scadenziere",
+          "type": 1
+        },
+        {
+          "id": "10:6346005511698437196",
+          "name": "commentoAgenzia",
+          "type": 9
+        },
+        {
+          "id": "11:4094674872537589080",
+          "name": "commentoCliente",
+          "type": 9
+        },
+        {
+          "id": "12:2597331402829640823",
+          "name": "codParent",
+          "type": 6
+        },
+        {
+          "id": "13:7855911986131007569",
+          "name": "iCalUid",
+          "type": 9
+        }
+      ],
+      "relations": [
+        {
+          "id": "13:6144246402560499746",
+          "name": "anagrafiche",
+          "targetId": "2:293834241018180873"
+        }
+      ]
+    },
+    {
+      "id": "7:2615396367283971534",
+      "lastPropertyId": "7:7149749818544586331",
+      "name": "Contatto",
+      "properties": [
+        {
+          "id": "1:1015198916279125545",
+          "name": "codContatto",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4480126769304402682",
+          "name": "contatto",
+          "type": 9
+        },
+        {
+          "id": "3:475737335009608575",
+          "name": "descrizione",
+          "type": 9
+        },
+        {
+          "id": "4:2676831331147867251",
+          "name": "codTipologiaContatto",
+          "type": 6
+        },
+        {
+          "id": "5:6096443767477058927",
+          "name": "codAnagrafica",
+          "type": 6
+        },
+        {
+          "id": "6:5602581258018352555",
+          "name": "codAgente",
+          "type": 6
+        },
+        {
+          "id": "7:7149749818544586331",
+          "name": "tipologiaContattoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "7:1010470763393771000",
+          "relationTarget": "TipologiaContatto"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:4081961382466290516",
+      "lastPropertyId": "10:6295696732597831458",
+      "name": "DatiCatastali",
+      "properties": [
+        {
+          "id": "1:882897867477262351",
+          "name": "codDatiCatastali",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2818479105138481054",
+          "name": "foglio",
+          "type": 9
+        },
+        {
+          "id": "3:8131052404761059223",
+          "name": "particella",
+          "type": 9
+        },
+        {
+          "id": "4:7614976630413296555",
+          "name": "subalterno",
+          "type": 9
+        },
+        {
+          "id": "5:4895107570644328952",
+          "name": "categoria",
+          "type": 9
+        },
+        {
+          "id": "6:1521654928903175763",
+          "name": "rendita",
+          "type": 8
+        },
+        {
+          "id": "7:6876839432900119328",
+          "name": "redditoDomenicale",
+          "type": 8
+        },
+        {
+          "id": "8:178141845310951477",
+          "name": "redditoAgricolo",
+          "type": 8
+        },
+        {
+          "id": "9:927130204303300379",
+          "name": "dimensione",
+          "type": 8
+        },
+        {
+          "id": "10:6295696732597831458",
+          "name": "codImmobile",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:757328395889382841",
+      "lastPropertyId": "5:6663865456837484252",
+      "name": "Immagine",
+      "properties": [
+        {
+          "id": "1:7699746990000329512",
+          "name": "codImmagine",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5440983258152161213",
+          "name": "codImmobile",
+          "type": 6
+        },
+        {
+          "id": "3:3655538332132439337",
+          "name": "ordine",
+          "type": 6
+        },
+        {
+          "id": "4:2834260834398836247",
+          "name": "pathImmagine",
+          "type": 9
+        },
+        {
+          "id": "5:6663865456837484252",
+          "name": "imgPropsStr",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "10:7568040681083448512",
+      "lastPropertyId": "25:7471632642035551421",
+      "name": "Immobile",
+      "properties": [
+        {
+          "id": "1:8134050888706473649",
+          "name": "codImmobile",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:982283752963554582",
+          "name": "rif",
+          "type": 9
+        },
+        {
+          "id": "3:2963188051241610411",
+          "name": "indirizzo",
+          "type": 9
+        },
+        {
+          "id": "4:7309069188943430877",
+          "name": "provincia",
+          "type": 9
+        },
+        {
+          "id": "5:8829512485097932401",
+          "name": "cap",
+          "type": 9
+        },
+        {
+          "id": "6:7648577875566662567",
+          "name": "citta",
+          "type": 9
+        },
+        {
+          "id": "7:8505832860312742490",
+          "name": "zona",
+          "type": 9
+        },
+        {
+          "id": "8:321104500892783892",
+          "name": "dataInserimento",
+          "type": 10
+        },
+        {
+          "id": "9:8826654615270205068",
+          "name": "dataLibero",
+          "type": 10
+        },
+        {
+          "id": "10:2009247384368534895",
+          "name": "descrizione",
+          "type": 9
+        },
+        {
+          "id": "11:7862715026997169534",
+          "name": "mutuoDescrizione",
+          "type": 9
+        },
+        {
+          "id": "12:4893070602423674692",
+          "name": "prezzo",
+          "type": 8
+        },
+        {
+          "id": "13:380850130265908028",
+          "name": "mutuo",
+          "type": 8
+        },
+        {
+          "id": "14:927313726822821296",
+          "name": "spese",
+          "type": 8
+        },
+        {
+          "id": "15:4527175858319372576",
+          "name": "varie",
+          "type": 9
+        },
+        {
+          "id": "16:4295002648886671971",
+          "name": "visione",
+          "type": 1
+        },
+        {
+          "id": "17:8639697153603640448",
+          "name": "storico",
+          "type": 1
+        },
+        {
+          "id": "18:8717782834513168334",
+          "name": "affittabile",
+          "type": 1
+        },
+        {
+          "id": "19:4020874955991273171",
+          "name": "mq",
+          "type": 6
+        },
+        {
+          "id": "20:6444433413149699751",
+          "name": "annoCostruzione",
+          "type": 6
+        },
+        {
+          "id": "21:7663598501579642842",
+          "name": "agenteInseritoreId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "8:7929509765618067149",
+          "relationTarget": "Agente"
+        },
+        {
+          "id": "22:6679120532569650775",
+          "name": "riscaldamentoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "9:8216283141336157921",
+          "relationTarget": "Riscaldamento"
+        },
+        {
+          "id": "23:5686169327166007856",
+          "name": "statoConservativoId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "10:382696995089959586",
+          "relationTarget": "StatoConservativo"
+        },
+        {
+          "id": "24:2120823047171190231",
+          "name": "tipologiaImmobileId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "11:7639890443565691167",
+          "relationTarget": "TipologiaImmobile"
+        },
+        {
+          "id": "25:7471632642035551421",
+          "name": "classeEnergeticaId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "12:4282630748260591132",
+          "relationTarget": "ClasseEnergetica"
+        }
+      ],
+      "relations": [
+        {
+          "id": "8:734706892945463092",
+          "name": "stanze",
+          "targetId": "12:7637466687066493278"
+        },
+        {
+          "id": "10:7789457817926044058",
+          "name": "immagini",
+          "targetId": "9:757328395889382841"
+        },
+        {
+          "id": "12:8835141306723881424",
+          "name": "proprietari",
+          "targetId": "2:293834241018180873"
+        }
+      ]
+    },
+    {
+      "id": "11:6261678428064405502",
+      "lastPropertyId": "2:4552832517303043960",
+      "name": "Riscaldamento",
+      "properties": [
+        {
+          "id": "1:8388491397889393561",
+          "name": "codRiscaldamento",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4552832517303043960",
+          "name": "descrizione",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "12:7637466687066493278",
+      "lastPropertyId": "4:4659736222864569640",
+      "name": "StanzaImmobile",
+      "properties": [
+        {
+          "id": "1:2785227346138468212",
+          "name": "codStanzaImmobile",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8907589801466336892",
+          "name": "codImmobile",
+          "type": 6
+        },
+        {
+          "id": "3:5709467713778893720",
+          "name": "tipologiaStanzaId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "13:8510568089575891598",
+          "relationTarget": "TipologiaStanza"
+        },
+        {
+          "id": "4:4659736222864569640",
+          "name": "mq",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "13:78095892710267260",
+      "lastPropertyId": "2:2506954189293363471",
+      "name": "StatoConservativo",
+      "properties": [
+        {
+          "id": "1:832383944653527778",
+          "name": "codStatoConservativo",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2506954189293363471",
+          "name": "descrizione",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "14:6363396343229116270",
+      "lastPropertyId": "4:4269823461443388400",
+      "name": "TipologiaAppuntamento",
+      "properties": [
+        {
+          "id": "1:7396574461806172172",
+          "name": "codTipologiaAppuntamento",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4231777248974000754",
+          "name": "descrizione",
+          "type": 9
+        },
+        {
+          "id": "3:6038671342953004944",
+          "name": "gCalColor",
+          "type": 9
+        },
+        {
+          "id": "4:4269823461443388400",
+          "name": "ordine",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "15:5181767849494525414",
+      "lastPropertyId": "2:1552866231508454639",
+      "name": "TipologiaColloquio",
+      "properties": [
+        {
+          "id": "1:1349533958703883290",
+          "name": "codTipologiaColloquio",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1552866231508454639",
+          "name": "descrizione",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "16:763542966046052396",
+      "lastPropertyId": "2:4703598772050029837",
+      "name": "TipologiaContatto",
+      "properties": [
+        {
+          "id": "1:4650064342384010061",
+          "name": "codTipologiaContatto",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4703598772050029837",
+          "name": "descrizione",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "17:4044006737828550810",
+      "lastPropertyId": "2:2322599607388358549",
+      "name": "TipologiaImmobile",
+      "properties": [
+        {
+          "id": "1:6490459769903761696",
+          "name": "codTipologiaImmobile",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2322599607388358549",
+          "name": "descrizione",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "18:4409652037449677777",
+      "lastPropertyId": "2:3842500601377659165",
+      "name": "TipologiaStanza",
+      "properties": [
+        {
+          "id": "1:3158044831427994832",
+          "name": "codTipologiaStanza",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3842500601377659165",
+          "name": "descrizione",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "18:4409652037449677777",
+  "lastIndexId": "13:8510568089575891598",
+  "lastRelationId": "13:6144246402560499746",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [
+    444762249311848945,
+    5185577959448678342,
+    5759117127510008189
+  ],
+  "version": 1
+}
