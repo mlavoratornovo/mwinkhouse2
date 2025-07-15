@@ -1,7 +1,9 @@
 import 'package:objectbox/objectbox.dart';
 
+import 'IDatiBase.dart';
+
 @Entity()
-class TipologiaContatto{
+class TipologiaContatto implements IDatiBase{
 
   TipologiaContatto():super();
 
@@ -20,6 +22,26 @@ class TipologiaContatto{
     instance.codTipologiaContatto = json['codTipologiaContatto'];
     instance.descrizione = json['descrizione'];
     return instance;
+  }
+
+  @override
+  int getCodice() {
+    return codTipologiaContatto ?? 0;
+  }
+
+  @override
+  String getDescrizione() {
+    return descrizione ?? '';
+  }
+
+  @override
+  String getNome() {
+    return '';
+  }
+
+  @override
+  int getOrdine() {
+    return 0;
   }
 
 }

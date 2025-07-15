@@ -71,6 +71,13 @@ flutter:
     - assets/images/impostazioni.jpg
     - assets/images/wink75.png
     - assets/comuni.json
+    - assets/images/tipiimmobili.jpg
+    - assets/images/statoconservativo.jpg
+    - assets/images/classeenergetica.jpg
+    - assets/images/riscaldamenti.jpg
+    - assets/images/tipiclienti.jpg
+    - assets/images/tipistanza.jpg
+    - assets/images/tipicontatti.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

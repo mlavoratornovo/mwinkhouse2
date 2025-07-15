@@ -7,6 +7,8 @@ import 'package:mwinkhouse/widgets/immobili/lista_immobili.dart';
 import 'package:mwinkhouse/widgets/settings/impostazioni.dart';
 import 'package:mwinkhouse/objbox/dao/objectbox.dart';
 
+import 'lista_dati_base.dart';
+
 late ObjectBox objectbox;
 
 class BaseDataHome extends StatefulWidget {
@@ -43,16 +45,20 @@ class _MyHomePageState extends State<BaseDataHome> {
           ),
 
         ),
-        body: Center(
-
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,// Ensures it fills the screen
+          child:SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center, // Centers vertically
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ImmobiliList()));
-                },
+                      builder: (context) => BaseDatiList(tipoDati:BaseDatiType.tipiimmobili)
+                  ));
+                  },
                 child:Container(
                   constraints: const BoxConstraints.expand(width:280,height:150.0),
                   decoration: const BoxDecoration(
@@ -105,7 +111,8 @@ class _MyHomePageState extends State<BaseDataHome> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AnagraficheList()));
+                      builder: (context) => BaseDatiList(tipoDati:BaseDatiType.statoconservativo)
+                  ));
                 },
                 child:Container(
                   constraints: const BoxConstraints.expand(width:280,height:140.0),
@@ -160,7 +167,8 @@ class _MyHomePageState extends State<BaseDataHome> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => BaseData()));
+                      builder: (context) => BaseDatiList(tipoDati:BaseDatiType.classeenergetica)
+                  ));
                 },
                 child:Container(
                         constraints: const BoxConstraints.expand(width:280,height:140.0),
@@ -215,7 +223,8 @@ class _MyHomePageState extends State<BaseDataHome> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const Impostazioni()));
+                      builder: (context) => BaseDatiList(tipoDati:BaseDatiType.riscaldamenti)
+                  ));
                 },
                 child:Container(
                         constraints: const BoxConstraints.expand(width:280,height:140.0),
@@ -265,10 +274,179 @@ class _MyHomePageState extends State<BaseDataHome> {
                       ]
                   ),
                 )
+              ),
+              const SizedBox(height: 13),
+              InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => BaseDatiList(tipoDati:BaseDatiType.tipistanza)
+                    ));
+                    },
+                  child:Container(
+                    constraints: const BoxConstraints.expand(width:280,height:140.0),
+                    decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.blueGrey,
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 0)
+                          )
+                        ],
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/tipistanza.jpg"),
+                            fit: BoxFit.cover,
+                            opacity: 1
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // Implement the stroke
+                          Text(
+                            'STANZE',
+                            style: TextStyle(
+                              fontSize: 24,
+                              letterSpacing: 3,
+                              fontWeight: FontWeight.bold,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 5
+                                ..color = Colors.blue,
+                            ),
+                          ),
+                          // The text inside
+                          const Text(
+                            'STANZE',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 24,
+                              letterSpacing: 3,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ]
+                    ),
+                  )
+              ),
+              const SizedBox(height: 13),
+              InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => BaseDatiList(tipoDati:BaseDatiType.tipiclienti)
+                    ));
+                  },
+                  child:Container(
+                    constraints: const BoxConstraints.expand(width:280,height:140.0),
+                    decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.blueGrey,
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 0)
+                          )
+                        ],
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/tipiclienti.jpg"),
+                            fit: BoxFit.cover,
+                            opacity: 1
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // Implement the stroke
+                          Text(
+                            'ANAGRAFICHE',
+                            style: TextStyle(
+                              fontSize: 24,
+                              letterSpacing: 3,
+                              fontWeight: FontWeight.bold,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 5
+                                ..color = Colors.blue,
+                            ),
+                          ),
+                          // The text inside
+                          const Text(
+                            'ANAGRAFICHE',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 24,
+                              letterSpacing: 3,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ]
+                    ),
+                  )
+              ),
+              const SizedBox(height: 13),
+              InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => BaseDatiList(tipoDati:BaseDatiType.tipicontatti)
+                    ));
+                    },
+                  child:Container(
+                    constraints: const BoxConstraints.expand(width:280,height:140.0),
+                    decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.blueGrey,
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 0)
+                          )
+                        ],
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/tipicontatti.jpg"),
+                            fit: BoxFit.cover,
+                            opacity: 1
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))
+                    ),
+                    child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // Implement the stroke
+                          Text(
+                            'CONTATTI',
+                            style: TextStyle(
+                              fontSize: 24,
+                              letterSpacing: 3,
+                              fontWeight: FontWeight.bold,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 5
+                                ..color = Colors.blue,
+                            ),
+                          ),
+                          // The text inside
+                          const Text(
+                            'CONTATTI',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 24,
+                              letterSpacing: 3,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ]
+                    ),
+                  )
               )
             ],
           ),
         ),
+      )
     );
   }
 }

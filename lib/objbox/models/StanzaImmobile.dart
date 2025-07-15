@@ -3,7 +3,7 @@ import 'package:objectbox/objectbox.dart';
 import 'TipologiaStanza.dart';
 
 @Entity()
-class StanzaImmobile{
+class StanzaImmobile {
 
   StanzaImmobile():super();
 

@@ -1,7 +1,9 @@
 import 'package:objectbox/objectbox.dart';
 
+import 'IDatiBase.dart';
+
 @Entity()
-class Riscaldamento{
+class Riscaldamento implements IDatiBase{
 
   Riscaldamento():super();
 
@@ -20,5 +22,21 @@ class Riscaldamento{
     instance.codRiscaldamento = json['codRiscaldamento'];
     instance.descrizione = json['descrizione'];
     return instance;
+  }
+
+  int getCodice(){
+    return codRiscaldamento ?? 0;
+  }
+
+  String getNome(){
+    return '';
+  }
+
+  String getDescrizione(){
+    return descrizione ?? '';
+  }
+
+  int getOrdine(){
+    return 0;
   }
 }

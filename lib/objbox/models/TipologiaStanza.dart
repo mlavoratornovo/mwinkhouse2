@@ -1,7 +1,9 @@
 import 'package:objectbox/objectbox.dart';
 
+import 'IDatiBase.dart';
+
 @Entity()
-class TipologiaStanza{
+class TipologiaStanza implements IDatiBase{
 
   TipologiaStanza():super();
   @Id()
@@ -19,6 +21,26 @@ class TipologiaStanza{
     instance.codTipologiaStanza = json['codTipologiaStanza'];
     instance.descrizione = json['descrizione'];
     return instance;
+  }
+
+  @override
+  int getCodice() {
+    return codTipologiaStanza ?? 0;
+  }
+
+  @override
+  String getDescrizione() {
+    return descrizione ?? '';
+  }
+
+  @override
+  String getNome() {
+    return '';
+  }
+
+  @override
+  int getOrdine() {
+    return 0;
   }
 
 }

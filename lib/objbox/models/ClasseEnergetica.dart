@@ -1,7 +1,9 @@
 import 'package:objectbox/objectbox.dart';
 
+import 'IDatiBase.dart';
+
 @Entity()
-class ClasseEnergetica{
+class ClasseEnergetica implements IDatiBase{
 
   ClasseEnergetica():super();
 
@@ -28,4 +30,19 @@ class ClasseEnergetica{
     return instance;
   }
 
+  int getCodice(){
+    return codClasseEnergetica ?? 0;
+  }
+
+  String getNome(){
+    return nome ?? '';
+  }
+
+  String getDescrizione(){
+    return descrizione ?? '';
+  }
+
+  int getOrdine(){
+    return ordine ?? 0;
+  }
 }

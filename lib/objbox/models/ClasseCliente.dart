@@ -1,7 +1,8 @@
+import 'package:mwinkhouse/objbox/models/IDatiBase.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ClasseCliente{
+class ClasseCliente implements IDatiBase{
   ClasseCliente():super();
   @Id()
   int? codClasseCliente;
@@ -22,4 +23,21 @@ class ClasseCliente{
     instance.ordine = json['ordine'];
     return instance;
   }
+
+  int getCodice(){
+    return codClasseCliente ?? 0;
+  }
+
+  String getNome(){
+    return '';
+  }
+
+  String getDescrizione(){
+    return descrizione ?? '';
+  }
+
+  int getOrdine(){
+    return ordine ?? 0;
+  }
+
 }

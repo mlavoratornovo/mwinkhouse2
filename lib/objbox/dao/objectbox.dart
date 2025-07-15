@@ -836,7 +836,63 @@ class ObjectBox {
     // Map it to a list of tasks to be used by a StreamBuilder.
         .map((query) => query.find());
   }
-  // Stream<List<Anagrafica>> getAnagrafichePropieta({int codImmobile=0}) {
+
+  Stream<List<TipologiaImmobile>> getTipologiaImmobile() {
+    QueryBuilder<TipologiaImmobile> qBuilderTasks;
+    qBuilderTasks = tipologiaImmobileBox.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
+  Stream<List<ClasseCliente>> getTipiClienti() {
+    QueryBuilder<ClasseCliente> qBuilderTasks;
+    qBuilderTasks = classeClienteBox.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
+  Stream<List<ClasseEnergetica>> getClasseEnergetica() {
+    QueryBuilder<ClasseEnergetica> qBuilderTasks;
+    qBuilderTasks = classeEnergeticaBox.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
+  Stream<List<Riscaldamento>> getRiscaldamenti() {
+    QueryBuilder<Riscaldamento> qBuilderTasks;
+    qBuilderTasks = riscaldamentoBox.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
+  Stream<List<StatoConservativo>> getStatoConservativo() {
+    QueryBuilder<StatoConservativo> qBuilderTasks;
+    qBuilderTasks = statoConservativoBox.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
+  Stream<List<TipologiaContatto>> getTipiContatti() {
+    QueryBuilder<TipologiaContatto> qBuilderTasks;
+    qBuilderTasks = tipologiaContattoBox.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
+  Stream<List<TipologiaStanza>> getTipiStanze() {
+    QueryBuilder<TipologiaStanza> qBuilderTasks;
+    qBuilderTasks = tipologiaStanzaBox.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+// Stream<List<Anagrafica>> getAnagrafichePropieta({int codImmobile=0}) {
   //   // Query for all tasks, sorted by their date.
   //   // https://docs.objectbox.io/queries
   //   QueryBuilder<Anagrafica> qBuilderTasks;
