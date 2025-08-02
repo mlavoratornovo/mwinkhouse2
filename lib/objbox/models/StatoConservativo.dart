@@ -44,4 +44,24 @@ class StatoConservativo implements IDatiBase{
     return 0;
   }
 
+  @override
+  void setCodice(int codice) {
+    codStatoConservativo = codice;
+  }
+
+  @override
+  void setDescrizione(String descrizione) {
+    this.descrizione = descrizione;
+  }
+
+  @override
+  void setNome(String nome) {
+    // TODO: implement setNome
+  }
+
+  @override
+  void setOrdine(int ordine) {
+    // TODO: implement setOrdine
+  }
+
 }

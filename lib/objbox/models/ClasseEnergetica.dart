@@ -30,19 +30,43 @@ class ClasseEnergetica implements IDatiBase{
     return instance;
   }
 
+  @override
   int getCodice(){
     return codClasseEnergetica ?? 0;
   }
 
+  @override
   String getNome(){
     return nome ?? '';
   }
 
+  @override
   String getDescrizione(){
     return descrizione ?? '';
   }
 
+  @override
   int getOrdine(){
     return ordine ?? 0;
+  }
+
+  @override
+  void setCodice(int codice) {
+    codClasseEnergetica = codice;
+  }
+
+  @override
+  void setDescrizione(String descrizione) {
+    this.descrizione = descrizione;
+  }
+
+  @override
+  void setNome(String nome) {
+    this.nome = nome;
+  }
+
+  @override
+  void setOrdine(int ordine) {
+    this.ordine = ordine;
   }
 }

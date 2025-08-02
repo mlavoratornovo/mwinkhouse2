@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'IDatiBase.dart';
@@ -38,5 +39,25 @@ class Riscaldamento implements IDatiBase{
 
   int getOrdine(){
     return 0;
+  }
+
+  @override
+  void setCodice(int codice) {
+    codRiscaldamento = codice;
+  }
+
+  @override
+  void setDescrizione(String descrizione) {
+    this.descrizione = descrizione;
+  }
+
+  @override
+  void setNome(String nome) {
+    // TODO: implement setNome
+  }
+
+  @override
+  void setOrdine(int ordine) {
+    // TODO: implement setOrdine
   }
 }

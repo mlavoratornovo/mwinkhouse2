@@ -16,17 +16,40 @@ enum BaseDatiType {
   tipicontatti
 }
 
-
 /// Displays the current list of tasks by listening to a stream.
 ///
 /// Each task has a check button to mark it completed and an edit button to
 /// update it. A task can also be swiped away to remove it.
 class BaseDatiList extends StatefulWidget {
+
+  final Icon addIcon = const Icon(Icons.add_box_outlined,color: Colors.white);
+  final Icon editIcon = const Icon(Icons.edit_outlined,color: Colors.white);
+  final Icon deleteIcon = const Icon(Icons.delete_outline_outlined,color: Colors.white);
+  final Icon saveIcon = const Icon(Icons.save_outlined,color: Colors.white);
+  final Icon syncIcon = const Icon(Icons.screen_rotation_alt_outlined,color: Colors.white);
+
+
   String title = '';
   BaseDatiType tipoDati = BaseDatiType.tipiimmobili;
 
   BaseDatiList({super.key, required this.tipoDati}){
     this.tipoDati = tipoDati;
+    switch(tipoDati){
+      case (BaseDatiType.tipiimmobili):
+        title = "Tipologie immobile";
+      case (BaseDatiType.tipiclienti):
+        title = "Categorie cliente";
+      case (BaseDatiType.classeenergetica):
+        title = "Classi energetiche";
+      case (BaseDatiType.riscaldamenti):
+        title = "Riscaldamenti";
+      case (BaseDatiType.statoconservativo):
+        title = "Stati conservativi";
+      case (BaseDatiType.tipicontatti):
+        title = "Tipologie contatti";
+      case (BaseDatiType.tipistanza):
+        title = "Tipologie stanze";
+    }
   }
 
   @override
@@ -48,6 +71,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
    BaseDatiType? tipoDati;
   _BaseDatiListState(this.tipoDati);
 
+  final _formKey = GlobalKey<FormState>();
   Dismissible Function(BuildContext, int) _itemBuilder<T>(List<IDatiBase> datibase) =>
           (BuildContext context, int index) => Dismissible(
         background: Container(
@@ -106,13 +130,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
             TextButton(
                 child: const Text('Edit'),
                 onPressed: () {
-/*
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioAnagrafica(
-                        anagrafica: datibase[index],
-                      )
-                  ));
-*/
+                  _openPopUp(context, datibase[index]);
                 }
                 ),
           ],
@@ -196,27 +214,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-/*
-              FloatingActionButton(
-                heroTag: "Anagrafica",
-                backgroundColor: (immobile!=null)?Colors.grey:null,
-                onPressed: (immobile!=null)?null:() {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioAnagrafica(anagrafica:Anagrafica())));
-                },
-                child: const Icon(Icons.add),
-              ),
-              const SizedBox(height: 10),
-              FloatingActionButton(
-                heroTag: "immobili",
-                backgroundColor: (immobile==null)?Colors.grey:null,
-                onPressed: (immobile==null)?null:() {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AnagraficheProprietaList(immobile:immobile?? Immobile())));
-                },
-                child: const Icon(Icons.check_box),
-              ),
-*/
+
             ]
         ));
   }
@@ -241,6 +239,123 @@ class _BaseDatiListState extends State<BaseDatiList> {
         return Stream<List<IDatiBase>>.empty();
     }
   }
+
+  bool savePopUpdata(IDatiBase datobase){
+    return true;
+  }
+
+   Future<dynamic> _openPopUp(BuildContext context, IDatiBase datobase) async {
+     return showDialog(
+         context: context,
+         builder: (BuildContext context) {
+           return AlertDialog(
+             content: SizedBox(
+               height: ((tipoDati==BaseDatiType.classeenergetica)?200:120),
+               child: Form(
+                   key: _formKey,
+                   child:Column(
+                     children: _getDialogWidgets(datobase),
+                   )
+               ),
+             ),
+           );
+         });
+   }
+
+   List<Widget> _getDialogWidgets(IDatiBase datobase){
+     List<Widget> widgets =  List<Widget>.empty(growable: true);
+     widgets.add(SizedBox(height: 5));
+     String labeltxt = '';
+     switch(tipoDati) {
+       case (BaseDatiType.tipiimmobili):
+         labeltxt = "Tipologia immobile";
+       case (BaseDatiType.tipiclienti):
+         labeltxt = "Categoria Cliente";
+       case (BaseDatiType.classeenergetica):
+         labeltxt = "Descrizione classe energetica";
+         widgets.add(
+             TextFormField(
+               decoration:const InputDecoration(
+                    labelText: "Nome classe energetica",
+                    labelStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+               ),
+               validator:  (value) {
+                 if (value == null || value.isEmpty) {
+                   return 'Inserire il nome';
+                 }
+                 return null;
+               },
+               onChanged: (text) {
+                 datobase.setNome(text);
+               },
+               initialValue: datobase.getNome(),
+             )
+         );
+
+       case (BaseDatiType.riscaldamenti):
+         labeltxt = "Riscaldamento";
+       case (BaseDatiType.statoconservativo):
+         labeltxt = "Stato Conservativo";
+       case (BaseDatiType.tipicontatti):
+         labeltxt = "Tipologia Contatto";
+       case (BaseDatiType.tipistanza):
+         labeltxt = "Tipologia Stanza";
+       case (null):
+         labeltxt = "";
+     }
+     if (labeltxt != ""){
+       widgets.add(
+           TextFormField(
+             decoration:InputDecoration(
+                 labelText: labeltxt,
+                 labelStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+             ),
+             validator:  (value) {
+               if (value == null || value.isEmpty || value.toString() == "") {
+                 return 'Inserire la descrizione';
+               }
+               return null;
+             },
+             onChanged: (text) {
+               datobase.setDescrizione(text);
+             },
+             initialValue: datobase.getDescrizione(),
+           )
+       );
+       widgets.add(SizedBox(height: 5));
+       widgets.add(
+         TextButton(
+           style: TextButton.styleFrom(
+             backgroundColor: Colors.blue,
+             shape: const CircleBorder(),
+           ),
+           child: widget.saveIcon,
+           onPressed: () {
+             if (_formKey.currentState!.validate()) {
+
+               savePopUpdata(datobase);
+               // objectbox.tipologiaImmobileBox.put(datobase)
+               //     widget.tipologieImmobileSelected ?? TipologiaImmobile());
+
+               setState(() {
+                 // widget.tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
+               });
+             }else{
+               setState(() {
+//               widget.tipologieImmobileSelected = null;
+               });
+               ScaffoldMessenger.of(context).showSnackBar(
+                 const SnackBar(content: Text('Dati non validi impossibile procedere')),
+               );
+             }
+             Navigator.of(context).pop();
+           },
+         ),
+       );
+     }
+
+     return widgets;
+   }
 
 }
 
