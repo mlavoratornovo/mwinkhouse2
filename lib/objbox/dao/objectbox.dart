@@ -11,6 +11,7 @@ import 'package:mwinkhouse/objbox/models/Contatto.dart';
 import 'package:mwinkhouse/objbox/models/CriteriRicercaAnagrafica.dart';
 import 'package:mwinkhouse/objbox/models/CriteriRicercaImmobile.dart';
 import 'package:mwinkhouse/objbox/models/Immobile.dart';
+import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
 import 'package:mwinkhouse/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaAppuntamento.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
@@ -40,6 +41,7 @@ class ObjectBox {
   late final Box<Anagrafica> anagraficaBox;
   late final Box<Colloquio> colloquioBox;
   late final Box<Contatto> contattoBox;
+  late final Box<StanzaImmobile> stanzaBox;
   late final Admin _admin;
 
   ObjectBox._create(this.store) {
@@ -56,6 +58,8 @@ class ObjectBox {
     colloquioBox = Box<Colloquio>(store);
 
     contattoBox = Box<Contatto>(store);
+
+    stanzaBox = Box<StanzaImmobile>(store);
 
     classeClienteBox = Box<ClasseCliente>(store);
     if (classeClienteBox.isEmpty()) {
@@ -572,8 +576,8 @@ class ObjectBox {
 
   // ConattoBox
 
-  void removeConatto(int codConatto){
-    contattoBox.remove(codConatto);
+  void removeConatto(int codContatto){
+    contattoBox.remove(codContatto);
   }
 
   // ImmobileBox
@@ -845,12 +849,34 @@ class ObjectBox {
         .map((query) => query.find());
   }
 
+  void removeTipologiaImmobile(int codTipologiaImmobile){
+    QueryBuilder<Immobile> qBuilderImmobili = immobileBox.query();
+    qBuilderImmobili.link(Immobile_.tipologiaImmobile, TipologiaImmobile_.codTipologiaImmobile.equals(codTipologiaImmobile));
+    List<Immobile> immobili = qBuilderImmobili.build().find();
+    for (var entity in immobili) {
+      entity.tipologiaImmobile.target = null;
+    }
+    immobileBox.putMany(immobili);
+    tipologiaImmobileBox.remove(codTipologiaImmobile);
+  }
+
   Stream<List<ClasseCliente>> getTipiClienti() {
     QueryBuilder<ClasseCliente> qBuilderTasks;
     qBuilderTasks = classeClienteBox.query();
     return qBuilderTasks
         .watch(triggerImmediately: true)
         .map((query) => query.find());
+  }
+
+  void removeTipiClienti(int codTipiClienti){
+    QueryBuilder<Anagrafica> qBuilderImmobili = anagraficaBox.query();
+    qBuilderImmobili.link(Anagrafica_.classeCliente, ClasseCliente_.codClasseCliente.equals(codTipiClienti));
+    List<Anagrafica> anagrafiche = qBuilderImmobili.build().find();
+    for (var entity in anagrafiche) {
+      entity.classeCliente.target = null;
+    }
+    anagraficaBox.putMany(anagrafiche);
+    classeClienteBox.remove(codTipiClienti);
   }
 
   Stream<List<ClasseEnergetica>> getClasseEnergetica() {
@@ -861,12 +887,34 @@ class ObjectBox {
         .map((query) => query.find());
   }
 
+  void removeClasseEnergetica(int codClasseEnergetica){
+    QueryBuilder<Immobile> qBuilderImmobili = immobileBox.query();
+    qBuilderImmobili.link(Immobile_.tipologiaImmobile, ClasseEnergetica_.codClasseEnergetica.equals(codClasseEnergetica));
+    List<Immobile> immobili = qBuilderImmobili.build().find();
+    for (var entity in immobili) {
+      entity.classeEnergetica.target = null;
+    }
+    immobileBox.putMany(immobili);
+    classeEnergeticaBox.remove(codClasseEnergetica);
+  }
+
   Stream<List<Riscaldamento>> getRiscaldamenti() {
     QueryBuilder<Riscaldamento> qBuilderTasks;
     qBuilderTasks = riscaldamentoBox.query();
     return qBuilderTasks
         .watch(triggerImmediately: true)
         .map((query) => query.find());
+  }
+
+  void removeRiscaldamento(int codRiscaldamento){
+    QueryBuilder<Immobile> qBuilderImmobili = immobileBox.query();
+    qBuilderImmobili.link(Immobile_.tipologiaImmobile, Riscaldamento_.codRiscaldamento.equals(codRiscaldamento));
+    List<Immobile> immobili = qBuilderImmobili.build().find();
+    for (var entity in immobili) {
+      entity.riscaldamento.target = null;
+    }
+    immobileBox.putMany(immobili);
+    riscaldamentoBox.remove(codRiscaldamento);
   }
 
   Stream<List<StatoConservativo>> getStatoConservativo() {
@@ -877,12 +925,34 @@ class ObjectBox {
         .map((query) => query.find());
   }
 
+  void removeStatoConservativo(int codStatoConservativo){
+    QueryBuilder<Immobile> qBuilderImmobili = immobileBox.query();
+    qBuilderImmobili.link(Immobile_.statoConservativo, StatoConservativo_.codStatoConservativo.equals(codStatoConservativo));
+    List<Immobile> immobili = qBuilderImmobili.build().find();
+    for (var entity in immobili) {
+      entity.statoConservativo.target = null;
+    }
+    immobileBox.putMany(immobili);
+    statoConservativoBox.remove(codStatoConservativo);
+  }
+
   Stream<List<TipologiaContatto>> getTipiContatti() {
     QueryBuilder<TipologiaContatto> qBuilderTasks;
     qBuilderTasks = tipologiaContattoBox.query();
     return qBuilderTasks
         .watch(triggerImmediately: true)
         .map((query) => query.find());
+  }
+
+  void removeTipologiaContatto(int codTipologiaContatto){
+    QueryBuilder<Contatto> qBuilderContatti = contattoBox.query();
+    qBuilderContatti.link(Contatto_.tipologiaContatto, TipologiaContatto_.codTipologiaContatto.equals(codTipologiaContatto));
+    List<Contatto> contatti = qBuilderContatti.build().find();
+    for (var entity in contatti) {
+      entity.tipologiaContatto.target = null;
+    }
+    contattoBox.putMany(contatti);
+    tipologiaContattoBox.remove(codTipologiaContatto);
   }
 
   Stream<List<TipologiaStanza>> getTipiStanze() {
@@ -892,6 +962,18 @@ class ObjectBox {
         .watch(triggerImmediately: true)
         .map((query) => query.find());
   }
+
+  void removeTipologiaStanza(int codTipologiaStanza){
+    QueryBuilder<StanzaImmobile> qBuilderStanze = stanzaBox.query();
+    qBuilderStanze.link(StanzaImmobile_.tipologiaStanza, TipologiaStanza_.codTipologiaStanza.equals(codTipologiaStanza));
+    List<StanzaImmobile> stanze = qBuilderStanze.build().find();
+    for (var entity in stanze) {
+      entity.tipologiaStanza.target = null;
+    }
+    stanzaBox.putMany(stanze);
+    tipologiaStanzaBox.remove(codTipologiaStanza);
+  }
+
 // Stream<List<Anagrafica>> getAnagrafichePropieta({int codImmobile=0}) {
   //   // Query for all tasks, sorted by their date.
   //   // https://docs.objectbox.io/queries

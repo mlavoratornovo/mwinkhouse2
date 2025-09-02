@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
+import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse/objbox/models/IDatiBase.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
+import 'package:mwinkhouse/objbox/models/TipologiaStanza.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_anagrafica.dart';
 
 import '../../main.dart';
+import '../../objbox/models/ClasseEnergetica.dart';
 import '../../objbox/models/Immobile.dart';
+import '../../objbox/models/Riscaldamento.dart';
+import '../../objbox/models/StatoConservativo.dart';
+import '../../objbox/models/TipologiaContatto.dart';
 
 enum BaseDatiType {
   tipiimmobili,
@@ -80,7 +87,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          // objectbox.removeAnagraficaEntity(datibase[index]);
+          removeDatiBase(datibase[index].getCodice());
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -90,7 +97,9 @@ class _BaseDatiListState extends State<BaseDatiList> {
               content: Container(
                   alignment: Alignment.center,
                   height: 35,
-                  child: Text('Immobile ${datibase[index].getCodice()} deleted'))));
+                  child: Text(deleteMessage(datibase[index].getDescrizione()))
+              )
+          ));
         },
         child: Row(
           children: <Widget>[
@@ -214,9 +223,35 @@ class _BaseDatiListState extends State<BaseDatiList> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-
+              FloatingActionButton(
+                heroTag: "Nuovo",
+                onPressed:  (){_openPopUp(context, getNewDatiBase());},
+                child: const Icon(Icons.add),
+              )
             ]
         ));
+  }
+
+  IDatiBase getNewDatiBase(){
+    switch(tipoDati){
+      case (BaseDatiType.tipiimmobili):
+        return TipologiaImmobile();
+      case (BaseDatiType.tipiclienti):
+        return ClasseCliente();
+      case (BaseDatiType.classeenergetica):
+        return ClasseEnergetica();
+      case (BaseDatiType.riscaldamenti):
+        return Riscaldamento();
+      case (BaseDatiType.statoconservativo):
+        return StatoConservativo();
+      case (BaseDatiType.tipicontatti):
+        return TipologiaContatto();
+      case (BaseDatiType.tipistanza):
+        return TipologiaStanza();
+      case (null):
+        showErrorDialog(context, 'Impossibile determinare il tipo di categoria');
+        return TipologiaImmobile();
+    }
   }
 
   Stream<List<IDatiBase>> getStreamData(){
@@ -238,6 +273,67 @@ class _BaseDatiListState extends State<BaseDatiList> {
       case (null):
         return Stream<List<IDatiBase>>.empty();
     }
+  }
+
+  void removeDatiBase(int codEntity){
+    switch(tipoDati){
+      case (BaseDatiType.tipiimmobili):
+        objectbox.removeTipologiaImmobile(codEntity);
+      case (BaseDatiType.tipiclienti):
+        objectbox.removeTipiClienti(codEntity);
+      case (BaseDatiType.classeenergetica):
+        objectbox.removeClasseEnergetica(codEntity);
+      case (BaseDatiType.riscaldamenti):
+        objectbox.removeRiscaldamento(codEntity);
+      case (BaseDatiType.statoconservativo):
+        objectbox.removeStatoConservativo(codEntity);
+      case (BaseDatiType.tipicontatti):
+        objectbox.removeTipologiaContatto(codEntity);
+      case (BaseDatiType.tipistanza):
+        objectbox.removeTipologiaStanza(codEntity);
+      case (null):
+    }
+  }
+
+  String deleteMessage(String entity){
+    switch(tipoDati){
+      case (BaseDatiType.tipiimmobili):
+        return 'Tipo immobile ${entity} cancellato';
+      case (BaseDatiType.tipiclienti):
+        return 'Categoria cliente ${entity} cancellata';
+      case (BaseDatiType.classeenergetica):
+        return 'Classe energetica ${entity} cancellata';
+      case (BaseDatiType.riscaldamenti):
+        return 'Riscaldamento ${entity} cancellato';
+      case (BaseDatiType.statoconservativo):
+        return 'Stato conservativo ${entity} cancellato';
+      case (BaseDatiType.tipicontatti):
+        return 'Tipo contatto ${entity} cancellato';
+      case (BaseDatiType.tipistanza):
+        return 'Tipo stanza ${entity} cancellata';
+      case (null):
+        return 'Tipo sconosciuto impossibile cancellare';
+    }
+  }
+
+  void showErrorDialog(BuildContext context, String errorMessage) {
+   showDialog(
+     context: context,
+     builder: (BuildContext context) {
+       return AlertDialog(
+         title: const Text('Errore'),
+         content: Text(errorMessage),
+         actions: <Widget>[
+           TextButton(
+             child: const Text('OK'),
+             onPressed: () {
+               Navigator.of(context).pop(); // Chiude il dialog
+             },
+           ),
+         ],
+       );
+     },
+   );
   }
 
   bool savePopUpdata(IDatiBase datobase){
