@@ -175,7 +175,9 @@ class _BaseDatiListState extends State<BaseDatiList> {
           ),
 
         ),
-        body: Center(
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 60),
+          child:Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
             child: Column(
@@ -217,6 +219,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
                   )
                 ]
             )
+          ),
         ),
         floatingActionButton: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -337,6 +340,31 @@ class _BaseDatiListState extends State<BaseDatiList> {
   }
 
   bool savePopUpdata(IDatiBase datobase){
+    if (_formKey.currentState!.validate()) {
+      switch(tipoDati){
+        case (BaseDatiType.tipiimmobili):
+          objectbox.tipologiaImmobileBox.put((datobase as TipologiaImmobile));
+        case (BaseDatiType.tipiclienti):
+          objectbox.classeClienteBox.put((datobase as ClasseCliente));
+        case (BaseDatiType.classeenergetica):
+          objectbox.classeEnergeticaBox.put((datobase as ClasseEnergetica));
+        case (BaseDatiType.riscaldamenti):
+          objectbox.riscaldamentoBox.put((datobase as Riscaldamento));
+        case (BaseDatiType.statoconservativo):
+          objectbox.statoConservativoBox.put((datobase as StatoConservativo));
+        case (BaseDatiType.tipicontatti):
+          objectbox.tipologiaContattoBox.put((datobase as TipologiaContatto));
+        case (BaseDatiType.tipistanza):
+          objectbox.tipologiaStanzaBox.put((datobase as TipologiaStanza));
+        case (null):
+      }
+      setState(() {});
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Dati non validi impossibile procedere')),
+      );
+    }
+    Navigator.of(context).pop();
     return true;
   }
 
