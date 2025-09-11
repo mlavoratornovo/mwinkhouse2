@@ -144,7 +144,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
                 ),
           ],
         ),
-      );
+  );
 
 
   @override
@@ -382,30 +382,9 @@ class _BaseDatiListState extends State<BaseDatiList> {
                    )
                ),
              ),
-               actions: [
-                 TextButton(
-                  style: TextButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            shape: const CircleBorder(),
-                          ),
-                  child: widget.saveIcon,
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-
-                      savePopUpdata(datobase);
-                      setState(() {});
-                    }else{
-                      setState(() {});
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Dati non validi impossibile procedere')),
-                      );
-                    }
-                    Navigator.of(dialogContext).pop();
-                  },
-                 ),
-              ]
            );
-         });
+         }
+     );
    }
 
    List<Widget> _getDialogWidgets(IDatiBase datobase){
@@ -469,6 +448,30 @@ class _BaseDatiListState extends State<BaseDatiList> {
            )
        );
        widgets.add(SizedBox(height: 5));
+       widgets.add(
+         TextButton(
+           style: TextButton.styleFrom(
+             backgroundColor: Colors.blue,
+             shape: const CircleBorder(),
+           ),
+           child: widget.saveIcon,
+           onPressed: () {
+             if (_formKey.currentState!.validate()) {
+
+               savePopUpdata(datobase);
+               setState(() {});
+             }else{
+               setState(() {});
+               ScaffoldMessenger.of(context).showSnackBar(
+                 const SnackBar(content: Text('Dati non validi impossibile procedere')),
+               );
+             }
+             Navigator.of(context, rootNavigator: true).push(
+               MaterialPageRoute(builder: (context) => BaseDatiList(tipoDati:widget.tipoDati)),
+             );
+           },
+         ),
+       );
      }
 
      return widgets;

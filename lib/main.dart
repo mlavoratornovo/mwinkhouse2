@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/lista_anagrafiche.dart';
-import 'package:mwinkhouse/widgets/basedata/base_data.dart';
 import 'package:mwinkhouse/widgets/basedata/home_dati_base.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_immobili.dart';
 import 'package:mwinkhouse/widgets/settings/impostazioni.dart';
