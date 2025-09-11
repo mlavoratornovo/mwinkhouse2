@@ -33,7 +33,7 @@ class WinkhouseRest{
   List<Comune> comuni = List<Comune>.empty(growable: true);
 
   String? getWinkhouseIp(){
-    return Settings.getValue<String>("ipWinkhouse", defaultValue: "127.0.0.1");
+    return Settings.getValue<String>("ipWinkhouse", defaultValue: "http://127.0.0.1");
   }
 
   String? getWinkhousePort(){

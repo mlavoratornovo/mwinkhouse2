@@ -371,7 +371,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
    Future<dynamic> _openPopUp(BuildContext context, IDatiBase datobase) async {
      return showDialog(
          context: context,
-         builder: (BuildContext context) {
+         builder: (BuildContext dialogContext) {
            return AlertDialog(
              content: SizedBox(
                height: ((tipoDati==BaseDatiType.classeenergetica)?200:120),
@@ -382,6 +382,28 @@ class _BaseDatiListState extends State<BaseDatiList> {
                    )
                ),
              ),
+               actions: [
+                 TextButton(
+                  style: TextButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            shape: const CircleBorder(),
+                          ),
+                  child: widget.saveIcon,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+
+                      savePopUpdata(datobase);
+                      setState(() {});
+                    }else{
+                      setState(() {});
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Dati non validi impossibile procedere')),
+                      );
+                    }
+                    Navigator.of(dialogContext).pop();
+                  },
+                 ),
+              ]
            );
          });
    }
@@ -447,35 +469,6 @@ class _BaseDatiListState extends State<BaseDatiList> {
            )
        );
        widgets.add(SizedBox(height: 5));
-       widgets.add(
-         TextButton(
-           style: TextButton.styleFrom(
-             backgroundColor: Colors.blue,
-             shape: const CircleBorder(),
-           ),
-           child: widget.saveIcon,
-           onPressed: () {
-             if (_formKey.currentState!.validate()) {
-
-               savePopUpdata(datobase);
-               // objectbox.tipologiaImmobileBox.put(datobase)
-               //     widget.tipologieImmobileSelected ?? TipologiaImmobile());
-
-               setState(() {
-                 // widget.tipologieImmobile = objectbox.tipologiaImmobileBox.getAll();
-               });
-             }else{
-               setState(() {
-//               widget.tipologieImmobileSelected = null;
-               });
-               ScaffoldMessenger.of(context).showSnackBar(
-                 const SnackBar(content: Text('Dati non validi impossibile procedere')),
-               );
-             }
-             Navigator.of(context).pop();
-           },
-         ),
-       );
      }
 
      return widgets;
