@@ -91,158 +91,203 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
             )],
 
         ),
-        body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-                child:Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Cognome"
-                        ),
-                        onChanged: (text) {
-                          widget.anagrafica.cognome = (text.trim() == '')?null:text;
-                        },
-                        initialValue: widget.anagrafica.cognome ?? "",
-                        key: Key(Random().nextInt(10000).toString()),
-                      ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Nome"
-                        ),
-                        onChanged: (text) {
-                          widget.anagrafica.nome = (text.trim() == '')?null:text;
-                        },
-                        initialValue: widget.anagrafica.nome ?? "",
-                        key: Key(Random().nextInt(10000).toString()),
-                      ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Ragione sociale"
-                        ),
-                        onChanged: (text) {
-                          widget.anagrafica.ragioneSociale = (text.trim() == '')?null:text;
-                        },
-                        initialValue: widget.anagrafica.ragioneSociale ?? "",
-                        key: Key(Random().nextInt(10000).toString()),
-                      ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Partita iva"
-                        ),
-                        onChanged: (text) {
-                          widget.anagrafica.partitaIva = text;
-                        },
-                        initialValue: widget.anagrafica.partitaIva ?? "",
-                        key: Key(Random().nextInt(10000).toString()),
-                      ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Codice fiscale"
-                        ),
-                        onChanged: (text) {
-                          widget.anagrafica.codiceFiscale = text;
-                        },
-                        initialValue: widget.anagrafica.codiceFiscale,
-                        key: Key(Random().nextInt(10000).toString()),
-                      ),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            // optional flex property if flex is 1 because the default flex is 1
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Provincia"
-                              ),
-                              onChanged: (text) {
-                                widget.anagrafica.provincia = text;
-                              },
-                              initialValue: widget.anagrafica.provincia,
-                              key: Key(Random().nextInt(10000).toString()),
+        body: SingleChildScrollView(
+            child: Padding(
+            padding: const EdgeInsets.all(16.0), // Optional: adds spacing around the form
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                  child:Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Card(
+                            elevation: 4, // Ombra della card
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                    decoration:const InputDecoration(
+                                        labelText: "Cognome"
+                                    ),
+                                    onChanged: (text) {
+                                      widget.anagrafica.cognome = (text.trim() == '')?null:text;
+                                    },
+                                    initialValue: widget.anagrafica.cognome ?? "",
+                                    key: Key(Random().nextInt(10000).toString()),
+                                  ),
+                                  TextFormField(
+                                    decoration:const InputDecoration(
+                                        labelText: "Nome"
+                                    ),
+                                    onChanged: (text) {
+                                      widget.anagrafica.nome = (text.trim() == '')?null:text;
+                                    },
+                                    initialValue: widget.anagrafica.nome ?? "",
+                                    key: Key(Random().nextInt(10000).toString()),
+                                  ),
+                                  TextFormField(
+                                    decoration:const InputDecoration(
+                                        labelText: "Ragione sociale"
+                                    ),
+                                    onChanged: (text) {
+                                      widget.anagrafica.ragioneSociale = (text.trim() == '')?null:text;
+                                    },
+                                    initialValue: widget.anagrafica.ragioneSociale ?? "",
+                                    key: Key(Random().nextInt(10000).toString()),
+                                  ),
+                                ]
+                            )
+                        ),
+                        Card(
+                          elevation: 4, // Ombra della card
+                          shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                           ),
-                          const SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Cap"
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextFormField(
+                                decoration:const InputDecoration(
+                                    labelText: "Partita iva"
+                                ),
+                                onChanged: (text) {
+                                  widget.anagrafica.partitaIva = text;
+                                },
+                                initialValue: widget.anagrafica.partitaIva ?? "",
+                                key: Key(Random().nextInt(10000).toString()),
                               ),
-                              onChanged: (text) {
-                                widget.anagrafica.cap = text;
-                              },
-                              initialValue: widget.anagrafica.cap,
-                              key: Key(Random().nextInt(10000).toString()),
-                            ),
-                          ),
-                        ],
-                      ),
-                      TextFormField(
-                        onTap: () async {
-                          final value = await Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ListaComuniRicerca(anagrafica:widget.anagrafica)
+                              TextFormField(
+                                decoration:const InputDecoration(
+                                    labelText: "Codice fiscale"
+                                ),
+                                onChanged: (text) {
+                                  widget.anagrafica.codiceFiscale = text;
+                                },
+                                initialValue: widget.anagrafica.codiceFiscale,
+                                key: Key(Random().nextInt(10000).toString()),
+                              ),
+                            ]
                           )
-                          );
-                          setState(() {});
-                        },
-                        decoration:const InputDecoration(
-                            labelText: "Città"
                         ),
-                        focusNode: focusNode,
-                        onChanged: (text) {
-                          widget.anagrafica.citta = text;
-                        },
-                        initialValue: widget.anagrafica.citta ?? "",
-                        key: Key(Random().nextInt(10000).toString()),
-                      ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Indirizzo"
+                        Card(
+                          elevation: 4, // Ombra della card
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Expanded(
+                                      // optional flex property if flex is 1 because the default flex is 1
+                                      flex: 1,
+                                      child: TextFormField(
+                                        decoration:const InputDecoration(
+                                            labelText: "Provincia"
+                                        ),
+                                        onChanged: (text) {
+                                          widget.anagrafica.provincia = text;
+                                        },
+                                        initialValue: widget.anagrafica.provincia,
+                                        key: Key(Random().nextInt(10000).toString()),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10.0),
+                                    Expanded(
+                                      flex: 1,
+                                      child: TextFormField(
+                                        decoration:const InputDecoration(
+                                            labelText: "Cap"
+                                        ),
+                                        onChanged: (text) {
+                                          widget.anagrafica.cap = text;
+                                        },
+                                        initialValue: widget.anagrafica.cap,
+                                        key: Key(Random().nextInt(10000).toString()),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                TextFormField(
+                                  onTap: () async {
+                                    final value = await Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) => ListaComuniRicerca(anagrafica:widget.anagrafica)
+                                    )
+                                    );
+                                    setState(() {});
+                                  },
+                                  decoration:const InputDecoration(
+                                      labelText: "Città"
+                                  ),
+                                  focusNode: focusNode,
+                                  onChanged: (text) {
+                                    widget.anagrafica.citta = text;
+                                  },
+                                  initialValue: widget.anagrafica.citta ?? "",
+                                  key: Key(Random().nextInt(10000).toString()),
+                                ),
+                                TextFormField(
+                                  decoration:const InputDecoration(
+                                      labelText: "Indirizzo"
+                                  ),
+                                  onChanged: (text) {
+                                    widget.anagrafica.indirizzo = text;
+                                  },
+                                  initialValue: widget.anagrafica.indirizzo ?? "",
+                                  key:Key(Random().nextInt(10000).toString()),
+                                ),
+                              ]
+                          )
                         ),
-                        onChanged: (text) {
-                          widget.anagrafica.indirizzo = text;
-                        },
-                        initialValue: widget.anagrafica.indirizzo ?? "",
-                        key:Key(Random().nextInt(10000).toString()),
-                      ),
-                      TextFormField(
-                        maxLines: null,
-                        decoration:const InputDecoration(
-                            labelText: "descrizione"
+                        Card(
+                          elevation: 4, // Ombra della card
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                  maxLines: null,
+                                  decoration:const InputDecoration(
+                                      labelText: "descrizione"
+                                  ),
+                                  onChanged: (text) {
+                                    widget.anagrafica.commento = text;
+                                  },
+                                  initialValue: widget.anagrafica.commento ?? "",
+                                  key: Key(Random().nextInt(10000).toString()),
+                                ),
+                                DropdownButtonFormField<ClasseCliente>(
+                                  hint: const Text('Tipologia cliente'),
+                                  validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
+                                  isExpanded: true,
+                                  value: widget.anagrafica.classeCliente.target,
+                                  onChanged: (ClasseCliente? newValue) {
+                                    setState(() {
+                                      widget.anagrafica.classeCliente.target = newValue;
+                                    });
+                                  },
+                                  items: widget.classeCliente.map((ClasseCliente classeCliente) {
+                                    return DropdownMenuItem<ClasseCliente>(
+                                      value: classeCliente,
+                                      child: Text(
+                                        classeCliente.descrizione??"",
+                                        style: const TextStyle(color: Colors.black),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ]
+                          )
                         ),
-                        onChanged: (text) {
-                          widget.anagrafica.commento = text;
-                        },
-                        initialValue: widget.anagrafica.commento ?? "",
-                        key: Key(Random().nextInt(10000).toString()),
-                      ),
-                      DropdownButtonFormField<ClasseCliente>(
-                        hint: const Text('Tipologia cliente'),
-                        validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
-                        isExpanded: true,
-                        value: widget.anagrafica.classeCliente.target,
-                        onChanged: (ClasseCliente? newValue) {
-                          setState(() {
-                            widget.anagrafica.classeCliente.target = newValue;
-                          });
-                        },
-                        items: widget.classeCliente.map((ClasseCliente classeCliente) {
-                          return DropdownMenuItem<ClasseCliente>(
-                            value: classeCliente,
-                            child: Text(
-                              classeCliente.descrizione??"",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ])
+                      ])
+              ),
             ),
           ),
         ),

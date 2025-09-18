@@ -77,62 +77,68 @@ class _AnagraficheListState extends State<AnagraficheList> {
                   height: 35,
                   child: Text('Immobile ${anagrafiche[index].codAnagrafica} deleted'))));
         },
-        child: Row(
-          children: <Widget>[
-            Checkbox(
-                value: (selected.get(index)!=null)?true:false,
-                onChanged: (immobile == null)?null:(bool? value) {
-                    final anagrafica = anagrafiche[index];
-                    _onCheckboxSelect(value!, anagrafica.codAnagrafica ?? 0);
-                    if (value==true){
-                      immobile?.proprietari.add(anagrafica);
-                    }else{
-                      immobile?.proprietari.remove(anagrafica);
-                    }
-                }),
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                    border:
-                    Border(bottom: BorderSide(color: Colors.black12))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        '${anagrafiche[index].ragioneSociale ?? ""} ${anagrafiche[index].cognome} ${anagrafiche[index].nome}',
-                        style: const TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.none),
-                        // Provide a Key for the integration test
-                        key: Key('list_item_$index'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Text(
-                          anagrafiche[index].classeCliente.target?.descrizione.toString() ?? "",
+        child: Card(
+          elevation: 4, // Ombra della card
+          shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            children: <Widget>[
+              Checkbox(
+                  value: (selected.get(index)!=null)?true:false,
+                  onChanged: (immobile == null)?null:(bool? value) {
+                      final anagrafica = anagrafiche[index];
+                      _onCheckboxSelect(value!, anagrafica.codAnagrafica ?? 0);
+                      if (value==true){
+                        immobile?.proprietari.add(anagrafica);
+                      }else{
+                        immobile?.proprietari.remove(anagrafica);
+                      }
+                  }),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                      border:
+                      Border(bottom: BorderSide(color: Colors.black12))),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 18.0, horizontal: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '${anagrafiche[index].ragioneSociale ?? ""} ${anagrafiche[index].cognome} ${anagrafiche[index].nome}',
                           style: const TextStyle(
-                            fontSize: 12.0,
+                              color: Colors.grey,
+                              decoration: TextDecoration.none),
+                          // Provide a Key for the integration test
+                          key: Key('list_item_$index'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            anagrafiche[index].classeCliente.target?.descrizione.toString() ?? "",
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            TextButton(
-                child: const Text('Edit'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioAnagrafica(
-                        anagrafica: anagrafiche[index],
-                      )
-                  ));
-                }),
-          ],
+              TextButton(
+                  child: const Text('Edit'),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DettaglioAnagrafica(
+                          anagrafica: anagrafiche[index],
+                        )
+                    ));
+                  }),
+            ],
+          )
         ),
       );
 

@@ -466,7 +466,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
                  const SnackBar(content: Text('Dati non validi impossibile procedere')),
                );
              }
-             Navigator.of(context, rootNavigator: true).push(
+             Navigator.of(context, rootNavigator: true).pushReplacement(
                MaterialPageRoute(builder: (context) => BaseDatiList(tipoDati:widget.tipoDati)),
              );
            },
