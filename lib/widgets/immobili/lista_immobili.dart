@@ -93,63 +93,69 @@ class _ImmobiliListState extends State<ImmobiliList> {
                   height: 35,
                   child: Text('Immobile ${immobili[index].codImmobile} deleted'))));
         },
-        child: Row(
-          children: <Widget>[
-            Checkbox(
-                value: (selected.get(index)!=null)?true:false,
-                onChanged: (anagrafica == null)?null:(bool? value) {
-                  final immobile = immobili[index];
-                  _onCheckboxSelect(value!, immobile.codImmobile ?? 0);
-                  if (value==true){
-                    anagrafica?.proprieta.add(immobile);
-                  }else{
-                    anagrafica?.proprieta.remove(immobile);
-                  }
-                }),
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                    border:
-                    Border(bottom: BorderSide(width:2.0, color: Colors.black12))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        '${immobili[index].indirizzo} (Tipo: ${immobili[index].tipologiaImmobile.target?.descrizione.toString() ?? ""})',
-                        style: const TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.none),
-                        // Provide a Key for the integration test
-                        key: Key('list_item_$index'),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Text(
-                          immobili[index].classeEnergetica.target?.nome.toString() ?? "",
+        child: Card(
+          elevation: 4, // Ombra della card
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            children: <Widget>[
+              Checkbox(
+                  value: (selected.get(index)!=null)?true:false,
+                  onChanged: (anagrafica == null)?null:(bool? value) {
+                    final immobile = immobili[index];
+                    _onCheckboxSelect(value!, immobile.codImmobile ?? 0);
+                    if (value==true){
+                      anagrafica?.proprieta.add(immobile);
+                    }else{
+                      anagrafica?.proprieta.remove(immobile);
+                    }
+                  }),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                      border:
+                      Border(bottom: BorderSide(width:2.0, color: Colors.black12))),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 18.0, horizontal: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '${immobili[index].indirizzo} (Tipo: ${immobili[index].tipologiaImmobile.target?.descrizione.toString() ?? ""})',
                           style: const TextStyle(
-                            fontSize: 12.0,
+                              color: Colors.grey,
+                              decoration: TextDecoration.none),
+                          // Provide a Key for the integration test
+                          key: Key('list_item_$index'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            immobili[index].classeEnergetica.target?.nome.toString() ?? "",
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            TextButton(
-                child: const Text('Edit'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioImmobile(
-                        immobile: immobili[index],
-                      )
-                  ));
-                }),
-          ],
-        ),
+              TextButton(
+                  child: const Text('Edit'),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DettaglioImmobile(
+                          immobile: immobili[index],
+                        )
+                    ));
+                  }),
+            ],
+          ),
+        )
       );
 
   @override

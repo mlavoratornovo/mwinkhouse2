@@ -41,60 +41,66 @@ class _ListaComuniRicercaState extends State<ListaComuniRicerca> {
 
   Widget Function(BuildContext, int) _itemBuilder(List<Comune> comuni) =>
           (BuildContext context, int index) => Container(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: InkWell(
-                onTap: (){
-                  if (widget.immobile != null) {
-                    widget.immobile?.citta = comuni[index].comune;
-                    widget.immobile?.provincia = comuni[index].provincia;
-                    widget.immobile?.cap = comuni[index].cap;
-                  }
-                  if (widget.anagrafica != null){
-                    widget.anagrafica?.citta = comuni[index].comune;
-                    widget.anagrafica?.provincia = comuni[index].provincia;
-                    widget.anagrafica?.cap = comuni[index].cap;
-                  }
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                      border:
-                      Border(bottom: BorderSide(color: Colors.black12))),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 18.0, horizontal: 10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Cod. Istat:${comuni[index].codIstat} Nome: ${comuni[index].comune})',
-                          style: const TextStyle(
-                              color: Colors.grey,
-                              decoration: TextDecoration.none),
-                          // Provide a Key for the integration test
-                          key: Key('list_item_$index'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0),
-                          child: Text(
-                            'Regione:${comuni[index].regione} \n'
-                                'Provincia: ${comuni[index].provincia} \n'
-                                'Cap: ${comuni[index].cap}' ,
-                            style: const TextStyle(
-                              fontSize: 12.0,
+        child: Card(
+          elevation: 4, // Ombra della card
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: InkWell(
+                    onTap: (){
+                      if (widget.immobile != null) {
+                        widget.immobile?.citta = comuni[index].comune;
+                        widget.immobile?.provincia = comuni[index].provincia;
+                        widget.immobile?.cap = comuni[index].cap;
+                      }
+                      if (widget.anagrafica != null){
+                        widget.anagrafica?.citta = comuni[index].comune;
+                        widget.anagrafica?.provincia = comuni[index].provincia;
+                        widget.anagrafica?.cap = comuni[index].cap;
+                      }
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          border:
+                          Border(bottom: BorderSide(color: Colors.black12))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 18.0, horizontal: 10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Cod. Istat:${comuni[index].codIstat} Nome: ${comuni[index].comune})',
+                              style: const TextStyle(
+                                  color: Colors.grey,
+                                  decoration: TextDecoration.none),
+                              // Provide a Key for the integration test
+                              key: Key('list_item_$index'),
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                'Regione:${comuni[index].regione} \n'
+                                    'Provincia: ${comuni[index].provincia} \n'
+                                    'Cap: ${comuni[index].cap}' ,
+                                style: const TextStyle(
+                                  fontSize: 12.0,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  )
                 ),
-              )
+              ],
             ),
-          ],
-        ),
+        )
       );
 
   @override
@@ -127,7 +133,12 @@ class _ListaComuniRicercaState extends State<ListaComuniRicerca> {
           // in the middle of the parent.
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: [Card(
+                elevation: 4, // Ombra della card
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child:
                   TextField(
                     decoration:const InputDecoration(
                         labelText: "Comune da ricercare"
@@ -137,7 +148,7 @@ class _ListaComuniRicercaState extends State<ListaComuniRicerca> {
                         widget.comuneSearch = text;
                       });
                     },
-                  ),
+                  ),),
                   Expanded(
                       child: StreamBuilder<List<Comune>>(
                           stream: widget.comuneSearch.length >= 3?widget.winkhouseRest.findComuni(widget.comuneSearch??''):null,

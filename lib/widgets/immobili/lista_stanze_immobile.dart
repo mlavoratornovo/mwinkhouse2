@@ -43,50 +43,56 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
                   height: 35,
                   child: Text('Stanza ${stanza[index].tipologiaStanza.target?.descrizione} cancellata'))));
         },
-        child: Row(
-          children: <Widget>[
-            Checkbox(
-                value: false, //immobili[index].isFinished(),
-                onChanged: (bool? value) {
-                  final anagrafica = stanza[index];
-                  // immobile.toggleFinished();
-                  // objectbox.taskBox.put(task);
-                  // List updated via watched query stream.
-                }),
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                    border:
-                    Border(bottom: BorderSide(color: Colors.black12))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        '${stanza[index].tipologiaStanza.target?.descrizione ?? ""} ${stanza[index].mq} mq',
-                        style: const TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.none),
-                        // Provide a Key for the integration test
-                        key: Key('list_item_$index'),
-                      ),
-                    ],
+        child: Card(
+          elevation: 4, // Ombra della card
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            children: <Widget>[
+              Checkbox(
+                  value: false, //immobili[index].isFinished(),
+                  onChanged: (bool? value) {
+                    final anagrafica = stanza[index];
+                    // immobile.toggleFinished();
+                    // objectbox.taskBox.put(task);
+                    // List updated via watched query stream.
+                  }),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                      border:
+                      Border(bottom: BorderSide(color: Colors.black12))),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 18.0, horizontal: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '${stanza[index].tipologiaStanza.target?.descrizione ?? ""} ${stanza[index].mq} mq',
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              decoration: TextDecoration.none),
+                          // Provide a Key for the integration test
+                          key: Key('list_item_$index'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            TextButton(
-                child: const Text('Edit'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioStanza(immobile: widget.immobile,
-                        stanzaImmobile: stanza[index],
-                      )
-                  ));
-                }),
-          ],
+              TextButton(
+                  child: const Text('Edit'),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DettaglioStanza(immobile: widget.immobile,
+                          stanzaImmobile: stanza[index],
+                        )
+                    ));
+                  }),
+            ],
+          )
         ),
       );
 

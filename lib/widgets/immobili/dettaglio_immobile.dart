@@ -179,7 +179,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
           actions: [
             PopupMenuButton(itemBuilder: (context)=>const [
               PopupMenuItem(value: 0, child: Text('Stanze')),
-              PopupMenuItem(value: 1, child: Text('Propietari')),
+              PopupMenuItem(value: 1, child: Text('Proprietari')),
               PopupMenuItem(value: 2, child: Text('Immagini')),
               PopupMenuItem(value: 3, child: Text('Colloqui')),
               PopupMenuItem(value: 4, child: Text('Mappa')),
@@ -214,272 +214,313 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 }
               },
             )]),
-    body: Center(
-      // Center is a layout widget. It takes a single child and positions it
-      // in the middle of the parent.
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child:Column(
-            children: <Widget>[
-              TextFormField(
-                style: TextStyle(color: (widget.immobileIsFromDB==true)?Colors.black:Colors.blue),
-                key: Key("origine:${(widget.immobileIsFromDB==true)?"base dati locale": "base dati remota"}"),
-                initialValue: "origine:${(widget.immobileIsFromDB==true)?"base dati locale": "base dati remota"}",
-                enabled: false,
+    body: SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0), // Optional: adds spacing around the form
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child:Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Card(
+                  elevation: 4, // Ombra della card
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                    child:Column(
+                        children: <Widget>[
+                        TextFormField(
+                          style: TextStyle(color: (widget.immobileIsFromDB==true)?Colors.black:Colors.blue),
+                          key: Key("origine:${(widget.immobileIsFromDB==true)?"base dati locale": "base dati remota"}"),
+                          initialValue: "origine:${(widget.immobileIsFromDB==true)?"base dati locale": "base dati remota"}",
+                          enabled: false,
 
-              ),
-              TextFormField(
-                decoration:const InputDecoration(
-                  prefixIcon: Icon(Icons.key),
-                    labelText: "Codice riferimento"
-                ),
-                validator:  (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Codice riferimento dato obbligatorio';
-                  }else{
-                    Immobile? i = objectbox.getImmobileByRif(value);
-                    if ( i != null && i.codImmobile != widget.immobile.codImmobile){
-                      return 'Codice riferimento presente in archivio';
-                    }
-                  }
-                  return null;
-                },
-                onChanged: (text) {
-                  widget.immobile.rif = text;
-                },
-                key: Key(Random().nextInt(10000).toString()),
-                initialValue: widget.immobile.rif ?? "",
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    // optional flex property if flex is 1 because the default flex is 1
-                    flex: 1,
-                    child: TextFormField(
-                      decoration:const InputDecoration(
-                          labelText: "Provincia"
-                      ),
-                      onChanged: (text) {
-                        widget.immobile.provincia = text;
-                      },
-                      key: Key(Random().nextInt(10000).toString()),
-                      initialValue: widget.immobile.provincia ?? "",
-                    ),
-                  ),
-                  const SizedBox(width: 10.0),
-                  Expanded(
-                    flex: 1,
-                    child: TextFormField(
-                      decoration:const InputDecoration(
-                          labelText: "Cap"
-                      ),
-                      onChanged: (text) {
-                        widget.immobile.cap = text;
-                      },
-                      key: Key("${(widget.immobile.cap != null && widget.immobile.cap != '')? widget.immobile.cap:Random().nextInt(1000).toString()}"),
-                      initialValue: widget.immobile.cap ?? "",
-                    ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                onTap: () async {
-                  final value = await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ListaComuniRicerca(immobile:widget.immobile)
+                        ),
+                        TextFormField(
+                          decoration:const InputDecoration(
+                            prefixIcon: Icon(Icons.key),
+                              labelText: "Codice riferimento"
+                          ),
+                          validator:  (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Codice riferimento dato obbligatorio';
+                            }else{
+                              Immobile? i = objectbox.getImmobileByRif(value);
+                              if ( i != null && i.codImmobile != widget.immobile.codImmobile){
+                                return 'Codice riferimento presente in archivio';
+                              }
+                            }
+                            return null;
+                          },
+                          onChanged: (text) {
+                            widget.immobile.rif = text;
+                          },
+                          key: Key(Random().nextInt(10000).toString()),
+                          initialValue: widget.immobile.rif ?? "",
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(
+                              // optional flex property if flex is 1 because the default flex is 1
+                              flex: 1,
+                              child: TextFormField(
+                                decoration:const InputDecoration(
+                                    labelText: "Provincia"
+                                ),
+                                onChanged: (text) {
+                                  widget.immobile.provincia = text;
+                                },
+                                key: Key(Random().nextInt(10000).toString()),
+                                initialValue: widget.immobile.provincia ?? "",
+                              ),
+                            ),
+                            const SizedBox(width: 10.0),
+                            Expanded(
+                              flex: 1,
+                              child: TextFormField(
+                                decoration:const InputDecoration(
+                                    labelText: "Cap"
+                                ),
+                                onChanged: (text) {
+                                  widget.immobile.cap = text;
+                                },
+                                key: Key("${(widget.immobile.cap != null && widget.immobile.cap != '')? widget.immobile.cap:Random().nextInt(1000).toString()}"),
+                                initialValue: widget.immobile.cap ?? "",
+                              ),
+                            ),
+                          ],
+                        ),
+                        TextFormField(
+                          onTap: () async {
+                            final value = await Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ListaComuniRicerca(immobile:widget.immobile)
+                            )
+                            );
+                            setState(() {});
+                          },
+                          focusNode: focusNode,
+                          decoration:const InputDecoration(
+                              labelText: "Città"
+                          ),
+                          validator:  (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Città dato obbligatorio';
+                            }
+                            return null;
+                          },
+                          onChanged: (text) {
+                            widget.immobile.citta = text;
+                          },
+                          key: Key(Random().nextInt(10000).toString()),
+                          initialValue: widget.immobile.citta ?? "",
+                        ),
+                        TextFormField(
+                          decoration:const InputDecoration(
+                              labelText: "Zona"
+                          ),
+                          onChanged: (text) {
+                            widget.immobile.zona = text;
+                          },
+                          key: Key(Random().nextInt(10000).toString()),
+                          initialValue: widget.immobile.zona ?? "",
+                        ),
+                        TextFormField(
+                          decoration:const InputDecoration(
+                              labelText: "Indirizzo"
+                          ),
+                          validator:  (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Indirizzo dato obbligatorio';
+                            }
+                            return null;
+                          },
+                          onChanged: (text) {
+                            widget.immobile.indirizzo = text;
+                          },
+                          key: Key(Random().nextInt(10000).toString()),
+                          initialValue: widget.immobile.indirizzo ?? "",
+                        )
+                      ]
+                    )
                   )
-                  );
-                  setState(() {});
-                },
-                focusNode: focusNode,
-                decoration:const InputDecoration(
-                    labelText: "Città"
                 ),
-                validator:  (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Città dato obbligatorio';
-                  }
-                  return null;
-                },
-                onChanged: (text) {
-                  widget.immobile.citta = text;
-                },
-                key: Key(Random().nextInt(10000).toString()),
-                initialValue: widget.immobile.citta ?? "",
-              ),
-              TextFormField(
-                decoration:const InputDecoration(
-                    labelText: "Zona"
-                ),
-                onChanged: (text) {
-                  widget.immobile.zona = text;
-                },
-                key: Key(Random().nextInt(10000).toString()),
-                initialValue: widget.immobile.zona ?? "",
-              ),
-              TextFormField(
-                decoration:const InputDecoration(
-                    labelText: "Indirizzo"
-                ),
-                validator:  (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Indirizzo dato obbligatorio';
-                  }
-                  return null;
-                },
-                onChanged: (text) {
-                  widget.immobile.indirizzo = text;
-                },
-                key: Key(Random().nextInt(10000).toString()),
-                initialValue: widget.immobile.indirizzo ?? "",
-              ),
-              TextFormField(
-                decoration:const InputDecoration(
-                    labelText: "Prezzo"
-                ),
-                onChanged: (text) {
-                  widget.immobile.prezzo = double.parse(text);
-                },
-                key: Key(Random().nextInt(10000).toString()),
-                initialValue: "${widget.immobile.prezzo ?? ""}",
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    // optional flex property if flex is 1 because the default flex is 1
-                    flex: 1,
-                    child: TextFormField(
-                      decoration:const InputDecoration(
-                          labelText: "Mq"
-                      ),
-                      onChanged: (text) {
-                        widget.immobile.mq = int.parse(text);
-                      },
-                      key: Key(Random().nextInt(1000).toString()),
-                      initialValue: "${widget.immobile.mq ?? ""}",
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
+                Card(
+                  elevation: 4, // Ombra della card
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  const SizedBox(width: 10.0),
-                  Expanded(
-                    flex: 1,
-                    child: TextFormField(
-                      decoration:const InputDecoration(
-                          labelText: "Anno Costruzione"
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                    child:Column(
+                    children: <Widget>[
+                      TextFormField(
+                        decoration:const InputDecoration(
+                            labelText: "Prezzo"
+                        ),
+                        onChanged: (text) {
+                          widget.immobile.prezzo = double.parse(text);
+                        },
+                        key: Key(Random().nextInt(10000).toString()),
+                        initialValue: "${widget.immobile.prezzo ?? ""}",
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                       ),
-                      onChanged: (text) {
-                        widget.immobile.annoCostruzione = int.parse(text);
-                      },
-                      key: Key(Random().nextInt(10000).toString()),
-                      initialValue: "${widget.immobile.annoCostruzione ?? ""}",
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                maxLines: null,
-                decoration:const InputDecoration(
-                    labelText: "descrizione"
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Expanded(
+                            // optional flex property if flex is 1 because the default flex is 1
+                            flex: 1,
+                            child: TextFormField(
+                              decoration:const InputDecoration(
+                                  labelText: "Mq"
+                              ),
+                              onChanged: (text) {
+                                widget.immobile.mq = int.parse(text);
+                              },
+                              key: Key(Random().nextInt(1000).toString()),
+                              initialValue: "${widget.immobile.mq ?? ""}",
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 10.0),
+                          Expanded(
+                            flex: 1,
+                            child: TextFormField(
+                              decoration:const InputDecoration(
+                                  labelText: "Anno Costruzione"
+                              ),
+                              onChanged: (text) {
+                                widget.immobile.annoCostruzione = int.parse(text);
+                              },
+                              key: Key(Random().nextInt(10000).toString()),
+                              initialValue: "${widget.immobile.annoCostruzione ?? ""}",
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      TextFormField(
+                        maxLines: null,
+                        decoration:const InputDecoration(
+                            labelText: "descrizione"
+                        ),
+                        onChanged: (text) {
+                          widget.immobile.descrizione = text;
+                        },
+                        key: Key(Random().nextInt(10000).toString()),
+                        initialValue: widget.immobile.descrizione ?? "",
+                      )
+                    ]
+                    )
+                  )
                 ),
-                onChanged: (text) {
-                  widget.immobile.descrizione = text;
-                },
-                key: Key(Random().nextInt(10000).toString()),
-                initialValue: widget.immobile.descrizione ?? "",
-              ),
-              DropdownButtonFormField<TipologiaImmobile>(
-                isExpanded: true,
-                hint: const Text('Tipologia immobile'),
-                // validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
-                value: widget.immobile.tipologiaImmobile.target,
-                onChanged: (TipologiaImmobile? newValue) {
-                  setState(() {
-                    widget.immobile.tipologiaImmobile.target = newValue;
-                  });
-                },
-                items: widget.tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
-                  return DropdownMenuItem<TipologiaImmobile>(
-                    value: tipologiaImmobile,
-                    child: Text(
-                      tipologiaImmobile.descrizione??"",
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  );
-                }).toList(),
-              ),
-              DropdownButton<StatoConservativo>(
-                isExpanded: true,
-                hint: const Text('Stato conservativo'),
-                value: widget.immobile.statoConservativo.target,
-                onChanged: (StatoConservativo? newValue) {
-                  setState(() {
-                    widget.immobile.statoConservativo.target = newValue;
-                  });
-                },
-                items: widget.statoConservativo.map((StatoConservativo statoConservativo) {
-                  return DropdownMenuItem<StatoConservativo>(
-                    value: statoConservativo,
-                    child: Text(
-                      statoConservativo.descrizione??"",
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  );
-                }).toList(),
-              ),
-              DropdownButton<ClasseEnergetica>(
-                isExpanded: true,
-                hint: const Text('Class energetica'),
-                value: widget.immobile.classeEnergetica.target,
-                onChanged: (ClasseEnergetica? newValue) {
-                  setState(() {
-                    widget.immobile.classeEnergetica.target = newValue;
-                  });
-                },
-                items: widget.classeEnergetica.map((ClasseEnergetica classeEnergetica) {
-                  return DropdownMenuItem<ClasseEnergetica>(
-                    value: classeEnergetica,
-                    child: Text(
-                      classeEnergetica.nome??"",
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  );
-                }).toList(),
-              ),
-              DropdownButton<Riscaldamento>(
-                isExpanded: true,
-                hint: const Text('Riscaldamento'),
-                value: widget.immobile.riscaldamento.target,
-                onChanged: (Riscaldamento? newValue) {
-                  setState(() {
-                    widget.immobile.riscaldamento.target = newValue;
-                  });
-                },
-                items: widget.riscaldamento.map((Riscaldamento riscaldamento) {
-                  return DropdownMenuItem<Riscaldamento>(
-                    value: riscaldamento,
-                    child: Text(
-                      riscaldamento.descrizione??"",
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  );
-                }).toList(),
-              ),
+                Card(
+                  elevation: 4, // Ombra della card
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                      padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                      child:Column(
+                      children: <Widget>[
+                      DropdownButtonFormField<TipologiaImmobile>(
+                        isExpanded: true,
+                        hint: const Text('Tipologia immobile'),
+                        // validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
+                        value: widget.immobile.tipologiaImmobile.target,
+                        onChanged: (TipologiaImmobile? newValue) {
+                          setState(() {
+                            widget.immobile.tipologiaImmobile.target = newValue;
+                          });
+                        },
+                        items: widget.tipologieImmobile.map((TipologiaImmobile tipologiaImmobile) {
+                          return DropdownMenuItem<TipologiaImmobile>(
+                            value: tipologiaImmobile,
+                            child: Text(
+                              tipologiaImmobile.descrizione??"",
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      DropdownButton<StatoConservativo>(
+                        isExpanded: true,
+                        hint: const Text('Stato conservativo'),
+                        value: widget.immobile.statoConservativo.target,
+                        onChanged: (StatoConservativo? newValue) {
+                          setState(() {
+                            widget.immobile.statoConservativo.target = newValue;
+                          });
+                        },
+                        items: widget.statoConservativo.map((StatoConservativo statoConservativo) {
+                          return DropdownMenuItem<StatoConservativo>(
+                            value: statoConservativo,
+                            child: Text(
+                              statoConservativo.descrizione??"",
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      DropdownButton<ClasseEnergetica>(
+                        isExpanded: true,
+                        hint: const Text('Class energetica'),
+                        value: widget.immobile.classeEnergetica.target,
+                        onChanged: (ClasseEnergetica? newValue) {
+                          setState(() {
+                            widget.immobile.classeEnergetica.target = newValue;
+                          });
+                        },
+                        items: widget.classeEnergetica.map((ClasseEnergetica classeEnergetica) {
+                          return DropdownMenuItem<ClasseEnergetica>(
+                            value: classeEnergetica,
+                            child: Text(
+                              classeEnergetica.nome??"",
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      DropdownButton<Riscaldamento>(
+                        isExpanded: true,
+                        hint: const Text('Riscaldamento'),
+                        value: widget.immobile.riscaldamento.target,
+                        onChanged: (Riscaldamento? newValue) {
+                          setState(() {
+                            widget.immobile.riscaldamento.target = newValue;
+                          });
+                        },
+                        items: widget.riscaldamento.map((Riscaldamento riscaldamento) {
+                          return DropdownMenuItem<Riscaldamento>(
+                            value: riscaldamento,
+                            child: Text(
+                              riscaldamento.descrizione??"",
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                  ]
+                )
+              )
+            )
           ])
-        ),
-      ),
+          )
+        )
+      )
     ),
     floatingActionButton: Column(
       crossAxisAlignment: CrossAxisAlignment.center,

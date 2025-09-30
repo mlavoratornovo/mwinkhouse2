@@ -105,40 +105,43 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextFormField(
-                                    decoration:const InputDecoration(
-                                        labelText: "Cognome"
+                            child: Padding(
+                                padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextFormField(
+                                      decoration:const InputDecoration(
+                                          labelText: "Cognome"
+                                      ),
+                                      onChanged: (text) {
+                                        widget.anagrafica.cognome = (text.trim() == '')?null:text;
+                                      },
+                                      initialValue: widget.anagrafica.cognome ?? "",
+                                      key: Key(Random().nextInt(10000).toString()),
                                     ),
-                                    onChanged: (text) {
-                                      widget.anagrafica.cognome = (text.trim() == '')?null:text;
-                                    },
-                                    initialValue: widget.anagrafica.cognome ?? "",
-                                    key: Key(Random().nextInt(10000).toString()),
-                                  ),
-                                  TextFormField(
-                                    decoration:const InputDecoration(
-                                        labelText: "Nome"
+                                    TextFormField(
+                                      decoration:const InputDecoration(
+                                          labelText: "Nome"
+                                      ),
+                                      onChanged: (text) {
+                                        widget.anagrafica.nome = (text.trim() == '')?null:text;
+                                      },
+                                      initialValue: widget.anagrafica.nome ?? "",
+                                      key: Key(Random().nextInt(10000).toString()),
                                     ),
-                                    onChanged: (text) {
-                                      widget.anagrafica.nome = (text.trim() == '')?null:text;
-                                    },
-                                    initialValue: widget.anagrafica.nome ?? "",
-                                    key: Key(Random().nextInt(10000).toString()),
-                                  ),
-                                  TextFormField(
-                                    decoration:const InputDecoration(
-                                        labelText: "Ragione sociale"
+                                    TextFormField(
+                                      decoration:const InputDecoration(
+                                          labelText: "Ragione sociale"
+                                      ),
+                                      onChanged: (text) {
+                                        widget.anagrafica.ragioneSociale = (text.trim() == '')?null:text;
+                                      },
+                                      initialValue: widget.anagrafica.ragioneSociale ?? "",
+                                      key: Key(Random().nextInt(10000).toString()),
                                     ),
-                                    onChanged: (text) {
-                                      widget.anagrafica.ragioneSociale = (text.trim() == '')?null:text;
-                                    },
-                                    initialValue: widget.anagrafica.ragioneSociale ?? "",
-                                    key: Key(Random().nextInt(10000).toString()),
-                                  ),
-                                ]
+                                  ]
+                              )
                             )
                         ),
                         Card(
@@ -146,30 +149,33 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                           shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextFormField(
-                                decoration:const InputDecoration(
-                                    labelText: "Partita iva"
+                          child: Padding(
+                              padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                              child:Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                  decoration:const InputDecoration(
+                                      labelText: "Partita iva"
+                                  ),
+                                  onChanged: (text) {
+                                    widget.anagrafica.partitaIva = text;
+                                  },
+                                  initialValue: widget.anagrafica.partitaIva ?? "",
+                                  key: Key(Random().nextInt(10000).toString()),
                                 ),
-                                onChanged: (text) {
-                                  widget.anagrafica.partitaIva = text;
-                                },
-                                initialValue: widget.anagrafica.partitaIva ?? "",
-                                key: Key(Random().nextInt(10000).toString()),
-                              ),
-                              TextFormField(
-                                decoration:const InputDecoration(
-                                    labelText: "Codice fiscale"
+                                TextFormField(
+                                  decoration:const InputDecoration(
+                                      labelText: "Codice fiscale"
+                                  ),
+                                  onChanged: (text) {
+                                    widget.anagrafica.codiceFiscale = text;
+                                  },
+                                  initialValue: widget.anagrafica.codiceFiscale,
+                                  key: Key(Random().nextInt(10000).toString()),
                                 ),
-                                onChanged: (text) {
-                                  widget.anagrafica.codiceFiscale = text;
-                                },
-                                initialValue: widget.anagrafica.codiceFiscale,
-                                key: Key(Random().nextInt(10000).toString()),
-                              ),
-                            ]
+                              ]
+                            )
                           )
                         ),
                         Card(
@@ -177,71 +183,74 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Expanded(
-                                      // optional flex property if flex is 1 because the default flex is 1
-                                      flex: 1,
-                                      child: TextFormField(
-                                        decoration:const InputDecoration(
-                                            labelText: "Provincia"
+                          child: Padding(
+                              padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                              child:Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Expanded(
+                                        // optional flex property if flex is 1 because the default flex is 1
+                                        flex: 1,
+                                        child: TextFormField(
+                                          decoration:const InputDecoration(
+                                              labelText: "Provincia"
+                                          ),
+                                          onChanged: (text) {
+                                            widget.anagrafica.provincia = text;
+                                          },
+                                          initialValue: widget.anagrafica.provincia,
+                                          key: Key(Random().nextInt(10000).toString()),
                                         ),
-                                        onChanged: (text) {
-                                          widget.anagrafica.provincia = text;
-                                        },
-                                        initialValue: widget.anagrafica.provincia,
-                                        key: Key(Random().nextInt(10000).toString()),
                                       ),
-                                    ),
-                                    const SizedBox(width: 10.0),
-                                    Expanded(
-                                      flex: 1,
-                                      child: TextFormField(
-                                        decoration:const InputDecoration(
-                                            labelText: "Cap"
+                                      const SizedBox(width: 10.0),
+                                      Expanded(
+                                        flex: 1,
+                                        child: TextFormField(
+                                          decoration:const InputDecoration(
+                                              labelText: "Cap"
+                                          ),
+                                          onChanged: (text) {
+                                            widget.anagrafica.cap = text;
+                                          },
+                                          initialValue: widget.anagrafica.cap,
+                                          key: Key(Random().nextInt(10000).toString()),
                                         ),
-                                        onChanged: (text) {
-                                          widget.anagrafica.cap = text;
-                                        },
-                                        initialValue: widget.anagrafica.cap,
-                                        key: Key(Random().nextInt(10000).toString()),
                                       ),
+                                    ],
+                                  ),
+                                  TextFormField(
+                                    onTap: () async {
+                                      final value = await Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => ListaComuniRicerca(anagrafica:widget.anagrafica)
+                                      )
+                                      );
+                                      setState(() {});
+                                    },
+                                    decoration:const InputDecoration(
+                                        labelText: "Città"
                                     ),
-                                  ],
-                                ),
-                                TextFormField(
-                                  onTap: () async {
-                                    final value = await Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => ListaComuniRicerca(anagrafica:widget.anagrafica)
-                                    )
-                                    );
-                                    setState(() {});
-                                  },
-                                  decoration:const InputDecoration(
-                                      labelText: "Città"
+                                    focusNode: focusNode,
+                                    onChanged: (text) {
+                                      widget.anagrafica.citta = text;
+                                    },
+                                    initialValue: widget.anagrafica.citta ?? "",
+                                    key: Key(Random().nextInt(10000).toString()),
                                   ),
-                                  focusNode: focusNode,
-                                  onChanged: (text) {
-                                    widget.anagrafica.citta = text;
-                                  },
-                                  initialValue: widget.anagrafica.citta ?? "",
-                                  key: Key(Random().nextInt(10000).toString()),
-                                ),
-                                TextFormField(
-                                  decoration:const InputDecoration(
-                                      labelText: "Indirizzo"
+                                  TextFormField(
+                                    decoration:const InputDecoration(
+                                        labelText: "Indirizzo"
+                                    ),
+                                    onChanged: (text) {
+                                      widget.anagrafica.indirizzo = text;
+                                    },
+                                    initialValue: widget.anagrafica.indirizzo ?? "",
+                                    key:Key(Random().nextInt(10000).toString()),
                                   ),
-                                  onChanged: (text) {
-                                    widget.anagrafica.indirizzo = text;
-                                  },
-                                  initialValue: widget.anagrafica.indirizzo ?? "",
-                                  key:Key(Random().nextInt(10000).toString()),
-                                ),
-                              ]
+                                ]
+                            )
                           )
                         ),
                         Card(
@@ -249,41 +258,44 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextFormField(
-                                  maxLines: null,
-                                  decoration:const InputDecoration(
-                                      labelText: "descrizione"
+                          child: Padding(
+                              padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                    minLines: null,
+                                    decoration:const InputDecoration(
+                                        labelText: "descrizione"
+                                    ),
+                                    onChanged: (text) {
+                                      widget.anagrafica.commento = text;
+                                    },
+                                    initialValue: widget.anagrafica.commento ?? "",
+                                    key: Key(Random().nextInt(10000).toString()),
                                   ),
-                                  onChanged: (text) {
-                                    widget.anagrafica.commento = text;
-                                  },
-                                  initialValue: widget.anagrafica.commento ?? "",
-                                  key: Key(Random().nextInt(10000).toString()),
-                                ),
-                                DropdownButtonFormField<ClasseCliente>(
-                                  hint: const Text('Tipologia cliente'),
-                                  validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
-                                  isExpanded: true,
-                                  value: widget.anagrafica.classeCliente.target,
-                                  onChanged: (ClasseCliente? newValue) {
-                                    setState(() {
-                                      widget.anagrafica.classeCliente.target = newValue;
-                                    });
-                                  },
-                                  items: widget.classeCliente.map((ClasseCliente classeCliente) {
-                                    return DropdownMenuItem<ClasseCliente>(
-                                      value: classeCliente,
-                                      child: Text(
-                                        classeCliente.descrizione??"",
-                                        style: const TextStyle(color: Colors.black),
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ]
+                                  DropdownButtonFormField<ClasseCliente>(
+                                    hint: const Text('Tipologia cliente'),
+                                    validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
+                                    isExpanded: true,
+                                    value: widget.anagrafica.classeCliente.target,
+                                    onChanged: (ClasseCliente? newValue) {
+                                      setState(() {
+                                        widget.anagrafica.classeCliente.target = newValue;
+                                      });
+                                    },
+                                    items: widget.classeCliente.map((ClasseCliente classeCliente) {
+                                      return DropdownMenuItem<ClasseCliente>(
+                                        value: classeCliente,
+                                        child: Text(
+                                          classeCliente.descrizione??"",
+                                          style: const TextStyle(color: Colors.black),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ]
+                            )
                           )
                         ),
                       ])

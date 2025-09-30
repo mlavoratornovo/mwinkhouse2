@@ -66,54 +66,63 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
         body: Container(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-                child:Column(
-                    children: <Widget>[
-                      DropdownButtonFormField<TipologiaStanza>(
-                        hint: const Text('Seleziona tipo stanza'),
-                        validator: (value) => value == null ? 'Seleziona tipo' : null,
-                        isExpanded: true,
-                        value: stanzaImmobile?.tipologiaStanza.target,
-                        onChanged: (TipologiaStanza? newValue) {
-                          setState(() {
-                            stanzaImmobile?.tipologiaStanza.target = newValue;
-                          });
-                        },
-                        items: tipologiaStanza.map((TipologiaStanza tipologiaStanza) {
-                          return DropdownMenuItem<TipologiaStanza>(
-                            value: tipologiaStanza,
-                            child: Text(
-                              tipologiaStanza.descrizione??"",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Mq"
+          child: Card(
+          elevation: 4, // Ombra della card
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(16.0), // Padding interno alla Card
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                  child:Column(
+                      children: <Widget>[
+                        DropdownButtonFormField<TipologiaStanza>(
+                          hint: const Text('Seleziona tipo stanza'),
+                          validator: (value) => value == null ? 'Seleziona tipo' : null,
+                          isExpanded: true,
+                          value: stanzaImmobile?.tipologiaStanza.target,
+                          onChanged: (TipologiaStanza? newValue) {
+                            setState(() {
+                              stanzaImmobile?.tipologiaStanza.target = newValue;
+                            });
+                          },
+                          items: tipologiaStanza.map((TipologiaStanza tipologiaStanza) {
+                            return DropdownMenuItem<TipologiaStanza>(
+                              value: tipologiaStanza,
+                              child: Text(
+                                tipologiaStanza.descrizione??"",
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            );
+                          }).toList(),
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            if (stanzaImmobile?.mq == null){
-                              return 'Inserire la dimensione';
+                        TextFormField(
+                          decoration:const InputDecoration(
+                              labelText: "Mq"
+                          ),
+                          validator:  (value) {
+                            if (value == null || value.isEmpty) {
+                              if (stanzaImmobile?.mq == null){
+                                return 'Inserire la dimensione';
+                              }
                             }
-                          }
-                          return null;
-                        },
-                        onChanged: (text) {
-                          stanzaImmobile?.mq = int.parse(text);
-                        },
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        initialValue: "${stanzaImmobile?.mq ?? ""}",
-                      ),
-                    ])
-            ),
+                            return null;
+                          },
+                          onChanged: (text) {
+                            stanzaImmobile?.mq = int.parse(text);
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          initialValue: "${stanzaImmobile?.mq ?? ""}",
+                        ),
+                      ])
+              ),
+            )
+          )
           ),
         ),
         floatingActionButton: FloatingActionButton(

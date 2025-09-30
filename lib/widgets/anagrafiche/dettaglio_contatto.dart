@@ -62,57 +62,66 @@ class _DettaglioContattoState extends State<DettaglioContatto> {
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
-                child:Column(
-                    children: <Widget>[
-                      DropdownButtonFormField<TipologiaContatto>(
-                        hint: const Text('Seleziona tipo contatto'),
-                        validator: (value) => value == null ? 'Seleziona tipo' : null,
-                        isExpanded: true,
-                        value: widget.contatto?.tipologiaContatto.target,
-                        onChanged: (TipologiaContatto? newValue) {
-                          setState(() {
-                            widget.contatto?.tipologiaContatto.target = newValue;
-                          });
-                        },
-                        items: widget.tipologiaContatto.map((TipologiaContatto tipologiaContatto) {
-                          return DropdownMenuItem<TipologiaContatto>(
-                            value: tipologiaContatto,
-                            child: Text(
-                              tipologiaContatto.descrizione??"",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Contatto"
+                child: Card(
+                  elevation: 4, // Ombra della card
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                      padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                      child:Column(
+                      children: <Widget>[
+                        DropdownButtonFormField<TipologiaContatto>(
+                          hint: const Text('Seleziona tipo contatto'),
+                          validator: (value) => value == null ? 'Seleziona tipo' : null,
+                          isExpanded: true,
+                          value: widget.contatto?.tipologiaContatto.target,
+                          onChanged: (TipologiaContatto? newValue) {
+                            setState(() {
+                              widget.contatto?.tipologiaContatto.target = newValue;
+                            });
+                          },
+                          items: widget.tipologiaContatto.map((TipologiaContatto tipologiaContatto) {
+                            return DropdownMenuItem<TipologiaContatto>(
+                              value: tipologiaContatto,
+                              child: Text(
+                                tipologiaContatto.descrizione??"",
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            );
+                          }).toList(),
                         ),
-                        validator:  (value) {
-                          if (value == null || value.isEmpty) {
-                            if (widget.contatto?.descrizione == null){
-                              return 'Inserire il contatto';
+                        TextFormField(
+                          decoration:const InputDecoration(
+                              labelText: "Contatto"
+                          ),
+                          validator:  (value) {
+                            if (value == null || value.isEmpty) {
+                              if (widget.contatto?.descrizione == null){
+                                return 'Inserire il contatto';
+                              }
                             }
-                          }
-                          return null;
-                        },
-                        onChanged: (text) {
-                          widget.contatto?.contatto = text;
-                        },
-                        initialValue: widget.contatto?.contatto ?? "",
-                      ),
-                      TextFormField(
-                        maxLines: null,
-                        decoration:const InputDecoration(
-                            labelText: "descrizione"
+                            return null;
+                          },
+                          onChanged: (text) {
+                            widget.contatto?.contatto = text;
+                          },
+                          initialValue: widget.contatto?.contatto ?? "",
                         ),
-                        onChanged: (text) {
-                          widget.contatto?.descrizione = text;
-                        },
-                        initialValue: widget.contatto?.descrizione ?? "",
-                      ),
-                    ])
-            ),
+                        TextFormField(
+                          maxLines: null,
+                          decoration:const InputDecoration(
+                              labelText: "descrizione"
+                          ),
+                          onChanged: (text) {
+                            widget.contatto?.descrizione = text;
+                          },
+                          initialValue: widget.contatto?.descrizione ?? "",
+                        ),
+                      ])
+                    )
+                )
+              ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

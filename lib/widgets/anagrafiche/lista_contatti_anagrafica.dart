@@ -43,51 +43,57 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
                   height: 35,
                   child: Text('Contatto ${contatto[index].contatto} cancellato'))));
         },
-        child: Row(
-          children: <Widget>[
-            Checkbox(
-                value: false, //immobili[index].isFinished(),
-                onChanged: (bool? value) {
-                  final contattosel = contatto[index];
-                  // immobile.toggleFinished();
-                  // objectbox.taskBox.put(task);
-                  // List updated via watched query stream.
-                }),
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                    border:
-                    Border(bottom: BorderSide(color: Colors.black12))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        '${contatto[index].tipologiaContatto.target?.descrizione ?? ""} ${contatto[index].contatto}',
-                        style: const TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.none),
-                        // Provide a Key for the integration test
-                        key: Key('list_item_$index'),
-                      ),
-                    ],
+        child: Card(
+          elevation: 4, // Ombra della card
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            children: <Widget>[
+              Checkbox(
+                  value: false, //immobili[index].isFinished(),
+                  onChanged: (bool? value) {
+                    final contattosel = contatto[index];
+                    // immobile.toggleFinished();
+                    // objectbox.taskBox.put(task);
+                    // List updated via watched query stream.
+                  }),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                      border:
+                      Border(bottom: BorderSide(color: Colors.black12))),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 18.0, horizontal: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '${contatto[index].tipologiaContatto.target?.descrizione ?? ""} ${contatto[index].contatto}',
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              decoration: TextDecoration.none),
+                          // Provide a Key for the integration test
+                          key: Key('list_item_$index'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            TextButton(
-                child: const Text('Edit'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioContatto(anagrafica: widget.anagrafica,
-                        contatto: contatto[index],
-                      )
-                  ));
-                }),
-          ],
-        ),
+              TextButton(
+                  child: const Text('Edit'),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DettaglioContatto(anagrafica: widget.anagrafica,
+                          contatto: contatto[index],
+                        )
+                    ));
+                  }),
+            ],
+          ),
+        )
       );
 
   @override

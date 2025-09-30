@@ -47,51 +47,57 @@ class _ColloquiAnagraficaListState extends State<ColloquiAnagraficaList> {
                   height: 35,
                   child: Text('Colloquio del ${colloquio[index].dataColloquio} cancellato'))));
         },
-        child: Row(
-          children: <Widget>[
-            Checkbox(
-                value: false, //immobili[index].isFinished(),
-                onChanged: (bool? value) {
-                  final colloquiosel = colloquio[index];
-                  // immobile.toggleFinished();
-                  // objectbox.taskBox.put(task);
-                  // List updated via watched query stream.
-                }),
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                    border:
-                    Border(bottom: BorderSide(color: Colors.black12))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        '${colloquio[index].tipologiaColloquio.target?.descrizione ?? ""} ${colloquio[index].dataColloquio}',
-                        style: const TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.none),
-                        // Provide a Key for the integration test
-                        key: Key('list_item_$index'),
+        child: Card(
+          elevation: 4, // Ombra della card
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+              children: <Widget>[
+                Checkbox(
+                    value: false, //immobili[index].isFinished(),
+                    onChanged: (bool? value) {
+                      final colloquiosel = colloquio[index];
+                      // immobile.toggleFinished();
+                      // objectbox.taskBox.put(task);
+                      // List updated via watched query stream.
+                    }),
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        border:
+                        Border(bottom: BorderSide(color: Colors.black12))),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 18.0, horizontal: 10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '${colloquio[index].tipologiaColloquio.target?.descrizione ?? ""} ${colloquio[index].dataColloquio}',
+                            style: const TextStyle(
+                                color: Colors.grey,
+                                decoration: TextDecoration.none),
+                            // Provide a Key for the integration test
+                            key: Key('list_item_$index'),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+                TextButton(
+                    child: const Text('Edit'),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DettaglioColloquio(anagrafica: widget.anagrafica??Anagrafica(),
+                            colloquio: colloquio[index],
+                          )
+                      ));
+                    }),
+              ],
             ),
-            TextButton(
-                child: const Text('Edit'),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DettaglioColloquio(anagrafica: widget.anagrafica??Anagrafica(),
-                        colloquio: colloquio[index],
-                      )
-                  ));
-                }),
-          ],
-        ),
+          )
       );
 
   @override

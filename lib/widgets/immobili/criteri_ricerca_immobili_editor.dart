@@ -68,172 +68,206 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
             child: SingleChildScrollView(
                 child:Column(
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            // optional flex property if flex is 1 because the default flex is 1
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
+                      Card(
+                        elevation: 4, // Ombra della card
+                        shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                          child:Column(
+                            children: <Widget>[
+                              Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Expanded(
+                                  // optional flex property if flex is 1 because the default flex is 1
+                                  flex: 1,
+                                  child: TextFormField(
+                                    decoration:const InputDecoration(
 
-                                  labelText: "Provincia"
-                              ),
-                              onChanged: (text) {
-                                 widget.criteri.provincia = text;
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
+                                        labelText: "Provincia"
+                                    ),
+                                    onChanged: (text) {
+                                       widget.criteri.provincia = text;
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 10.0),
+                                Expanded(
+                                  flex: 1,
+                                  child: TextFormField(
+                                    decoration:const InputDecoration(
 
-                                  labelText: "Cap"
+                                        labelText: "Cap"
+                                    ),
+                                    onChanged: (text) {
+                                      widget.criteri.cap = text;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            TextFormField(
+                              decoration:const InputDecoration(
+                                  labelText: "Città"
                               ),
                               onChanged: (text) {
-                                widget.criteri.cap = text;
+                                widget.criteri.citta = text;
                               },
                             ),
-                          ),
-                        ],
+                            TextFormField(
+                              decoration:const InputDecoration(
+                                  labelText: "Zona"
+                              ),
+                              onChanged: (text) {
+                                widget.criteri.zona = text;
+                              },
+                            ),
+                            TextFormField(
+                              decoration:const InputDecoration(
+                                  labelText: "Indirizzo"
+                              ),
+                              onChanged: (text) {
+                                widget.criteri.indirizzo = text;
+                              },
+                            )
+                          ]
+                        )
+                      )
                       ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Città"
+                      Card(
+                        elevation: 4, // Ombra della card
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        onChanged: (text) {
-                          widget.criteri.citta = text;
-                        },
+                        child: Padding(
+                            padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                            child:Column(
+                                children: <Widget>[Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Expanded(
+                                    // optional flex property if flex is 1 because the default flex is 1
+                                    flex: 1,
+                                    child: TextFormField(
+                                      decoration:const InputDecoration(
+                                          labelText: "Prezzo da "
+                                      ),
+                                      onChanged: (text) {
+                                        widget.criteri.prezzoDa = double.parse(text);
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10.0),
+                                  Expanded(
+                                    flex: 1,
+                                    child: TextFormField(
+                                      decoration:const InputDecoration(
+                                          labelText: "Prezzo a "
+                                      ),
+                                      onChanged: (text) {
+                                        widget.criteri.prezzoA = double.parse(text);
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Expanded(
+                                    // optional flex property if flex is 1 because the default flex is 1
+                                    flex: 1,
+                                    child: TextFormField(
+                                      decoration:const InputDecoration(
+                                          labelText: "Mq da "
+                                      ),
+                                      onChanged: (text) {
+                                        widget.criteri.mqDa = int.parse(text);
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10.0),
+                                  Expanded(
+                                    flex: 1,
+                                    child: TextFormField(
+                                      decoration:const InputDecoration(
+                                          labelText: "Mq a "
+                                      ),
+                                      onChanged: (text) {
+                                        widget.criteri.mqA = int.parse(text);
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                    )
+                                  ),
+                                ]
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Expanded(
+                                    // optional flex property if flex is 1 because the default flex is 1
+                                    flex: 1,
+                                    child: TextFormField(
+                                      decoration:const InputDecoration(
+                                          labelText: "Anno costruzione da "
+                                      ),
+                                      onChanged: (text) {
+                                        widget.criteri.annoCostruzioneDa = int.parse(text);
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10.0),
+                                  Expanded(
+                                    flex: 1,
+                                    child: TextFormField(
+                                      decoration:const InputDecoration(
+                                          labelText: "Anno costruzione a "
+                                      ),
+                                      onChanged: (text) {
+                                        widget.criteri.annoCostruzioneA = int.parse(text);
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                                ]
+                            )
+                        )
                       ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Zona"
+                      Card(
+                        elevation: 4, // Ombra della card
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        onChanged: (text) {
-                          widget.criteri.zona = text;
-                        },
-                      ),
-                      TextFormField(
-                        decoration:const InputDecoration(
-                            labelText: "Indirizzo"
-                        ),
-                        onChanged: (text) {
-                          widget.criteri.indirizzo = text;
-                        },
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            // optional flex property if flex is 1 because the default flex is 1
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Prezzo da "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.prezzoDa = double.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Prezzo a "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.prezzoA = double.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            // optional flex property if flex is 1 because the default flex is 1
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Mq da "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.mqDa = int.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Mq a "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.mqA = int.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            // optional flex property if flex is 1 because the default flex is 1
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Anno costruzione da "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.annoCostruzioneDa = int.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              decoration:const InputDecoration(
-                                  labelText: "Anno costruzione a "
-                              ),
-                              onChanged: (text) {
-                                widget.criteri.annoCostruzioneA = int.parse(text);
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        child: Padding(
+                            padding: EdgeInsets.all(16.0), // Padding interno alla Card
+                            child:Column(
+                                children: <Widget>[
                       DropdownButton<TipologiaImmobile>(
                         isExpanded: true,
                         hint: const Text('Tipologia immobile'),
@@ -310,7 +344,11 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                           );
                         }).toList(),
                       ),
-                    ])
+                    ]
+                    )
+                  )
+                ),
+             ])
             ),
           ),
         ),
