@@ -7,6 +7,7 @@ import 'package:mwinkhouse/widgets/immobili/scatta_foto.dart';
 
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
+import 'dettaglio_foto.dart';
 
 class ImmaginiImmobiliList extends StatefulWidget {
   String title = 'Lista immagini : ';
@@ -64,7 +65,18 @@ class _ImmaginiImmobiliListState extends State<ImmaginiImmobiliList> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Image.file(File(immagine[index].pathImmagine??""),width: 75,height: 75,)
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayPictureScreen(
+                                // Pass the automatically generated path to
+                                // the DisplayPictureScreen widget.
+                                imagePath: immagine[index].pathImmagine??"",
+                                immobile: widget.immobile,
+                                doSave: false,
+                              )),);
+                            },
+                            child: Image.file(File(immagine[index].pathImmagine??""),width: 75,height: 75,)
+                          )
                         ],
                       ),
                     ),
