@@ -15,6 +15,7 @@ import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_immagini_immobile.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_stanze_immobile.dart';
 
+import '../../constants';
 import '../../objbox/models/Anagrafica.dart';
 import '../../objbox/models/TipologiaColloquio.dart';
 import '../../objbox/models/TipologiaStanza.dart';
@@ -167,7 +168,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                     ),
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                          builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                          builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                       ),  (r){
                         return false;
                       });

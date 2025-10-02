@@ -7,6 +7,7 @@ import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/lista_colloqui_anagrafica.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_immobili_proprieta.dart';
 
+import '../../constants';
 import '../immobili/lista_comuni_ricerca.dart';
 import 'lista_contatti_anagrafica.dart';
 
@@ -50,7 +51,7 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                   ),
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                        builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                     ),  (r){
                       return false;
                     });

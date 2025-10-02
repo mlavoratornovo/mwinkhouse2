@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Immagine.dart';
 import 'package:mwinkhouse/widgets/immobili/scatta_foto.dart';
 
+import '../../constants';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 import 'dettaglio_foto.dart';
@@ -105,7 +106,7 @@ class _ImmaginiImmobiliListState extends State<ImmaginiImmobiliList> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                      builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                      builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                   ),  (r){
                     return false;
                   });

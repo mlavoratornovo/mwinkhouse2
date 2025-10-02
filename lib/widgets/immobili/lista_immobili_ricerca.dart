@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
+import '../../constants';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import '../../objbox/models/Immobile.dart';
 import '../../main.dart';
@@ -104,7 +105,7 @@ class _ImmobiliRicercaListState extends State<ImmobiliRicercaList> {
                   ),
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                        builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                     ),  (r){
                       return false;
                     });

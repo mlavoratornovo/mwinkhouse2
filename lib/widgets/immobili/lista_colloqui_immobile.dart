@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Colloquio.dart';
 
+import '../../constants';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 import 'dettaglio_colloquio_immobile.dart';
@@ -118,7 +119,7 @@ class _ColloquiImmobileListState extends State<ColloquiImmobileList> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                      builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                      builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                   ),  (r){
                     return false;
                   });

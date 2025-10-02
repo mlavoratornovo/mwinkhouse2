@@ -6,6 +6,7 @@ import 'package:mwinkhouse/widgets/basedata/home_dati_base.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_immobili.dart';
 import 'package:mwinkhouse/widgets/settings/impostazioni.dart';
 import 'objbox/dao/objectbox.dart';
+import 'package:mwinkhouse/constants';
 
 late ObjectBox objectbox;
 
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Winkhouse 2.0.1'),
+      home: const MyHomePage(title: 'Winkhouse $versione'),
     );
   }
 }

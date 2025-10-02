@@ -3,6 +3,7 @@ import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/objbox/models/CriteriRicercaAnagrafica.dart';
 
+import '../../constants';
 import 'lista_anagrafiche_ricerca.dart';
 
 
@@ -39,7 +40,7 @@ class _CriteriRicercaAnagraficaEditorState extends State<CriteriRicercaAnagrafic
                   ),
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                        builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                     ),  (r){
                       return false;
                     });

@@ -6,6 +6,7 @@ import 'package:mwinkhouse/objbox/models/Riscaldamento.dart';
 import 'package:mwinkhouse/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
 
+import '../../constants';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import 'lista_immobili_ricerca.dart';
 
@@ -49,7 +50,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
                   ),
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                        builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                     ),  (r){
                       return false;
                     });

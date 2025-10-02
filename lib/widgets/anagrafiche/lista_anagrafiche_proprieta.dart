@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_anagrafica.dart';
+import '../../constants';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 import 'lista_anagrafiche.dart';
@@ -134,7 +135,7 @@ class _AnagraficheProprietaListState extends State<AnagraficheProprietaList> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                      builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                      builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                   ),  (r){
                     return false;
                   });

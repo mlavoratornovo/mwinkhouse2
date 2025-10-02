@@ -3,6 +3,7 @@ import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/objbox/models/Contatto.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_contatto.dart';
 
+import '../../constants';
 import '../../main.dart';
 
 class ContattiAnagraficaList extends StatefulWidget {
@@ -115,7 +116,7 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                      builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                      builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                   ),  (r){
                     return false;
                   });

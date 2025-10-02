@@ -4,6 +4,7 @@ import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaStanza.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_stanze_immobile.dart';
 
+import '../../constants';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 
@@ -46,7 +47,7 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
                   ),
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                        builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                     ),  (r){
                       return false;
                     });

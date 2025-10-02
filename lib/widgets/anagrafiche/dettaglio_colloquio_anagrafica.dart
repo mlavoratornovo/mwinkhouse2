@@ -5,6 +5,8 @@ import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/objbox/models/Colloquio.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
 
+import '../../constants';
+
 class DettaglioColloquio extends StatefulWidget {
   final String title = 'Colloquio';
   Anagrafica? anagrafica;
@@ -57,7 +59,7 @@ class _DettaglioColloquioState extends State<DettaglioColloquio> {
                   ),
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                        builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                     ),  (r){
                       return false;
                     });

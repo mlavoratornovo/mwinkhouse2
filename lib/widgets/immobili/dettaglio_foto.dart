@@ -6,6 +6,7 @@ import 'package:mwinkhouse/objbox/models/Immagine.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../constants';
 import '../../objbox/models/Immobile.dart';
 import 'lista_immagini_immobile.dart';
 
@@ -31,7 +32,7 @@ class DisplayPictureScreen extends StatelessWidget {
                 ),
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                    builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                    builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                 ),  (r){
                   return false;
                 });

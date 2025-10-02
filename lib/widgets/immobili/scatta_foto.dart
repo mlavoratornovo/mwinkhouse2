@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 import 'dettaglio_foto.dart';
@@ -58,7 +59,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                      builder: (context) => const MyHomePage(title: 'Winkhouse 2.0.1',)
+                      builder: (context) => const MyHomePage(title: 'Winkhouse $versione',)
                   ),  (r){
                     return false;
                   });
