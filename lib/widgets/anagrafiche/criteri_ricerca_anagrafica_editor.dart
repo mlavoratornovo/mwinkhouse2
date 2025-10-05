@@ -3,7 +3,7 @@ import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/objbox/models/CriteriRicercaAnagrafica.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import 'lista_anagrafiche_ricerca.dart';
 
 

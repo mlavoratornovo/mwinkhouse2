@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/objbox/models/Colloquio.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../main.dart';
 import 'dettaglio_colloquio_anagrafica.dart';
 
@@ -58,10 +58,6 @@ class _ColloquiAnagraficaListState extends State<ColloquiAnagraficaList> {
                 Checkbox(
                     value: false, //immobili[index].isFinished(),
                     onChanged: (bool? value) {
-                      final colloquiosel = colloquio[index];
-                      // immobile.toggleFinished();
-                      // objectbox.taskBox.put(task);
-                      // List updated via watched query stream.
                     }),
                 Expanded(
                   child: Container(

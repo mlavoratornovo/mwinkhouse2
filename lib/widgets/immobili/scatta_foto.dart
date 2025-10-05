@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 import 'dettaglio_foto.dart';

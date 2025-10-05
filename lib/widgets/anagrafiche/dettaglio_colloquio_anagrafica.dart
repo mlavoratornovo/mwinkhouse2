@@ -5,14 +5,15 @@ import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/objbox/models/Colloquio.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
 
-import '../../constants';
+import '../../constants.dart';
+import 'dettaglio_anagrafica.dart';
 
 class DettaglioColloquio extends StatefulWidget {
   final String title = 'Colloquio';
-  Anagrafica? anagrafica;
+  Anagrafica anagrafica;
   Colloquio? colloquio;
   List<TipologiaColloquio> tipoColloquio = [];
-  DettaglioColloquio({super.key,this.anagrafica,this.colloquio}){
+  DettaglioColloquio({super.key,required this.anagrafica,this.colloquio}){
     colloquio?.dataColloquio ??= DateTime.now();
     tipoColloquio = objectbox.tipologiaColloquioBox.getAll().where((element) =>
     element.descrizione != 'Visita').toList();
@@ -146,14 +147,6 @@ class _DettaglioColloquioState extends State<DettaglioColloquio> {
                             decoration:const InputDecoration(
                                 labelText: "Agenzia"
                             ),
-                            // validator:  (value) {
-                            //   if (value == null || value.isEmpty) {
-                            //     if (widget.colloquio?.commentoAgenzia == null){
-                            //       return 'Please enter some text';
-                            //     }
-                            //   }
-                            //   return null;
-                            // },
                             onChanged: (text) {
                               widget.colloquio?.commentoAgenzia = text;
                             },
@@ -165,12 +158,6 @@ class _DettaglioColloquioState extends State<DettaglioColloquio> {
                             decoration:const InputDecoration(
                                 labelText: "Cliente"
                             ),
-                            // validator:  (value) {
-                            //   if (value == null || value.isEmpty) {
-                            //     return 'Please enter some text';
-                            //   }
-                            //   return null;
-                            // },
                             onChanged: (text) {
                               widget.colloquio?.commentoCliente = text;
                             },
@@ -184,17 +171,21 @@ class _DettaglioColloquioState extends State<DettaglioColloquio> {
         ),
         floatingActionButton: FloatingActionButton(
           heroTag: "Salva",
-          onPressed:(widget.anagrafica==null)?null:() async {
+          onPressed:() async {
             if (_formKey.currentState!.validate()) {
-              if (widget.colloquio != null) {
-                widget.anagrafica?.colloqui.add(widget.colloquio??Colloquio());
-                if (widget.anagrafica!= null) {
-                  objectbox.addAnagrafica(widget.anagrafica??Anagrafica());
+              bool findit = false;
+              for (var colloquio in widget.anagrafica.colloqui) {
+                if (colloquio.codColloquio == widget.colloquio?.codColloquio){
+                  findit = true;
                 }
               }
-              Navigator.pop(context);
-              // final value = await Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => ColloquiAnagraficaList(anagrafica:widget.anagrafica??Anagrafica())));
+              if (!findit) {
+                widget.anagrafica.colloqui.add(widget.colloquio ?? Colloquio());
+                objectbox.addAnagrafica(widget.anagrafica ?? Anagrafica());
+              }
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                  builder: (context) => DettaglioAnagrafica(anagrafica: widget.anagrafica,)
+              ),  (r){return false;});
 
             }else{
               ScaffoldMessenger.of(context).showSnackBar(

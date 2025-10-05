@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 import 'dettaglio_stanza.dart';

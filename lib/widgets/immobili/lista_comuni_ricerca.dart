@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../objbox/dao/winkhouse_rest.dart';
 import '../../objbox/models/Comune.dart';
 import '../../objbox/models/Immobile.dart';

@@ -6,7 +6,7 @@ import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaStanza.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_anagrafica.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../main.dart';
 import '../../objbox/models/ClasseEnergetica.dart';
 import '../../objbox/models/Immobile.dart';

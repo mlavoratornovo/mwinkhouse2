@@ -3,7 +3,7 @@ import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/objbox/models/Contatto.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_contatto.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../main.dart';
 
 class ContattiAnagraficaList extends StatefulWidget {
@@ -173,7 +173,7 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
       FloatingActionButton(
         heroTag: "immobile",
         backgroundColor: (widget.anagrafica==null)?Colors.grey:null,
-        onPressed: (widget.anagrafica==null)?null:() async {
+        onPressed: () async {
           final value = await Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => DettaglioContatto(anagrafica:widget.anagrafica, contatto: Contatto())));
           setState(() {});

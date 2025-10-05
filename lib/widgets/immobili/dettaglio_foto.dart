@@ -6,7 +6,7 @@ import 'package:mwinkhouse/objbox/models/Immagine.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../objbox/models/Immobile.dart';
 import 'lista_immagini_immobile.dart';
 

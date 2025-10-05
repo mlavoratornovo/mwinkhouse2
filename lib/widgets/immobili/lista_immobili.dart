@@ -4,7 +4,7 @@ import 'package:mwinkhouse/widgets/immobili/criteri_ricerca_immobili_editor_rest
 import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_immobili_proprieta.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../objbox/dao/winkhouse_rest.dart';
 import '../../objbox/models/Immobile.dart';
 import '../../main.dart';

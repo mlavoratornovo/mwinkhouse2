@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaContatto.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../main.dart';
 import '../../objbox/models/Contatto.dart';
+import 'dettaglio_anagrafica.dart';
+import 'lista_contatti_anagrafica.dart';
 
 class DettaglioContatto extends StatefulWidget {
   final String title = 'Contatto';
   Contatto? contatto;
-  Anagrafica? anagrafica;
+  Anagrafica anagrafica;
   List<TipologiaContatto> tipologiaContatto = [];
 
-  DettaglioContatto({super.key, this.anagrafica, this.contatto}){
+  DettaglioContatto({super.key, required this.anagrafica, this.contatto}){
     tipologiaContatto = objectbox.tipologiaContattoBox.getAll();
   }
 
@@ -127,12 +129,23 @@ class _DettaglioContattoState extends State<DettaglioContatto> {
         ),
         floatingActionButton: FloatingActionButton(
           heroTag: "Salva",
-          onPressed:(widget.anagrafica==null)?null:() async {
+          onPressed:() async {
             if (_formKey.currentState!.validate()) {
-              widget.anagrafica?.contatti.add(widget.contatto!);
-              Navigator.pop(context);
-              // final value = await Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => ContattiAnagraficaList(anagrafica:widget.anagrafica??Anagrafica())));
+              bool findit = false;
+              for (var contatto in widget.anagrafica.contatti) {
+                if (contatto.codContatto == widget.contatto?.codContatto){
+                  findit = true;
+                  break;
+                }
+              }
+              if (!findit) {
+                widget.anagrafica.contatti.add(widget.contatto!);
+                objectbox.addAnagrafica(widget.anagrafica);
+              }
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                  builder: (context) => DettaglioAnagrafica(anagrafica: widget.anagrafica,)
+              ),  (r){return false;});
+
             }else{
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Dati non validi impossibile procedere')),

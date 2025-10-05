@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaStanza.dart';
+import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_stanze_immobile.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';
 
@@ -56,13 +57,6 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
                 ),
                 Text(widget.title)]
           ),
-          // actions: [
-          //   PopupMenuButton(itemBuilder: (context)=>const [
-          //     PopupMenuItem(child: Text('Contatti')),
-          //     PopupMenuItem(child: Text('Immobili')),
-          //     PopupMenuItem(child: Text('Colloqui')),
-          //   ]
-          //   )],
         ),
         body: Container(
           // Center is a layout widget. It takes a single child and positions it
@@ -130,10 +124,20 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
           heroTag: "Salva",
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              immobile.stanze.add(stanzaImmobile!);
-              objectbox.addImmobile(immobile);
+              bool findit = false;
+              for (var stanza in widget.immobile.stanze) {
+                if (stanza.codStanzaImmobile ==
+                    widget.stanzaImmobile?.codStanzaImmobile) {
+                  findit = true;
+                  break;
+                }
+              }
+              if (!findit) {
+                immobile.stanze.add(stanzaImmobile!);
+                objectbox.addImmobile(immobile);
+              }
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => StanzeImmobileList(immobile: widget.immobile)
+                  builder: (context) => DettaglioImmobile(immobile: widget.immobile)
               ));
             }else{
               ScaffoldMessenger.of(context).showSnackBar(

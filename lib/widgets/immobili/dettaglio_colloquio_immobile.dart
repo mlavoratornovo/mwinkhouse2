@@ -3,17 +3,18 @@ import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/objbox/models/Colloquio.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
+import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../objbox/models/Immobile.dart';
 
 class DettaglioColloquioImmobile extends StatefulWidget {
   final String title = 'Colloquio';
-  Immobile? immobile;
+  Immobile immobile;
   Colloquio? colloquio;
   List<TipologiaColloquio> tipoColloquio = [];
-  DettaglioColloquioImmobile({super.key,this.immobile,this.colloquio}){
+  DettaglioColloquioImmobile({super.key,required this.immobile,this.colloquio}){
     colloquio?.dataColloquio ??= DateTime.now();
     tipoColloquio = objectbox.tipologiaColloquioBox.getAll().where((element) =>
     element.descrizione == 'Visita').toList();
@@ -184,19 +185,21 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
         ),
         floatingActionButton: FloatingActionButton(
           heroTag: "Salva",
-          onPressed:(widget.immobile==null)?null:() async {
+          onPressed:() async {
             if (_formKey.currentState!.validate()) {
-              if (widget.colloquio != null) {
-                widget.immobile?.colloqui.add(widget.colloquio??Colloquio());
-                if (widget.immobile!= null) {
-                  objectbox.addImmobile(widget.immobile??Immobile());
+              bool findit = false;
+              for (var colloquio in widget.immobile.colloqui) {
+                if (colloquio.codColloquio == widget.colloquio?.codColloquio){
+                  findit = true;
                 }
-
               }
-              Navigator.pop(context);
-              // final value = await Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => ColloquiAnagraficaList(anagrafica:widget.anagrafica??Anagrafica())));
-
+              if (!findit) {
+                widget.immobile.colloqui.add(widget.colloquio ?? Colloquio());
+                objectbox.addImmobile(widget.immobile ?? Immobile());
+              }
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                  builder: (context) => DettaglioImmobile(immobile: widget.immobile,)
+              ),  (r){return false;});
             }else{
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Dati non validi impossibile procedere')),

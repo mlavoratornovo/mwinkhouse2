@@ -7,7 +7,7 @@ import 'package:mwinkhouse/main.dart';
 import 'package:mwinkhouse/widgets/anagrafiche/lista_colloqui_anagrafica.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_immobili_proprieta.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../immobili/lista_comuni_ricerca.dart';
 import 'lista_contatti_anagrafica.dart';
 
@@ -264,17 +264,6 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TextFormField(
-                                    minLines: null,
-                                    decoration:const InputDecoration(
-                                        labelText: "descrizione"
-                                    ),
-                                    onChanged: (text) {
-                                      widget.anagrafica.commento = text;
-                                    },
-                                    initialValue: widget.anagrafica.commento ?? "",
-                                    key: Key(Random().nextInt(10000).toString()),
-                                  ),
                                   DropdownButtonFormField<ClasseCliente>(
                                     hint: const Text('Tipologia cliente'),
                                     validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
@@ -295,6 +284,18 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                                       );
                                     }).toList(),
                                   ),
+                                  TextFormField(
+                                    maxLines: 5,
+                                    minLines: 3,
+                                    decoration:const InputDecoration(
+                                        labelText: "descrizione"
+                                    ),
+                                    onChanged: (text) {
+                                      widget.anagrafica.commento = text;
+                                    },
+                                    initialValue: widget.anagrafica.commento ?? "",
+                                    key: Key(Random().nextInt(10000).toString()),
+                                  ),
                                 ]
                             )
                           )
@@ -314,7 +315,6 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                 );
               }else{
                 objectbox.addAnagrafica(widget.anagrafica);
-                Navigator.pop(context);
               }
             }else{
               ScaffoldMessenger.of(context).showSnackBar(

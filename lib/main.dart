@@ -6,7 +6,7 @@ import 'package:mwinkhouse/widgets/basedata/home_dati_base.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_immobili.dart';
 import 'package:mwinkhouse/widgets/settings/impostazioni.dart';
 import 'objbox/dao/objectbox.dart';
-import 'package:mwinkhouse/constants';
+import 'package:mwinkhouse/constants.dart';
 
 late ObjectBox objectbox;
 

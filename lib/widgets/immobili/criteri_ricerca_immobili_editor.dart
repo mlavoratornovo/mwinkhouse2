@@ -6,7 +6,7 @@ import 'package:mwinkhouse/objbox/models/Riscaldamento.dart';
 import 'package:mwinkhouse/objbox/models/StatoConservativo.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../objbox/models/CriteriRicercaImmobile.dart';
 import 'lista_immobili_ricerca.dart';
 

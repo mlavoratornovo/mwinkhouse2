@@ -15,7 +15,7 @@ import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_immagini_immobile.dart';
 import 'package:mwinkhouse/widgets/immobili/lista_stanze_immobile.dart';
 
-import '../../constants';
+import '../../constants.dart';
 import '../../objbox/models/Anagrafica.dart';
 import '../../objbox/models/TipologiaColloquio.dart';
 import '../../objbox/models/TipologiaStanza.dart';
@@ -414,7 +414,8 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                         ],
                       ),
                       TextFormField(
-                        maxLines: null,
+                        maxLines: 5,
+                        minLines: 3,
                         decoration:const InputDecoration(
                             labelText: "descrizione"
                         ),
@@ -554,7 +555,6 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                 }
               }
               objectbox.addImmobile(widget.immobile ?? Immobile());
-              Navigator.pop(context);
             }else{
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Dati non validi impossibile procedere')),
