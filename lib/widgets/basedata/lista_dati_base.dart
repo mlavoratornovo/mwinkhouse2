@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
+
 import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
 import 'package:mwinkhouse/objbox/models/IDatiBase.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
 import 'package:mwinkhouse/objbox/models/TipologiaStanza.dart';
-import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_anagrafica.dart';
+
 
 import '../../constants.dart';
 import '../../main.dart';
 import '../../objbox/models/ClasseEnergetica.dart';
-import '../../objbox/models/Immobile.dart';
 import '../../objbox/models/Riscaldamento.dart';
 import '../../objbox/models/StatoConservativo.dart';
 import '../../objbox/models/TipologiaContatto.dart';

@@ -31,7 +31,7 @@ class _ContattiAnagraficaListState extends State<ContattiAnagraficaList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          widget.anagrafica.contatti.removeWhere((element) => element.codContatto == contatto[index].codContatto);
+          widget.anagrafica.contatti.removeWhere((element) => element?.codContatto == contatto[index].codContatto);
           objectbox.addAnagrafica(widget.anagrafica);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -31,7 +31,7 @@ class _StanzeImmobileListState extends State<StanzeImmobileList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         onDismissed: (direction) {
           // Remove the task from the store.
-          widget.immobile.stanze.removeWhere((element) => element.codStanzaImmobile == stanza[index].codStanzaImmobile);
+          widget.immobile.stanze.removeWhere((element) => element?.codStanzaImmobile == stanza[index].codStanzaImmobile);
           objectbox.addImmobile(widget.immobile);
           // List updated via watched query stream.
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
