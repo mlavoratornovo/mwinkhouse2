@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
-import 'package:mwinkhouse/main.dart';
-import 'package:mwinkhouse/objbox/models/Colloquio.dart';
-import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
-import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
+import '../../main.dart';
+import '../../objbox/models/Colloquio.dart';
+import '../../objbox/models/TipologiaColloquio.dart';
+import 'dettaglio_immobile.dart';
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import '../../constants.dart';

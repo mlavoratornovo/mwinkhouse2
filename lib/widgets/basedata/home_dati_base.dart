@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mwinkhouse/objbox/dao/objectbox.dart';
+import '../../objbox/dao/objectbox.dart';
 
 import 'lista_dati_base.dart';
 

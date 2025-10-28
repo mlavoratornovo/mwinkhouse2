@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/objbox/models/Immagine.dart';
-import 'package:mwinkhouse/widgets/immobili/scatta_foto.dart';
+import '../../objbox/models/Immagine.dart';
+import 'scatta_foto.dart';
 
 import '../../constants.dart';
 import '../../main.dart';

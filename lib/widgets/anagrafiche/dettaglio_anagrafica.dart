@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
-import 'package:mwinkhouse/main.dart';
-import 'package:mwinkhouse/widgets/anagrafiche/lista_colloqui_anagrafica.dart';
-import 'package:mwinkhouse/widgets/immobili/lista_immobili_proprieta.dart';
+import '../../objbox/models/Anagrafica.dart';
+import '../../objbox/models/ClasseCliente.dart';
+import '../../main.dart';
+import 'lista_colloqui_anagrafica.dart';
+import '../immobili/lista_immobili_proprieta.dart';
 
 import '../../constants.dart';
 import '../immobili/lista_comuni_ricerca.dart';

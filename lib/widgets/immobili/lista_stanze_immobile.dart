@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
+import '../../objbox/models/StanzaImmobile.dart';
 
 import '../../constants.dart';
 import '../../main.dart';

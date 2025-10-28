@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
-import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse/main.dart';
-import 'package:mwinkhouse/objbox/models/Colloquio.dart';
-import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
+import '../../objbox/models/Anagrafica.dart';
+import '../../main.dart';
+import '../../objbox/models/Colloquio.dart';
+import '../../objbox/models/TipologiaColloquio.dart';
 
 import '../../constants.dart';
 import 'dettaglio_anagrafica.dart';

@@ -1,7 +1,7 @@
-import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
-import 'package:mwinkhouse/objbox/models/Colloquio.dart';
-import 'package:mwinkhouse/objbox/models/Contatto.dart';
-import 'package:mwinkhouse/objbox/models/Immobile.dart';
+import 'ClasseCliente.dart';
+import 'Colloquio.dart';
+import 'Contatto.dart';
+import 'Immobile.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:intl/intl.dart';
 import 'Agente.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
+import 'dettaglio_immobile.dart';
 
 import '../../constants.dart';
 import '../../objbox/dao/winkhouse_rest.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse/objbox/models/Contatto.dart';
-import 'package:mwinkhouse/widgets/anagrafiche/dettaglio_contatto.dart';
+import '../../objbox/models/Anagrafica.dart';
+import '../../objbox/models/Contatto.dart';
+import 'dettaglio_contatto.dart';
 
 import '../../constants.dart';
 import '../../main.dart';

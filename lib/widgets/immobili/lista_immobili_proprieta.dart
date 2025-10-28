@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
-import 'package:mwinkhouse/widgets/immobili/lista_immobili.dart';
+import '../../objbox/models/Anagrafica.dart';
+import 'dettaglio_immobile.dart';
+import 'lista_immobili.dart';
 import '../../constants.dart';
 import '../../main.dart';
 import '../../objbox/models/Immobile.dart';

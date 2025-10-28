@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/objbox/models/ClasseCliente.dart';
-import 'package:mwinkhouse/main.dart';
-import 'package:mwinkhouse/objbox/models/CriteriRicercaAnagrafica.dart';
+import '../../objbox/models/ClasseCliente.dart';
+import '../../main.dart';
+import '../../objbox/models/CriteriRicercaAnagrafica.dart';
 
 import '../../constants.dart';
 import 'lista_anagrafiche_ricerca.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
-import 'package:mwinkhouse/objbox/models/TipologiaStanza.dart';
-import 'package:mwinkhouse/widgets/immobili/dettaglio_immobile.dart';
-import 'package:mwinkhouse/widgets/immobili/lista_stanze_immobile.dart';
+import '../../objbox/models/StanzaImmobile.dart';
+import '../../objbox/models/TipologiaStanza.dart';
+import 'dettaglio_immobile.dart';
+import 'lista_stanze_immobile.dart';
 
 import '../../constants.dart';
 import '../../main.dart';

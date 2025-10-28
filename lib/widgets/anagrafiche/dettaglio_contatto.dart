@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/objbox/models/Anagrafica.dart';
-import 'package:mwinkhouse/objbox/models/TipologiaContatto.dart';
+import '../../objbox/models/Anagrafica.dart';
+import '../../objbox/models/TipologiaContatto.dart';
 
 import '../../constants.dart';
 import '../../main.dart';

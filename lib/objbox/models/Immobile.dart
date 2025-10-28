@@ -1,11 +1,11 @@
 
-import 'package:mwinkhouse/objbox/models/Agente.dart';
-import 'package:mwinkhouse/objbox/models/ClasseEnergetica.dart';
-import 'package:mwinkhouse/objbox/models/Immagine.dart';
-import 'package:mwinkhouse/objbox/models/Riscaldamento.dart';
-import 'package:mwinkhouse/objbox/models/StanzaImmobile.dart';
-import 'package:mwinkhouse/objbox/models/StatoConservativo.dart';
-import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
+import 'Agente.dart';
+import 'ClasseEnergetica.dart';
+import 'Immagine.dart';
+import 'Riscaldamento.dart';
+import 'StanzaImmobile.dart';
+import 'StatoConservativo.dart';
+import 'TipologiaImmobile.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:intl/intl.dart';
 import 'Anagrafica.dart';

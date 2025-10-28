@@ -1,4 +1,4 @@
-import 'package:mwinkhouse/objbox/models/IDatiBase.dart';
+import 'IDatiBase.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

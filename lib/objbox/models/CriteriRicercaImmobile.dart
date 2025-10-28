@@ -1,8 +1,8 @@
 
-import 'package:mwinkhouse/objbox/models/ClasseEnergetica.dart';
-import 'package:mwinkhouse/objbox/models/Riscaldamento.dart';
-import 'package:mwinkhouse/objbox/models/StatoConservativo.dart';
-import 'package:mwinkhouse/objbox/models/TipologiaImmobile.dart';
+import 'ClasseEnergetica.dart';
+import 'Riscaldamento.dart';
+import 'StatoConservativo.dart';
+import 'TipologiaImmobile.dart';
 
 
 class CriteriRicercaImmobile{

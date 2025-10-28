@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/objbox/models/Colloquio.dart';
+import '../../objbox/models/Colloquio.dart';
 
 import '../../constants.dart';
 import '../../main.dart';

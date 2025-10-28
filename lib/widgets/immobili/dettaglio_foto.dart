@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:mwinkhouse/main.dart';
-import 'package:mwinkhouse/objbox/models/Immagine.dart';
+import '../../main.dart';
+import '../../objbox/models/Immagine.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 

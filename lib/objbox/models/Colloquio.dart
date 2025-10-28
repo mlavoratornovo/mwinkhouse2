@@ -1,6 +1,6 @@
 
-import 'package:mwinkhouse/objbox/models/Agente.dart';
-import 'package:mwinkhouse/objbox/models/TipologiaColloquio.dart';
+import 'Agente.dart';
+import 'TipologiaColloquio.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:intl/intl.dart';
 import 'Anagrafica.dart';
