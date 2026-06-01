@@ -6,7 +6,6 @@ import '../../constants.dart';
 import '../../main.dart';
 import '../../objbox/models/Contatto.dart';
 import 'dettaglio_anagrafica.dart';
-import 'lista_contatti_anagrafica.dart';
 
 class DettaglioContatto extends StatefulWidget {
   final String title = 'Contatto';
@@ -78,7 +77,7 @@ class _DettaglioContattoState extends State<DettaglioContatto> {
                           hint: const Text('Seleziona tipo contatto'),
                           validator: (value) => value == null ? 'Seleziona tipo' : null,
                           isExpanded: true,
-                          value: widget.contatto?.tipologiaContatto.target,
+                          initialValue: widget.contatto?.tipologiaContatto.target,
                           onChanged: (TipologiaContatto? newValue) {
                             setState(() {
                               widget.contatto?.tipologiaContatto.target = newValue;

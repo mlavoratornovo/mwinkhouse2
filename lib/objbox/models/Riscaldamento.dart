@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'IDatiBase.dart';
@@ -25,18 +24,22 @@ class Riscaldamento implements IDatiBase{
     return instance;
   }
 
+  @override
   int getCodice(){
     return codRiscaldamento ?? 0;
   }
 
+  @override
   String getNome(){
     return '';
   }
 
+  @override
   String getDescrizione(){
     return descrizione ?? '';
   }
 
+  @override
   int getOrdine(){
     return 0;
   }

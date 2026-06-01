@@ -442,7 +442,7 @@ class _DettaglioImmobileState extends State<DettaglioImmobile> {
                         isExpanded: true,
                         hint: const Text('Tipologia immobile'),
                         // validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
-                        value: widget.immobile.tipologiaImmobile.target,
+                        initialValue: widget.immobile.tipologiaImmobile.target,
                         onChanged: (TipologiaImmobile? newValue) {
                           setState(() {
                             widget.immobile.tipologiaImmobile.target = newValue;

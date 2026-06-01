@@ -117,17 +117,17 @@
         {
           "id": "12:5122428428113654687",
           "name": "classeClienteId",
+          "indexId": "1:3651494731106722530",
           "type": 11,
           "flags": 520,
-          "indexId": "1:3651494731106722530",
           "relationTarget": "ClasseCliente"
         },
         {
           "id": "13:1555300741180730181",
           "name": "agenteInseritoreId",
+          "indexId": "2:2384026597163870618",
           "type": 11,
           "flags": 520,
-          "indexId": "2:2384026597163870618",
           "relationTarget": "Agente"
         },
         {
@@ -188,9 +188,9 @@
         {
           "id": "5:6445893869525913670",
           "name": "tipologiaAppuntamentoId",
+          "indexId": "3:3749888365003755907",
           "type": 11,
           "flags": 520,
-          "indexId": "3:3749888365003755907",
           "relationTarget": "TipologiaAppuntamento"
         },
         {
@@ -294,25 +294,25 @@
         {
           "id": "3:7972796733965140876",
           "name": "agenteInseritoreId",
+          "indexId": "4:274129033762138685",
           "type": 11,
           "flags": 520,
-          "indexId": "4:274129033762138685",
           "relationTarget": "Agente"
         },
         {
           "id": "4:2041143938119400373",
           "name": "immobileAbbinatoId",
+          "indexId": "5:6205787909942637107",
           "type": 11,
           "flags": 520,
-          "indexId": "5:6205787909942637107",
           "relationTarget": "Immobile"
         },
         {
           "id": "5:5332943791178424888",
           "name": "tipologiaColloquioId",
+          "indexId": "6:2215281331890157229",
           "type": 11,
           "flags": 520,
-          "indexId": "6:2215281331890157229",
           "relationTarget": "TipologiaColloquio"
         },
         {
@@ -403,9 +403,9 @@
         {
           "id": "7:7149749818544586331",
           "name": "tipologiaContattoId",
+          "indexId": "7:1010470763393771000",
           "type": 11,
           "flags": 520,
-          "indexId": "7:1010470763393771000",
           "relationTarget": "TipologiaContatto"
         }
       ],
@@ -613,41 +613,41 @@
         {
           "id": "21:7663598501579642842",
           "name": "agenteInseritoreId",
+          "indexId": "8:7929509765618067149",
           "type": 11,
           "flags": 520,
-          "indexId": "8:7929509765618067149",
           "relationTarget": "Agente"
         },
         {
           "id": "22:6679120532569650775",
           "name": "riscaldamentoId",
+          "indexId": "9:8216283141336157921",
           "type": 11,
           "flags": 520,
-          "indexId": "9:8216283141336157921",
           "relationTarget": "Riscaldamento"
         },
         {
           "id": "23:5686169327166007856",
           "name": "statoConservativoId",
+          "indexId": "10:382696995089959586",
           "type": 11,
           "flags": 520,
-          "indexId": "10:382696995089959586",
           "relationTarget": "StatoConservativo"
         },
         {
           "id": "24:2120823047171190231",
           "name": "tipologiaImmobileId",
+          "indexId": "11:7639890443565691167",
           "type": 11,
           "flags": 520,
-          "indexId": "11:7639890443565691167",
           "relationTarget": "TipologiaImmobile"
         },
         {
           "id": "25:7471632642035551421",
           "name": "classeEnergeticaId",
+          "indexId": "12:4282630748260591132",
           "type": 11,
           "flags": 520,
-          "indexId": "12:4282630748260591132",
           "relationTarget": "ClasseEnergetica"
         }
       ],
@@ -707,9 +707,9 @@
         {
           "id": "3:5709467713778893720",
           "name": "tipologiaStanzaId",
+          "indexId": "13:8510568089575891598",
           "type": 11,
           "flags": 520,
-          "indexId": "13:8510568089575891598",
           "relationTarget": "TipologiaStanza"
         },
         {

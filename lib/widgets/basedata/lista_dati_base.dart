@@ -40,7 +40,7 @@ class BaseDatiList extends StatefulWidget {
   BaseDatiType tipoDati = BaseDatiType.tipiimmobili;
 
   BaseDatiList({super.key, required this.tipoDati}){
-    this.tipoDati = tipoDati;
+    tipoDati = tipoDati;
     switch(tipoDati){
       case (BaseDatiType.tipiimmobili):
         title = "Tipologie immobile";
@@ -115,7 +115,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '${datibase[index].getNome()}',
+                        datibase[index].getNome(),
                         style: const TextStyle(
                             color: Colors.grey,
                             decoration: TextDecoration.none),
@@ -150,7 +150,7 @@ class _BaseDatiListState extends State<BaseDatiList> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      this.tipoDati = tipoDati;
+      tipoDati = tipoDati;
     });
     return Scaffold(
         appBar: AppBar(
@@ -301,19 +301,19 @@ class _BaseDatiListState extends State<BaseDatiList> {
   String deleteMessage(String entity){
     switch(tipoDati){
       case (BaseDatiType.tipiimmobili):
-        return 'Tipo immobile ${entity} cancellato';
+        return 'Tipo immobile $entity cancellato';
       case (BaseDatiType.tipiclienti):
-        return 'Categoria cliente ${entity} cancellata';
+        return 'Categoria cliente $entity cancellata';
       case (BaseDatiType.classeenergetica):
-        return 'Classe energetica ${entity} cancellata';
+        return 'Classe energetica $entity cancellata';
       case (BaseDatiType.riscaldamenti):
-        return 'Riscaldamento ${entity} cancellato';
+        return 'Riscaldamento $entity cancellato';
       case (BaseDatiType.statoconservativo):
-        return 'Stato conservativo ${entity} cancellato';
+        return 'Stato conservativo $entity cancellato';
       case (BaseDatiType.tipicontatti):
-        return 'Tipo contatto ${entity} cancellato';
+        return 'Tipo contatto $entity cancellato';
       case (BaseDatiType.tipistanza):
-        return 'Tipo stanza ${entity} cancellata';
+        return 'Tipo stanza $entity cancellata';
       case (null):
         return 'Tipo sconosciuto impossibile cancellare';
     }

@@ -390,7 +390,7 @@ class _CriteriRicercaImmobileEditorState extends State<CriteriRicercaImmobileEdi
               context,
               PageRouteBuilder(
                 transitionDuration: Duration.zero,
-                pageBuilder: (_, __, ___) => CriteriRicercaImmobileEditor(),
+                pageBuilder: (_, _, _) => CriteriRicercaImmobileEditor(),
               ),
             );          },
           child: const Icon(Icons.cleaning_services_outlined),

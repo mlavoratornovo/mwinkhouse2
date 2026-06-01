@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
@@ -241,9 +240,9 @@ class WinkhouseRest{
   Stream<List<Comune>> findComuni(String nomeComune) async*{
 
     if (comuni.isEmpty){
-      this.comuni = await loadJsonFile("assets/comuni.json");
+      comuni = await loadJsonFile("assets/comuni.json");
     }
-    var comuniFind = this.comuni.where((comune)=>comune.comune.toString().contains(nomeComune));
+    var comuniFind = comuni.where((comune)=>comune.comune.toString().contains(nomeComune));
     yield comuniFind.toList();
   }
 

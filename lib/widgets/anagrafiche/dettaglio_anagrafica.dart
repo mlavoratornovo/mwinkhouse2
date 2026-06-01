@@ -268,7 +268,7 @@ class _DettaglioAnagraficaState extends State<DettaglioAnagrafica> {
                                     hint: const Text('Tipologia cliente'),
                                     validator: (value) => value == null ? 'Tipologia dato obbligatorio' : null,
                                     isExpanded: true,
-                                    value: widget.anagrafica.classeCliente.target,
+                                    initialValue: widget.anagrafica.classeCliente.target,
                                     onChanged: (ClasseCliente? newValue) {
                                       setState(() {
                                         widget.anagrafica.classeCliente.target = newValue;

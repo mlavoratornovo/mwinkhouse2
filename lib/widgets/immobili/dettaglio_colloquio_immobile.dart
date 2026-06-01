@@ -34,7 +34,7 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
 
   _DettaglioColloquioImmobileState();
 
-  _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
     DateTime? newSelectedDate = await DatePicker.showDateTimePicker(context,
         showTitleActions: true,
@@ -94,7 +94,7 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
                             isExpanded: true,
                             hint: const Text('Tipologia Colloquio'),
                             validator: (value) => value == null ? 'Tipologia colloquio obbligatorio' : null,
-                            value: widget.colloquio?.tipologiaColloquio.target,
+                            initialValue: widget.colloquio?.tipologiaColloquio.target,
                             onChanged: (TipologiaColloquio? newValue) {
                               setState(() {
                                 widget.colloquio?.tipologiaColloquio.target = newValue;

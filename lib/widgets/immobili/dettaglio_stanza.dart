@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import '../../objbox/models/StanzaImmobile.dart';
 import '../../objbox/models/TipologiaStanza.dart';
 import 'dettaglio_immobile.dart';
-import 'lista_stanze_immobile.dart';
 
 import '../../constants.dart';
 import '../../main.dart';
@@ -77,7 +76,7 @@ class _DettaglioStanzaState extends State<DettaglioStanza> {
                           hint: const Text('Seleziona tipo stanza'),
                           validator: (value) => value == null ? 'Seleziona tipo' : null,
                           isExpanded: true,
-                          value: stanzaImmobile?.tipologiaStanza.target,
+                          initialValue: stanzaImmobile?.tipologiaStanza.target,
                           onChanged: (TipologiaStanza? newValue) {
                             setState(() {
                               stanzaImmobile?.tipologiaStanza.target = newValue;

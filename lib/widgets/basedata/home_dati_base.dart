@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../objbox/dao/objectbox.dart';
 
 import 'lista_dati_base.dart';
@@ -40,7 +39,7 @@ class _MyHomePageState extends State<BaseDataHome> {
           ),
 
         ),
-        body: Container(
+        body: SizedBox(
           height: double.infinity,
           width: double.infinity,// Ensures it fills the screen
           child:SingleChildScrollView(
