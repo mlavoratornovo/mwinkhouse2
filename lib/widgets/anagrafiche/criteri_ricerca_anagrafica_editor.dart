@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../objbox/models/Anagrafica.dart';
 import '../../objbox/models/ClasseCliente.dart';
 import '../../main.dart';
 import '../../objbox/models/CriteriRicercaAnagrafica.dart';
@@ -160,7 +161,7 @@ class _CriteriRicercaAnagraficaEditorState extends State<CriteriRicercaAnagrafic
         ),
         floatingActionButton: FloatingActionButton(
           heroTag: "Cerca",
-          onPressed: () {
+          onPressed: () async {
             if ((widget.criteri.provincia.trim() != '') ||
                 (widget.criteri.cap.trim() != '') ||
                 (widget.criteri.citta.trim() != '') ||
@@ -171,10 +172,18 @@ class _CriteriRicercaAnagraficaEditorState extends State<CriteriRicercaAnagrafic
                 (widget.criteri.codiceFiscale.trim() != '') ||
                 (widget.criteri.classeCliente != null)
             ) {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => AnagraficheRicercaList(criteri:widget.criteri)));
-            }
-            else{
+              final List<Anagrafica>? selezionate = await Navigator.push<List<Anagrafica>>(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AnagraficheRicercaList(criteri: widget.criteri),
+                ),
+              );
+              if (selezionate != null && context.mounted) {
+                Navigator.pop(context, selezionate);
+              }
+            //   Navigator.of(context).push(MaterialPageRoute(
+            //       builder: (context) => AnagraficheRicercaList(criteri:widget.criteri)));
+            }else{
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Dati non validi impossibile procedere')),
               );

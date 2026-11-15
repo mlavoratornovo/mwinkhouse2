@@ -35,6 +35,7 @@ extension SafeLookup<E> on List<E> {
 class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
 
   List<int> selected = [];
+  final Set<Anagrafica> _selectedItems = {};
   _AnagraficheRicercaListState();
 
 
@@ -56,20 +57,6 @@ class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
           color: Colors.red,
         ),
         key: UniqueKey(), //Key('dismissed_$index'),
-        onDismissed: (direction) {
-          // Remove the task from the store.
-          objectbox.removeAnagrafica(anagrafiche[index].codAnagrafica?.toInt() ?? 0);
-          // List updated via watched query stream.
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              behavior: SnackBarBehavior.floating,
-              margin: const EdgeInsets.only(bottom: 0, right: 70, left: 70),
-              padding: const EdgeInsets.all(5),
-              duration: const Duration(milliseconds: 800),
-              content: Container(
-                  alignment: Alignment.center,
-                  height: 35,
-                  child: Text('Anagrafica ${anagrafiche[index].codAnagrafica} deleted'))));
-        },
         child: Row(
           children: <Widget>[
             Expanded(
@@ -83,6 +70,18 @@ class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Checkbox(
+                        value: _selectedItems.contains(anagrafiche[index]),
+                        onChanged: (bool? checked) {
+                          setState(() {
+                            if (checked == true) {
+                              _selectedItems.add(anagrafiche[index]);
+                            } else {
+                              _selectedItems.remove(anagrafiche[index]);
+                            }
+                          });
+                        },
+                      ),
                       Text(
                         '${anagrafiche[index].ragioneSociale ?? ""} ${anagrafiche[index].cognome} ${anagrafiche[index].nome}',
                         style: const TextStyle(
@@ -186,29 +185,18 @@ class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
                 ]
             )
         ),
+          floatingActionButton: _selectedItems.isNotEmpty
+            ? FloatingActionButton.extended(
+                onPressed: () {
+                  // Restituisce la lista delle anagrafiche selezionate al chiamante
+                  Navigator.pop(context, _selectedItems.toList());
+                },
+                label: Text('Seleziona (${_selectedItems.length})'),
+                icon: const Icon(Icons.check),
+                backgroundColor: Colors.blue,
+              )
+          : null, // Se non ci sono selezioni, il pulsante non viene renderizzato
     );
   }
 }
 
-class SwipeLeftNotification extends StatelessWidget {
-  const SwipeLeftNotification({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(right: 20.0, bottom: 10.0),
-      child: Align(
-        alignment: Alignment.topRight,
-        child: Center(
-          child: Text(
-            'Delete a task by swiping it.',
-            style: TextStyle(
-              fontSize: 11.0,
-              color: Colors.grey,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

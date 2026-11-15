@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import '../../main.dart';
+import '../../objbox/models/Anagrafica.dart';
 import '../../objbox/models/Colloquio.dart';
 import '../../objbox/models/TipologiaColloquio.dart';
+import '../anagrafiche/criteri_ricerca_anagrafica_editor.dart';
+import '../anagrafiche/dettaglio_anagrafica.dart';
+import '../anagrafiche/lista_anagrafiche_ricerca.dart';
 import 'dettaglio_immobile.dart';
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-
+import '../../objbox/models/CriteriRicercaAnagrafica.dart';
 import '../../constants.dart';
 import '../../objbox/models/Immobile.dart';
 
@@ -177,38 +181,85 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
                             },
                             initialValue: widget.colloquio?.commentoCliente,
                           ),
-                        ])
+                          Divider(
+                            color: Colors.grey,       // Colore della linea
+                            thickness: 2,             // Spessore della linea (in pixel)
+                            indent: 20,              // Spazio vuoto all'inizio (sinistra)
+                            endIndent: 20,           // Spazio vuoto alla fine (destra)
+                            height: 40,              // Spazio totale (incluso il vuoto sopra/sotto) occupato dal widget
+                          ),
+                          Text('Anagrafiche'),
+                          for (var anagrafica in widget.colloquio!.anagrafiche)
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    '$widget.colloquio!.anagrafiche[index].cognome  $widget.colloquio!.anagrafiche[index].nome',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete, color: Colors.red),
+                                  onPressed: () {
+                                    widget.colloquio?.anagrafiche.remove(anagrafica);
+                                  },
+                                ),
+                              ],
+                            )
+
+                  ])
                 ),
               ),
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          heroTag: "Salva",
-          onPressed:() async {
-            if (_formKey.currentState!.validate()) {
-              bool findit = false;
-              for (var colloquio in widget.immobile.colloqui) {
-                if (colloquio.codColloquio == widget.colloquio?.codColloquio){
-                  findit = true;
+        floatingActionButton: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              heroTag: "Salva",
+              onPressed:() async {
+                if (_formKey.currentState!.validate()) {
+                  bool findit = false;
+                  for (var colloquio in widget.immobile.colloqui) {
+                    if (colloquio.codColloquio == widget.colloquio?.codColloquio){
+                      findit = true;
+                    }
+                  }
+                  if (!findit) {
+                    widget.immobile.colloqui.add(widget.colloquio ?? Colloquio());
+                    objectbox.addImmobile(widget.immobile ?? Immobile());
+                  }
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                      builder: (context) => DettaglioImmobile(immobile: widget.immobile,)
+                  ),  (r){return false;});
+                }else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Dati non validi impossibile procedere')),
+                  );
                 }
-              }
-              if (!findit) {
-                widget.immobile.colloqui.add(widget.colloquio ?? Colloquio());
-                objectbox.addImmobile(widget.immobile ?? Immobile());
-              }
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                  builder: (context) => DettaglioImmobile(immobile: widget.immobile,)
-              ),  (r){return false;});
-            }else{
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Dati non validi impossibile procedere')),
-              );
-            }
-          },
-          child: const Icon(Icons.save),
-        )
-    );
+              },
+              child: const Icon(Icons.save),
+            ),
+            FloatingActionButton(
+              heroTag: "Anagrafiche",
+              onPressed: () async {
+                final List<Anagrafica>? risultato = await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CriteriRicercaAnagraficaEditor()),
+                );
+
+                if (risultato != null) {
+                  setState(() {
+                    widget.colloquio?.anagrafiche.addAll(risultato);
+                  });
+                }              },
+              child: const Icon(Icons.add),
+            ),
+          ]
+        ));
   }
 
 
