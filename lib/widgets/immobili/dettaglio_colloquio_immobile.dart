@@ -194,7 +194,7 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
                               children: [
                                 Expanded(
                                   child: Text(
-                                    '$widget.colloquio!.anagrafiche[index].cognome  $widget.colloquio!.anagrafiche[index].nome',
+                                    '${anagrafica.cognome}  ${anagrafica.nome}',
                                     style: const TextStyle(fontSize: 16),
                                   ),
                                 ),
@@ -230,8 +230,8 @@ class _DettaglioColloquioImmobileState extends State<DettaglioColloquioImmobile>
                   }
                   if (!findit) {
                     widget.immobile.colloqui.add(widget.colloquio ?? Colloquio());
-                    objectbox.addImmobile(widget.immobile ?? Immobile());
                   }
+                  objectbox.addImmobile(widget.immobile ?? Immobile());
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
                       builder: (context) => DettaglioImmobile(immobile: widget.immobile,)
                   ),  (r){return false;});

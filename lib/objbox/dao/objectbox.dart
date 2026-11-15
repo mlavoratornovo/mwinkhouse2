@@ -820,24 +820,61 @@ class ObjectBox {
 
   Stream<List<Anagrafica>> searchAnagrafiche({required CriteriRicercaAnagrafica criteri}){
 
-    QueryBuilder<Anagrafica> qBuilderAnagrafiche = anagraficaBox.query(
-        ((criteri.indirizzo!='')?Anagrafica_.indirizzo.contains(criteri.indirizzo):Anagrafica_.indirizzo.notNull()) &
-        ((criteri.provincia!='')?Anagrafica_.provincia.contains(criteri.provincia):Anagrafica_.provincia.notNull()) &
-        ((criteri.cap!='')?Anagrafica_.cap.contains(criteri.cap):Anagrafica_.cap.notNull()) &
-        ((criteri.citta!='')?Anagrafica_.citta.contains(criteri.citta):Anagrafica_.citta.notNull()) &
-        ((criteri.cognome!='')?Anagrafica_.cognome.contains(criteri.cognome):Anagrafica_.cognome.notNull()) &
-        ((criteri.nome!='')?Anagrafica_.nome.contains(criteri.nome):Anagrafica_.nome.notNull()) &
-        ((criteri.ragioneSociale!='')?Anagrafica_.ragioneSociale.contains(criteri.ragioneSociale):Anagrafica_.ragioneSociale.notNull())
-    );
+    Condition<Anagrafica>? condition;
 
-    final classeCliente = criteri.classeCliente;
-    if (classeCliente!=null && classeCliente.codClasseCliente != null){
-      qBuilderAnagrafiche.link(Anagrafica_.classeCliente, ClasseCliente_.codClasseCliente.equals(classeCliente.codClasseCliente!));
+// Filtro per Cognome
+    if (criteri.cognome.trim().isNotEmpty) {
+      condition = Anagrafica_.cognome.contains(criteri.cognome, caseSensitive: false);
     }
 
-    return qBuilderAnagrafiche
+    // Filtro per Nome
+    if (criteri.nome.trim().isNotEmpty) {
+      final nomeCond = Anagrafica_.nome.contains(criteri.nome, caseSensitive: false);
+      condition = (condition == null) ? nomeCond : condition.and(nomeCond);
+    }
+    if (criteri.indirizzo.trim().isNotEmpty) {
+      final indirizzoCond = Anagrafica_.nome.contains(criteri.indirizzo, caseSensitive: false);
+      condition = (condition == null) ? indirizzoCond : condition.and(indirizzoCond);
+    }
+    if (criteri.provincia.trim().isNotEmpty) {
+      final provinciaCond = Anagrafica_.nome.contains(criteri.provincia, caseSensitive: false);
+      condition = (condition == null) ? provinciaCond : condition.and(provinciaCond);
+    }
+    if (criteri.cap.trim().isNotEmpty) {
+      final capCond = Anagrafica_.nome.contains(criteri.cap, caseSensitive: false);
+      condition = (condition == null) ? capCond : condition.and(capCond);
+    }
+    if (criteri.citta.trim().isNotEmpty) {
+      final cittaCond = Anagrafica_.nome.contains(criteri.citta, caseSensitive: false);
+      condition = (condition == null) ? cittaCond : condition.and(cittaCond);
+    }
+    if (criteri.codiceFiscale.trim().isNotEmpty) {
+      final codiceFiscaleCond = Anagrafica_.nome.contains(criteri.codiceFiscale, caseSensitive: false);
+      condition = (condition == null) ? codiceFiscaleCond : condition.and(codiceFiscaleCond);
+    }
+    if (criteri.partitaIva.trim().isNotEmpty) {
+      final partitaIvaCond = Anagrafica_.nome.contains(criteri.partitaIva, caseSensitive: false);
+      condition = (condition == null) ? partitaIvaCond : condition.and(partitaIvaCond);
+    }
+
+    // Inizializza il builder con la condizione (se presente)
+    final builder = anagraficaBox.query(condition);
+
+    if (criteri.classeCliente != null) {
+      final classeCliente = criteri.classeCliente;
+      if (classeCliente != null && classeCliente.codClasseCliente != null) {
+        builder.link(
+            Anagrafica_.classeCliente,
+            ClasseCliente_.codClasseCliente.equals(
+                classeCliente.codClasseCliente!)
+        );
+      }
+    }
+    // Applica l'ordinamento se necessario
+    builder.order(Anagrafica_.cognome);
+
+    return builder
         .watch(triggerImmediately: true)
-    // Map it to a list of tasks to be used by a StreamBuilder.
         .map((query) => query.find());
   }
 

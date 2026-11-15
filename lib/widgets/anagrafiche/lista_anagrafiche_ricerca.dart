@@ -35,21 +35,10 @@ extension SafeLookup<E> on List<E> {
 class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
 
   List<int> selected = [];
-  final Set<Anagrafica> _selectedItems = {};
+  //final Set<Anagrafica> _selectedItems = {};
+  final Map<int, Anagrafica> _selectedItemsMap = {};
   _AnagraficheRicercaListState();
 
-
-  void _onCheckboxSelect(bool select, int codAnagrafica){
-    if (select == true) {
-      setState(() {
-        selected.add(codAnagrafica);
-      });
-    } else {
-      setState(() {
-        selected.remove(codAnagrafica);
-      });
-    }
-  }
 
   Dismissible Function(BuildContext, int) _itemBuilder(List<Anagrafica> anagrafiche) =>
           (BuildContext context, int index) => Dismissible(
@@ -59,6 +48,23 @@ class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
         key: UniqueKey(), //Key('dismissed_$index'),
         child: Row(
           children: <Widget>[
+            Checkbox(
+              value: _selectedItemsMap.containsKey(anagrafiche[index].codAnagrafica),
+              onChanged: (bool? checked) {
+                setState(() {
+                  final item = anagrafiche[index];
+                  final codAnagrafica = item.codAnagrafica;
+                  if (codAnagrafica != null) {
+                    if (checked == true) {
+                      // Aggiunge alla mappa usando l'ID come chiave
+                      _selectedItemsMap[codAnagrafica] = item;
+                    } else {
+                      // Rimuove dalla mappa tramite ID
+                      _selectedItemsMap.remove(codAnagrafica);
+                    }
+                  }
+                });
+              },            ),
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
@@ -70,18 +76,6 @@ class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Checkbox(
-                        value: _selectedItems.contains(anagrafiche[index]),
-                        onChanged: (bool? checked) {
-                          setState(() {
-                            if (checked == true) {
-                              _selectedItems.add(anagrafiche[index]);
-                            } else {
-                              _selectedItems.remove(anagrafiche[index]);
-                            }
-                          });
-                        },
-                      ),
                       Text(
                         '${anagrafiche[index].ragioneSociale ?? ""} ${anagrafiche[index].cognome} ${anagrafiche[index].nome}',
                         style: const TextStyle(
@@ -185,17 +179,16 @@ class _AnagraficheRicercaListState extends State<AnagraficheRicercaList> {
                 ]
             )
         ),
-          floatingActionButton: _selectedItems.isNotEmpty
+          floatingActionButton: _selectedItemsMap.isNotEmpty
             ? FloatingActionButton.extended(
-                onPressed: () {
-                  // Restituisce la lista delle anagrafiche selezionate al chiamante
-                  Navigator.pop(context, _selectedItems.toList());
-                },
-                label: Text('Seleziona (${_selectedItems.length})'),
-                icon: const Icon(Icons.check),
-                backgroundColor: Colors.blue,
-              )
-          : null, // Se non ci sono selezioni, il pulsante non viene renderizzato
+            onPressed: () {
+              // Restituisce la lista degli oggetti Anagrafica contenuti nella mappa
+              Navigator.pop(context, _selectedItemsMap.values.toList());
+            },
+            label: Text('Seleziona (${_selectedItemsMap.length})'),
+            icon: const Icon(Icons.check),
+            backgroundColor: Colors.white, // O il colore che preferisci
+          ): null,
     );
   }
 }
